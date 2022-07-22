@@ -79,9 +79,9 @@ def test_CX_callable():
     qubit_inds_seq = [[0], [0], [0, 1]]
     param_inds_seq = [[], [0], []]
 
-    apply_circuit = qujax.get_params_to_statetensor_func(gate_seq,
-                                                        qubit_inds_seq,
-                                                        param_inds_seq)
+    apply_circuit = qujax.get_params_to_statetensor_func(
+        gate_seq, qubit_inds_seq, param_inds_seq
+    )
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -218,7 +218,10 @@ def test_HH():
 def test_quantum_hamiltonian():
     n_qubits = 5
 
-    strings_zz = [QubitPauliString({Qubit(j): Pauli.Z, Qubit(j + 1): Pauli.Z}) for j in range(n_qubits - 1)]
+    strings_zz = [
+        QubitPauliString({Qubit(j): Pauli.Z, Qubit(j + 1): Pauli.Z})
+        for j in range(n_qubits - 1)
+    ]
     coefs_zz = random.normal(random.PRNGKey(0), shape=(len(strings_zz),))
     tket_op_dict_zz = dict(zip(strings_zz, coefs_zz))
     strings_x = [QubitPauliString({Qubit(j): Pauli.X}) for j in range(n_qubits)]
@@ -226,13 +229,15 @@ def test_quantum_hamiltonian():
     tket_op_dict_x = dict(zip(strings_x, coefs_x))
     tket_op = QubitPauliOperator(tket_op_dict_zz | tket_op_dict_x)
 
-    gate_str_seq_seq = [['Z', 'Z']] * (n_qubits - 1) + [['X']] * n_qubits
-    qubit_inds_seq = [[i, i + 1] for i in range(n_qubits - 1)] + [[i] for i in range(n_qubits)]
-    st_to_exp = qujax.get_statetensor_to_expectation_func(gate_str_seq_seq,
-                                                         qubit_inds_seq,
-                                                         jnp.concatenate([coefs_zz, coefs_x]))
+    gate_str_seq_seq = [["Z", "Z"]] * (n_qubits - 1) + [["X"]] * n_qubits
+    qubit_inds_seq = [[i, i + 1] for i in range(n_qubits - 1)] + [
+        [i] for i in range(n_qubits)
+    ]
+    st_to_exp = qujax.get_statetensor_to_expectation_func(
+        gate_str_seq_seq, qubit_inds_seq, jnp.concatenate([coefs_zz, coefs_x])
+    )
 
-    state = random.uniform(random.PRNGKey(0), shape=(2 ** n_qubits,))
+    state = random.uniform(random.PRNGKey(0), shape=(2**n_qubits,))
     state /= jnp.linalg.norm(state)
 
     tket_exp = tket_op.state_expectation(state)
