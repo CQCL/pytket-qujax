@@ -15,13 +15,13 @@
 """Methods to allow conversion between qujax and tket data types
 """
 
-from typing import Tuple, Sequence
+from typing import Tuple, Sequence, Optional
 from jax import numpy as jnp
 from qujax.circuit import CallableOptionalArrayArg, get_params_to_statetensor_func  # type: ignore
 import pytket
 
 
-def _tk_qubits_to_inds(tk_qubits: Sequence[pytket.Qubit]) -> Tuple[int, ...]:  # type: ignore
+def _tk_qubits_to_inds(tk_qubits: Sequence[pytket.circuit.Circuit.Qubit]) -> Tuple[int, ...]:
     """
     Convert Sequence of tket qubits objects to Tuple of integers qubit indices.
 
@@ -34,7 +34,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[pytket.Qubit]) -> Tuple[int, ...]:  #
     return tuple(q.index[0] for q in tk_qubits)
 
 
-def tk_to_qujax(circuit: pytket.Circuit) -> CallableOptionalArrayArg:  # type: ignore
+def tk_to_qujax(circuit: pytket.circuit.Circuit) -> CallableOptionalArrayArg:
     """
     Converts a tket circuit into a function that maps circuit
     parameters to a statetensor.
@@ -68,8 +68,8 @@ def tk_to_qujax(circuit: pytket.Circuit) -> CallableOptionalArrayArg:  # type: i
     )
 
 
-def tk_to_qujax_symbolic(  # type: ignore
-    circuit: pytket.Circuit, symbol_map: dict = None  # type: ignore
+def tk_to_qujax_symbolic(
+    circuit: pytket.Circuit, symbol_map: Optional[dict] = None
 ) -> CallableOptionalArrayArg:
     """
     Converts a tket circuit with symbolics parameters and a symbolic parameter map
@@ -93,7 +93,7 @@ def tk_to_qujax_symbolic(  # type: ignore
 
     """
     if symbol_map is None:
-        free_symbols = circuit.free_symbols()  # type: ignore
+        free_symbols = circuit.free_symbols()
         n_symbols = len(free_symbols)
         symbol_map = dict(zip(free_symbols, range(n_symbols)))
     else:
@@ -113,7 +113,7 @@ def tk_to_qujax_symbolic(  # type: ignore
             continue
         gate_name_seq.append(gate_name)
         qubit_inds_seq.append(_tk_qubits_to_inds(c.qubits))
-        param_inds_seq.append(  # type: ignore
+        param_inds_seq.append(
             jnp.array([symbol_map[symbol] for symbol in c.op.free_symbols()])  # type: ignore
         )
 
