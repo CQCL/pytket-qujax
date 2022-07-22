@@ -38,8 +38,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
 def tk_to_qujax(circuit: Circuit) -> CallableOptionalArrayArg:
     """
     Converts a tket circuit into a function that maps circuit parameters
-    to a statetensor.
-    Assumes all circuit gates can be found in qujax.gates.
+    to a statetensor. Assumes all circuit gates can be found in qujax.gates.
     Input parameter to created function will be ordered as in circuit.get_commands()
     (pytket automatically reorders some gates, consider using Barriers).
 
@@ -81,7 +80,6 @@ def tk_to_qujax_symbolic(
     and if there are none it will assume that none of the gates require parameters.
     On the other hand,tk_to_qujax will work out which gates are parameterised
     based on e.g. circuit.get_commands()[0].op.params
-
 
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit
