@@ -50,6 +50,7 @@ def build_module_docs():
         )
         content.append(f"\tpytket <{PYTKET_DOCS_LINK}>\n")
         content.append(f"\tpytket extensions <{PYTKET_EX_DOCS_LINK}>\n")
+        content.append(f"\tqujax <{QUJAX_LINK}>\n")
 
     with open(index_rst, "w") as f:
         f.writelines(content)
