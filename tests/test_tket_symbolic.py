@@ -21,7 +21,7 @@ from pytket.circuit import Circuit
 from pytket.extensions.qujax import tk_to_qujax_symbolic
 
 
-def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]):
+def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]) -> None:
     params = random.uniform(random.PRNGKey(0), (len(symbols),)) * 2
     param_map = dict(zip(symbols, params))
     symbol_map = dict(zip(symbols, range(len(symbols))))
@@ -49,7 +49,7 @@ def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]):
         assert isinstance(grad_cost_jit_func(params), jnp.ndarray)
 
 
-def test_H():
+def test_H() -> None:
     symbols = []
 
     circuit = Circuit(3)
@@ -58,7 +58,7 @@ def test_H():
     _test_circuit(circuit, symbols)
 
 
-def test_CX():
+def test_CX() -> None:
     symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
@@ -69,7 +69,7 @@ def test_CX():
     _test_circuit(circuit, symbols)
 
 
-def test_CX_qrev():
+def test_CX_qrev() -> None:
     symbols = [Symbol("p0"), Symbol("p1")]
 
     circuit = Circuit(2)
@@ -80,7 +80,7 @@ def test_CX_qrev():
     _test_circuit(circuit, symbols)
 
 
-def test_CZ():
+def test_CZ() -> None:
     symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
@@ -91,7 +91,7 @@ def test_CZ():
     _test_circuit(circuit, symbols)
 
 
-def test_CZ_qrev():
+def test_CZ_qrev() -> None:
     symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
@@ -102,7 +102,7 @@ def test_CZ_qrev():
     _test_circuit(circuit, symbols)
 
 
-def test_CX_Barrier_Rx():
+def test_CX_Barrier_Rx() -> None:
     symbols = [Symbol("p0"), Symbol("p1")]
 
     circuit = Circuit(3)
@@ -114,7 +114,7 @@ def test_CX_Barrier_Rx():
     _test_circuit(circuit, symbols)
 
 
-def test_circuit1():
+def test_circuit1() -> None:
     n_qubits = 4
     depth = 1
     symbols = [Symbol(f"p{j}") for j in range(n_qubits * (depth + 1))]
@@ -137,7 +137,7 @@ def test_circuit1():
     _test_circuit(circuit, symbols)
 
 
-def test_circuit2():
+def test_circuit2() -> None:
     n_qubits = 3
     depth = 1
     symbols = [Symbol(f"p{j}") for j in range(2 * n_qubits * (depth + 1))]
@@ -166,7 +166,7 @@ def test_circuit2():
     _test_circuit(circuit, symbols)
 
 
-def test_HH():
+def test_HH() -> None:
     circuit = Circuit(3)
     circuit.H(0)
 
@@ -178,7 +178,7 @@ def test_HH():
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
 
 
-def test_exception_symbol_map():
+def test_exception_symbol_map() -> None:
     symbols = [Symbol("p0"), Symbol("p1"), Symbol("bad_bad_symbol")]
 
     circuit = Circuit(2)

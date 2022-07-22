@@ -22,7 +22,7 @@ from pytket.utils import QubitPauliOperator
 from pytket.extensions.qujax import tk_to_qujax
 
 
-def _test_circuit(circuit: Circuit, param: Union[None, jnp.ndarray]):
+def _test_circuit(circuit: Circuit, param: Union[None, jnp.ndarray]) -> None:
     true_sv = circuit.get_statevector()
 
     apply_circuit = tk_to_qujax(circuit)
@@ -45,14 +45,14 @@ def _test_circuit(circuit: Circuit, param: Union[None, jnp.ndarray]):
         assert isinstance(grad_cost_jit_func(param), jnp.ndarray)
 
 
-def test_H():
+def test_H() -> None:
     circuit = Circuit(3)
     circuit.H(0)
 
     _test_circuit(circuit, None)
 
 
-def test_CX():
+def test_CX() -> None:
     param = jnp.array([0.25])
 
     circuit = Circuit(2)
@@ -63,16 +63,16 @@ def test_CX():
     _test_circuit(circuit, param)
 
 
-def test_CX_callable():
+def test_CX_callable() -> None:
     param = jnp.array([0.25])
 
-    def H():
+    def H() -> jnp.ndarray:
         return qujax.gates._H
 
-    def Rz(p):
+    def Rz(p) -> jnp.ndarray:
         return qujax.gates.Rz(p)
 
-    def CX():
+    def CX() -> jnp.ndarray:
         return qujax.gates._CX
 
     gate_seq = [H, Rz, CX]
@@ -98,7 +98,7 @@ def test_CX_callable():
     assert jnp.all(jnp.abs(test_jit_sv - true_sv) < 1e-5)
 
 
-def test_CX_qrev():
+def test_CX_qrev() -> None:
     param = jnp.array([0.2, 0.8])
 
     circuit = Circuit(2)
@@ -109,7 +109,7 @@ def test_CX_qrev():
     _test_circuit(circuit, param)
 
 
-def test_CZ():
+def test_CZ() -> None:
     param = jnp.array([0.25])
 
     circuit = Circuit(2)
@@ -120,7 +120,7 @@ def test_CZ():
     _test_circuit(circuit, param)
 
 
-def test_CZ_qrev():
+def test_CZ_qrev() -> None:
     param = jnp.array([0.25])
 
     circuit = Circuit(2)
@@ -131,7 +131,7 @@ def test_CZ_qrev():
     _test_circuit(circuit, param)
 
 
-def test_CX_Barrier_Rx():
+def test_CX_Barrier_Rx() -> None:
     param = jnp.array([0, 1 / jnp.pi])
 
     circuit = Circuit(3)
@@ -143,7 +143,7 @@ def test_CX_Barrier_Rx():
     _test_circuit(circuit, param)
 
 
-def test_circuit1():
+def test_circuit1() -> None:
     n_qubits = 4
     depth = 1
 
@@ -169,7 +169,7 @@ def test_circuit1():
     _test_circuit(circuit, param)
 
 
-def test_circuit2():
+def test_circuit2() -> None:
     n_qubits = 3
     depth = 1
 
@@ -201,7 +201,7 @@ def test_circuit2():
     _test_circuit(circuit, param)
 
 
-def test_HH():
+def test_HH() -> None:
     circuit = Circuit(3)
     circuit.H(0)
 
@@ -215,7 +215,7 @@ def test_HH():
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
 
 
-def test_quantum_hamiltonian():
+def test_quantum_hamiltonian() -> None:
     n_qubits = 5
 
     strings_zz = [
