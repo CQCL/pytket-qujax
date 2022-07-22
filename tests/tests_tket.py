@@ -14,7 +14,7 @@
 
 from jax import numpy as jnp, jit, grad, random
 
-from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_symbolic
+from pytket.extensions.qujax import tk_to_qujax
 import qujax
 
 from pytket.circuit import Circuit, Qubit
