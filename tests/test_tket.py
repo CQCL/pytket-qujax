@@ -227,7 +227,6 @@ def test_quantum_hamiltonian() -> None:
     strings_x = [QubitPauliString({Qubit(j): Pauli.X}) for j in range(n_qubits)]
     coefs_x = random.normal(random.PRNGKey(0), shape=(len(strings_x),))
     tket_op_dict_x = dict(zip(strings_x, coefs_x))
-    # tket_op = QubitPauliOperator(tket_op_dict_zz | tket_op_dict_x)
     tket_op = QubitPauliOperator({**tket_op_dict_zz, **tket_op_dict_x})
 
     gate_str_seq_seq = [["Z", "Z"]] * (n_qubits - 1) + [["X"]] * n_qubits
