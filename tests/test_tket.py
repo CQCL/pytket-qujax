@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Union
 from jax import numpy as jnp, jit, grad, random
 import qujax
 
@@ -21,7 +22,7 @@ from pytket.utils import QubitPauliOperator
 from pytket.extensions.qujax import tk_to_qujax
 
 
-def _test_circuit(circuit, param):
+def _test_circuit(circuit: Circuit, param: Union[None, jnp.ndarray]):
     true_sv = circuit.get_statevector()
 
     apply_circuit = tk_to_qujax(circuit)

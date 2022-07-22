@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Sequence
 import pytest
 from sympy import Symbol
 from jax import numpy as jnp, jit, grad, random
@@ -20,7 +21,7 @@ from pytket.circuit import Circuit
 from pytket.extensions.qujax import tk_to_qujax_symbolic
 
 
-def _test_circuit(circuit, symbols):
+def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]):
     params = random.uniform(random.PRNGKey(0), (len(symbols),)) * 2
     param_map = dict(zip(symbols, params))
     symbol_map = dict(zip(symbols, range(len(symbols))))
