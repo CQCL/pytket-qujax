@@ -13,13 +13,12 @@
 # limitations under the License.
 
 from jax import numpy as jnp, jit, grad, random
-
-from pytket.extensions.qujax import tk_to_qujax
 import qujax
 
 from pytket.circuit import Circuit, Qubit
 from pytket.pauli import Pauli, QubitPauliString
 from pytket.utils import QubitPauliOperator
+from pytket.extensions.qujax import tk_to_qujax
 
 
 def _test_circuit(circuit, param):
