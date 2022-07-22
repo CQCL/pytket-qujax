@@ -1,9 +1,9 @@
 API documentation
 ~~~~~~~~~~~~~~~~~
 
-.. automodule:: pytket.extensions.quantinuum
+.. automodule:: pytket.extensions.qujax
     :special-members:
-    :members: QuantinuumBackend
+    :members:
 
-.. automodule:: pytket.extensions.quantinuum.qujax_convert
+.. automodule:: pytket.extensions.qujax.qujax_convert
     :members:

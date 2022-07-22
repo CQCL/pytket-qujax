@@ -12,15 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pytket.circuit import Circuit, OpType  # type: ignore
-from pytket.extensions.qujax import tk_to_qujax
+from pytket.circuit import Circuit  # type: ignore
+from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_symbolic
 
 
 def test_convert() -> None:
     circ = Circuit(4)
     circ.H(0).CX(0, 1)
-    circ.add_gate(OpType.noop, [1])
-    circ.CRz(0.5, 1, 2)
-    circ.add_barrier([2])
-    circ.measure_all()
     tk_to_qujax(circ)
+
+
+def test_convert_symbolic() -> None:
+    circ = Circuit(4)
+    circ.H(0).CX(0, 1)
+    tk_to_qujax_symbolic(circ)
