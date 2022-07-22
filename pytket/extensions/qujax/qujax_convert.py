@@ -18,7 +18,7 @@
 from typing import Tuple, Sequence, Optional
 from jax import numpy as jnp
 from qujax.circuit import CallableOptionalArrayArg, get_params_to_statetensor_func  # type: ignore
-from pytket import Qubit, Circuit
+from pytket import Qubit, Circuit  # type: ignore
 
 
 def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
