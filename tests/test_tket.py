@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Union
-from jax import numpy as jnp, jit, grad, random
-import qujax
+from typing import Union, Any
+from jax import numpy as jnp, jit, grad, random # type: ignore
+import qujax # type: ignore
 
-from pytket.circuit import Circuit, Qubit
-from pytket.pauli import Pauli, QubitPauliString
-from pytket.utils import QubitPauliOperator
+from pytket.circuit import Circuit, Qubit # type: ignore
+from pytket.pauli import Pauli, QubitPauliString # type: ignore
+from pytket.utils import QubitPauliOperator # type: ignore
 from pytket.extensions.qujax import tk_to_qujax
 
 
@@ -53,7 +53,7 @@ def test_H() -> None:
 
 
 def test_CX() -> None:
-    param = jnp.array([0.25])
+    param = jnp.array([0.25]) # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -64,15 +64,15 @@ def test_CX() -> None:
 
 
 def test_CX_callable() -> None:
-    param = jnp.array([0.25])
+    param = jnp.array([0.25]) # type: ignore
 
-    def H() -> jnp.ndarray:
+    def H() -> Any:
         return qujax.gates._H
 
-    def Rz(p) -> jnp.ndarray:
+    def Rz(p: float) -> Any:
         return qujax.gates.Rz(p)
 
-    def CX() -> jnp.ndarray:
+    def CX() -> Any:
         return qujax.gates._CX
 
     gate_seq = [H, Rz, CX]
@@ -99,7 +99,7 @@ def test_CX_callable() -> None:
 
 
 def test_CX_qrev() -> None:
-    param = jnp.array([0.2, 0.8])
+    param = jnp.array([0.2, 0.8]) # type: ignore
 
     circuit = Circuit(2)
     circuit.Rx(param[0], 0)
@@ -110,7 +110,7 @@ def test_CX_qrev() -> None:
 
 
 def test_CZ() -> None:
-    param = jnp.array([0.25])
+    param = jnp.array([0.25]) # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -121,7 +121,7 @@ def test_CZ() -> None:
 
 
 def test_CZ_qrev() -> None:
-    param = jnp.array([0.25])
+    param = jnp.array([0.25]) # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -132,7 +132,7 @@ def test_CZ_qrev() -> None:
 
 
 def test_CX_Barrier_Rx() -> None:
-    param = jnp.array([0, 1 / jnp.pi])
+    param = jnp.array([0, 1 / jnp.pi]) # type: ignore
 
     circuit = Circuit(3)
     circuit.CX(0, 1)
@@ -210,7 +210,7 @@ def test_HH() -> None:
     st1 = apply_circuit(None)
     st2 = apply_circuit(None, st1)
 
-    all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)
+    all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int) # type: ignore
 
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
 
@@ -227,7 +227,8 @@ def test_quantum_hamiltonian() -> None:
     strings_x = [QubitPauliString({Qubit(j): Pauli.X}) for j in range(n_qubits)]
     coefs_x = random.normal(random.PRNGKey(0), shape=(len(strings_x),))
     tket_op_dict_x = dict(zip(strings_x, coefs_x))
-    tket_op = QubitPauliOperator(tket_op_dict_zz | tket_op_dict_x)
+    # tket_op = QubitPauliOperator(tket_op_dict_zz | tket_op_dict_x)
+    tket_op = QubitPauliOperator({**tket_op_dict_zz, **tket_op_dict_x})
 
     gate_str_seq_seq = [["Z", "Z"]] * (n_qubits - 1) + [["X"]] * n_qubits
     qubit_inds_seq = [[i, i + 1] for i in range(n_qubits - 1)] + [
@@ -240,7 +241,7 @@ def test_quantum_hamiltonian() -> None:
     state = random.uniform(random.PRNGKey(0), shape=(2**n_qubits,))
     state /= jnp.linalg.norm(state)
 
-    tket_exp = tket_op.state_expectation(state)
+    tket_exp = tket_op.state_expectation(state)  # type: ignore
     jax_exp = st_to_exp(state.reshape((2,) * n_qubits))
 
     assert jnp.abs(tket_exp - jax_exp) < 1e-5

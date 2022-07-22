@@ -14,7 +14,7 @@
 
 from typing import Sequence
 import pytest
-from sympy import Symbol
+from sympy import Symbol # type: ignore
 from jax import numpy as jnp, jit, grad, random
 
 from pytket.circuit import Circuit
@@ -50,7 +50,7 @@ def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]) -> None:
 
 
 def test_H() -> None:
-    symbols = []
+    symbols: Sequence = []
 
     circuit = Circuit(3)
     circuit.H(0)
@@ -174,7 +174,7 @@ def test_HH() -> None:
 
     st1 = apply_circuit(None)
     st2 = apply_circuit(None, st1)
-    all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)
+    all_zeros_sv = (jnp.arange(st2.size) == 0).astype(int)
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
 
 
