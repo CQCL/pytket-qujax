@@ -18,7 +18,7 @@ on:
 
 jobs:
   qujax-checks:
-    name: Quantinuum - Build and test module
+    name: Qujax - Build and test module
     strategy:
       matrix:
         os: ['ubuntu-20.04', 'macos-11', 'windows-2019']
@@ -83,7 +83,7 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+        password: ${{ secrets.PYPI_PYTKET_QUJAX_API_TOKEN }}
         verbose: true
 
   docs:

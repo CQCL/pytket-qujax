@@ -1,7 +1,7 @@
 Changelog
 ~~~~~~~~~
 
-0.0.1 (July 2022)
+0.1.0 (July 2022)
 -----------------
 
-* first steps
+* add tk_to_qujax and tk_to_qujax_symbolic
