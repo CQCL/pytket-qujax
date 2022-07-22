@@ -87,7 +87,7 @@ def tk_to_qujax_symbolic(
     :type circuit: pytket.Circuit
     :param symbol_map: dict that maps elements of circuit.free_symbols() (sympy)
         to parameter indices.
-    :type symbol_map: dict
+    :type symbol_map: Optional[dict]
     :return: Function which maps parameters
         (and optional statetensor_in) to a statetensor.
     :rtype: CallableOptionalArrayArg
