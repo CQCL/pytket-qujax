@@ -11,7 +11,10 @@ The other pytket extensions can be found [here](https://github.com/CQCL/pytket-e
 with CQC tket, a set of quantum programming tools.
 
 `pytket-qujax` is an extension to `pytket` that allows `pytket` circuits to
-be submitted to qujax.
+be converted to `qujax`.
+
+[qujax](https://github.com/CQCL/qujax) is a pure [JAX](https://github.com/google/jax)
+quantum simulator.
 
 ## Getting started
 
