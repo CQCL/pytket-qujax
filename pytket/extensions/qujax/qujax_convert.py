@@ -65,7 +65,9 @@ def tk_to_qujax(circuit: Circuit) -> CallableOptionalArrayArg:
     )
 
 
-def tk_to_qujax_symbolic(circuit: Circuit, symbol_map: Optional[dict] = None) -> CallableOptionalArrayArg:
+def tk_to_qujax_symbolic(
+    circuit: Circuit, symbol_map: Optional[dict] = None
+) -> CallableOptionalArrayArg:
     """
     Converts a tket circuit with symbolics parameters and a symbolic parameter map
     into a function that maps circuit parameters to a statetensor.
