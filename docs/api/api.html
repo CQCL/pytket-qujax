@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API documentation &mdash; pytket-qujax 0.1.0rc1 documentation</title>
+  <title>API documentation &mdash; pytket-qujax 0.1.0rc3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -48,6 +48,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/index.html">pytket</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://cqcl.github.io/pytket-extensions/api/index.html">pytket extensions</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/qujax">qujax</a></li>
 </ul>
 
         </div>
@@ -81,16 +82,13 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="pytket.extensions.qujax.qujax_convert.tk_to_qujax">
 <span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.qujax_convert.</span></span><span class="sig-name descname"><span class="pre">tk_to_qujax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket.circuit.Circuit" title="(in pytket v1.4)"><span class="pre">pytket.circuit.Circuit</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qujax.circuit.CallableOptionalArrayArg</span></span></span><a class="headerlink" href="#pytket.extensions.qujax.qujax_convert.tk_to_qujax" title="Permalink to this definition"></a></dt>
-<dd><dl class="simple">
-<dt>Converts a tket circuit into a function that maps circuit parameters</dt><dd><p>to a statetensor.</p>
-</dd>
-</dl>
-<p>Assumes all circuit gates can be found in qujax.gates.
+<dd><p>Converts a tket circuit into a function that maps circuit parameters
+to a statetensor. Assumes all circuit gates can be found in qujax.gates.
 Input parameter to created function will be ordered as in circuit.get_commands()
 (pytket automatically reorders some gates, consider using Barriers).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>circuit</strong> (<em>pytket.Circuit</em>) – pytket.Circuit object.</p>
+<dd class="field-odd"><p><strong>circuit</strong> (<em>pytket.Circuit</em>) – Circuit to be converted.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Function which maps parameters (and optional statetensor_in)
@@ -117,7 +115,7 @@ based on e.g. circuit.get_commands()[0].op.params</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>circuit</strong> (<em>pytket.Circuit</em>) – pytket.Circuit object.</p></li>
+<li><p><strong>circuit</strong> (<em>pytket.Circuit</em>) – Circuit to be converted.</p></li>
 <li><p><strong>symbol_map</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>]</em>) – dict that maps elements of circuit.free_symbols() (sympy)
 to parameter indices.</p></li>
 </ul>
