@@ -18,10 +18,10 @@
 from typing import Tuple, Sequence, Optional
 from jax import numpy as jnp
 from qujax.circuit import CallableOptionalArrayArg, get_params_to_statetensor_func  # type: ignore
-import pytket
+from pytket import Qubit, Circuit
 
 
-def _tk_qubits_to_inds(tk_qubits: Sequence[pytket.circuit.Circuit.Qubit]) -> Tuple[int, ...]:
+def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
     """
     Convert Sequence of tket qubits objects to Tuple of integers qubit indices.
 
@@ -34,7 +34,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[pytket.circuit.Circuit.Qubit]) -> Tup
     return tuple(q.index[0] for q in tk_qubits)
 
 
-def tk_to_qujax(circuit: pytket.circuit.Circuit) -> CallableOptionalArrayArg:
+def tk_to_qujax(circuit: Circuit) -> CallableOptionalArrayArg:
     """
     Converts a tket circuit into a function that maps circuit
     parameters to a statetensor.
@@ -69,7 +69,7 @@ def tk_to_qujax(circuit: pytket.circuit.Circuit) -> CallableOptionalArrayArg:
 
 
 def tk_to_qujax_symbolic(
-    circuit: pytket.Circuit, symbol_map: Optional[dict] = None
+    circuit: Circuit, symbol_map: Optional[dict] = None
 ) -> CallableOptionalArrayArg:
     """
     Converts a tket circuit with symbolics parameters and a symbolic parameter map
