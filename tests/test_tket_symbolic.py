@@ -14,7 +14,7 @@
 
 from typing import Sequence
 import pytest
-from sympy import Symbol # type: ignore
+from sympy import Symbol  # type: ignore
 from jax import numpy as jnp, jit, grad, random
 
 from pytket.circuit import Circuit
@@ -59,7 +59,7 @@ def test_H() -> None:
 
 
 def test_CX() -> None:
-    symbols = [Symbol("p0")]
+    symbols = [Symbol("p0")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -70,7 +70,7 @@ def test_CX() -> None:
 
 
 def test_CX_qrev() -> None:
-    symbols = [Symbol("p0"), Symbol("p1")]
+    symbols = [Symbol("p0"), Symbol("p1")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.Rx(symbols[0], 0)
@@ -81,7 +81,7 @@ def test_CX_qrev() -> None:
 
 
 def test_CZ() -> None:
-    symbols = [Symbol("p0")]
+    symbols = [Symbol("p0")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -92,7 +92,7 @@ def test_CZ() -> None:
 
 
 def test_CZ_qrev() -> None:
-    symbols = [Symbol("p0")]
+    symbols = [Symbol("p0")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -103,7 +103,7 @@ def test_CZ_qrev() -> None:
 
 
 def test_CX_Barrier_Rx() -> None:
-    symbols = [Symbol("p0"), Symbol("p1")]
+    symbols = [Symbol("p0"), Symbol("p1")]  # type: ignore
 
     circuit = Circuit(3)
     circuit.CX(0, 1)
@@ -117,7 +117,7 @@ def test_CX_Barrier_Rx() -> None:
 def test_circuit1() -> None:
     n_qubits = 4
     depth = 1
-    symbols = [Symbol(f"p{j}") for j in range(n_qubits * (depth + 1))]
+    symbols = [Symbol(f"p{j}") for j in range(n_qubits * (depth + 1))]  # type: ignore
 
     circuit = Circuit(n_qubits)
     k = 0
@@ -140,7 +140,7 @@ def test_circuit1() -> None:
 def test_circuit2() -> None:
     n_qubits = 3
     depth = 1
-    symbols = [Symbol(f"p{j}") for j in range(2 * n_qubits * (depth + 1))]
+    symbols = [Symbol(f"p{j}") for j in range(2 * n_qubits * (depth + 1))]  # type: ignore
 
     circuit = Circuit(n_qubits)
     k = 0
@@ -179,7 +179,7 @@ def test_HH() -> None:
 
 
 def test_exception_symbol_map() -> None:
-    symbols = [Symbol("p0"), Symbol("p1"), Symbol("bad_bad_symbol")]
+    symbols = [Symbol("p0"), Symbol("p1"), Symbol("bad_bad_symbol")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.Rx(symbols[0], 0)
