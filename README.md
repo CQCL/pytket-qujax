@@ -11,7 +11,7 @@ The other pytket extensions can be found [here](https://github.com/CQCL/pytket-e
 with CQC tket, a set of quantum programming tools.
 
 `pytket-qujax` is an extension to `pytket` that allows `pytket` circuits to
-be executed on Quantinuum's quantum devices.
+be submitted to qujax.
 
 ## Getting started
 
@@ -26,7 +26,7 @@ and methods into the `pytket.extensions` namespace.
 ## Bugs and feature requests
 
 Please file bugs and feature requests on the Github
-[issue tracker](https://github.com/CQCL/pytket-quantinuum/issues).
+[issue tracker](https://github.com/CQCL/pytket-qujax/issues).
 
 ## Development
 
