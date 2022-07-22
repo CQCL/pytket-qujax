@@ -1,4 +1,4 @@
-pytket-quantinuum
+pytket-qujax
 ==================================
 
 .. image:: CQCLogo.png
@@ -14,9 +14,6 @@ and Windows. To install, run:
 ::
 
     pip install pytket-qujax
-
-.. note::   Using the ``QuantinuumBackend`` requires a `Quantinuum <https://www.quantinuum.com/>`_ account.
-            The user will be prompted for their login credentials when making API calls such as calling the ``process_circuits`` method or querying ``backend_info``.
 
 
 .. toctree::
