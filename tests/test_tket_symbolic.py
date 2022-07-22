@@ -14,14 +14,14 @@
 
 from typing import Sequence
 import pytest
-from sympy import Symbol
+from sympy import Symbol  # type: ignore
 from jax import numpy as jnp, jit, grad, random
 
 from pytket.circuit import Circuit
 from pytket.extensions.qujax import tk_to_qujax_symbolic
 
 
-def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]):
+def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]) -> None:
     params = random.uniform(random.PRNGKey(0), (len(symbols),)) * 2
     param_map = dict(zip(symbols, params))
     symbol_map = dict(zip(symbols, range(len(symbols))))
@@ -49,8 +49,8 @@ def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]):
         assert isinstance(grad_cost_jit_func(params), jnp.ndarray)
 
 
-def test_H():
-    symbols = []
+def test_H() -> None:
+    symbols: Sequence = []
 
     circuit = Circuit(3)
     circuit.H(0)
@@ -58,8 +58,8 @@ def test_H():
     _test_circuit(circuit, symbols)
 
 
-def test_CX():
-    symbols = [Symbol("p0")]
+def test_CX() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -69,8 +69,8 @@ def test_CX():
     _test_circuit(circuit, symbols)
 
 
-def test_CX_qrev():
-    symbols = [Symbol("p0"), Symbol("p1")]
+def test_CX_qrev() -> None:
+    symbols = [Symbol("p0"), Symbol("p1")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.Rx(symbols[0], 0)
@@ -80,8 +80,8 @@ def test_CX_qrev():
     _test_circuit(circuit, symbols)
 
 
-def test_CZ():
-    symbols = [Symbol("p0")]
+def test_CZ() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -91,8 +91,8 @@ def test_CZ():
     _test_circuit(circuit, symbols)
 
 
-def test_CZ_qrev():
-    symbols = [Symbol("p0")]
+def test_CZ_qrev() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -102,8 +102,8 @@ def test_CZ_qrev():
     _test_circuit(circuit, symbols)
 
 
-def test_CX_Barrier_Rx():
-    symbols = [Symbol("p0"), Symbol("p1")]
+def test_CX_Barrier_Rx() -> None:
+    symbols = [Symbol("p0"), Symbol("p1")]  # type: ignore
 
     circuit = Circuit(3)
     circuit.CX(0, 1)
@@ -114,10 +114,10 @@ def test_CX_Barrier_Rx():
     _test_circuit(circuit, symbols)
 
 
-def test_circuit1():
+def test_circuit1() -> None:
     n_qubits = 4
     depth = 1
-    symbols = [Symbol(f"p{j}") for j in range(n_qubits * (depth + 1))]
+    symbols = [Symbol(f"p{j}") for j in range(n_qubits * (depth + 1))]  # type: ignore
 
     circuit = Circuit(n_qubits)
     k = 0
@@ -137,10 +137,10 @@ def test_circuit1():
     _test_circuit(circuit, symbols)
 
 
-def test_circuit2():
+def test_circuit2() -> None:
     n_qubits = 3
     depth = 1
-    symbols = [Symbol(f"p{j}") for j in range(2 * n_qubits * (depth + 1))]
+    symbols = [Symbol(f"p{j}") for j in range(2 * n_qubits * (depth + 1))]  # type: ignore
 
     circuit = Circuit(n_qubits)
     k = 0
@@ -166,7 +166,7 @@ def test_circuit2():
     _test_circuit(circuit, symbols)
 
 
-def test_HH():
+def test_HH() -> None:
     circuit = Circuit(3)
     circuit.H(0)
 
@@ -174,12 +174,12 @@ def test_HH():
 
     st1 = apply_circuit(None)
     st2 = apply_circuit(None, st1)
-    all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)
+    all_zeros_sv = (jnp.arange(st2.size) == 0).astype(int)
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
 
 
-def test_exception_symbol_map():
-    symbols = [Symbol("p0"), Symbol("p1"), Symbol("bad_bad_symbol")]
+def test_exception_symbol_map() -> None:
+    symbols = [Symbol("p0"), Symbol("p1"), Symbol("bad_bad_symbol")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.Rx(symbols[0], 0)
