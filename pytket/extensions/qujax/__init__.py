@@ -19,4 +19,5 @@
 from ._metadata import __extension_version__, __extension_name__  # type: ignore
 from .qujax_convert import (
     tk_to_qujax,
+    tk_to_qujax_symbolic,
 )
