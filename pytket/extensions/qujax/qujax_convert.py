@@ -26,7 +26,8 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
     """
     Convert Sequence of tket qubits objects to Tuple of integers qubit indices.
 
-    :param tk_qubits: Sequence of tket qubit object (as stored in pytket.Circuit.qubits).
+    :param tk_qubits: Sequence of tket qubit object
+        (as stored in pytket.Circuit.qubits).
     :type param: Sequence[Qubit]
     :return: Tuple of qubit indices.
     :rtype: tuple
@@ -36,14 +37,16 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
 
 def tk_to_qujax(circuit: Circuit) -> CallableOptionalArrayArg:
     """
-    Converts a tket circuit into a function that maps circuit parameters to a statetensor.
+    Converts a tket circuit into a function that maps circuit parameters
+        to a statetensor.
     Assumes all circuit gates can be found in qujax.gates.
     Input parameter to created function will be ordered as in circuit.get_commands()
     (pytket automatically reorders some gates, consider using Barriers).
 
     :param circuit: pytket.Circuit object.
     :type circuit: pytket.Circuit
-    :return: Function which maps parameters (and optional statetensor_in) to a statetensor.
+    :return: Function which maps parameters (and optional statetensor_in)
+        to a statetensor.
     :rtype: CallableOptionalArrayArg
     """
     gate_name_seq = []
@@ -72,18 +75,21 @@ def tk_to_qujax_symbolic(
     Converts a tket circuit with symbolics parameters and a symbolic parameter map
     into a function that maps circuit parameters to a statetensor.
     Assumes all circuit gates can be found in qujax.gates.
-    Note that the behaviour of tk_to_qujax_symbolic(circuit) is different to tk_to_qujax(circuit),
-    tk_to_qujax_symbolic will look for parameters in circuit.free_symbols() and if there are none
-    it will assume that none of the gates require parameters.
+    Note that the behaviour of tk_to_qujax_symbolic(circuit)
+    is different to tk_to_qujax(circuit),
+    tk_to_qujax_symbolic will look for parameters in circuit.free_symbols()
+    and if there are none it will assume that none of the gates require parameters.
     On the other hand,tk_to_qujax will work out which gates are parameterised
     based on e.g. circuit.get_commands()[0].op.params
 
 
     :param circuit: pytket.Circuit object.
     :type circuit: pytket.Circuit
-    :param symbol_map: dict that maps elements of circuit.free_symbols() (sympy) to parameter indices.
+    :param symbol_map: dict that maps elements of circuit.free_symbols() (sympy)
+        to parameter indices.
     :type symbol_map: dict
-    :return: Function which maps parameters (and optional statetensor_in) to a statetensor.
+    :return: Function which maps parameters
+        (and optional statetensor_in) to a statetensor.
     :rtype: CallableOptionalArrayArg
     """
     if symbol_map is None:
