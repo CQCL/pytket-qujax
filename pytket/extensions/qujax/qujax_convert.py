@@ -69,7 +69,7 @@ def tk_to_qujax(circuit: pytket.Circuit) -> CallableOptionalArrayArg:  # type: i
 
 
 def tk_to_qujax_symbolic(  # type: ignore
-    circuit: pytket.Circuit, symbol_map: dict = None
+    circuit: pytket.Circuit, symbol_map: dict = None  # type: ignore
 ) -> CallableOptionalArrayArg:
     """
     Converts a tket circuit with symbolics parameters and a symbolic parameter map
@@ -114,7 +114,7 @@ def tk_to_qujax_symbolic(  # type: ignore
         gate_name_seq.append(gate_name)
         qubit_inds_seq.append(_tk_qubits_to_inds(c.qubits))
         param_inds_seq.append(  # type: ignore
-            jnp.array([symbol_map[symbol] for symbol in c.op.free_symbols()])
+            jnp.array([symbol_map[symbol] for symbol in c.op.free_symbols()])  # type: ignore
         )
 
     return get_params_to_statetensor_func(
