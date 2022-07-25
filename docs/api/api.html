@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API documentation &mdash; pytket-qujax 0.1.0 documentation</title>
+  <title>API documentation &mdash; pytket-qujax 0.1.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -92,10 +92,12 @@ Input parameter to created function will be ordered as in circuit.get_commands()
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Function which maps parameters (and optional statetensor_in)
-to a statetensor.</p>
+to a statetensor.
+If the circuit has no parameters, the resulting function
+will only take the optional statetensor_in as an argument.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CallableOptionalArrayArg</p>
+<dd class="field-odd"><p>UnionCallableOptionalArray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -122,10 +124,12 @@ to parameter indices.</p></li>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Function which maps parameters
-(and optional statetensor_in) to a statetensor.</p>
+(and optional statetensor_in) to a statetensor.
+If the circuit has no parameters, the resulting function
+will only take the optional statetensor_in as an argument.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CallableOptionalArrayArg</p>
+<dd class="field-odd"><p>UnionCallableOptionalArray</p>
 </dd>
 </dl>
 </dd></dl>
