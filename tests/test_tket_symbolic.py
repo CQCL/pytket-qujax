@@ -31,12 +31,16 @@ def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]):
     true_sv = circuit_inst.get_statevector()
 
     apply_circuit = tk_to_qujax_symbolic(circuit, symbol_map)
-
-    test_sv = apply_circuit(params).flatten()
-    assert jnp.all(jnp.abs(test_sv - true_sv) < 1e-5)
-
     jit_apply_circuit = jit(apply_circuit)
-    test_jit_sv = jit_apply_circuit(params).flatten()
+
+    if params.size == 0:
+        test_sv = apply_circuit().flatten()
+        test_jit_sv = jit_apply_circuit().flatten()
+    else:
+        test_sv = apply_circuit(params).flatten()
+        test_jit_sv = jit_apply_circuit(params).flatten()
+
+    assert jnp.all(jnp.abs(test_sv - true_sv) < 1e-5)
     assert jnp.all(jnp.abs(test_jit_sv - true_sv) < 1e-5)
 
     if len(params):
@@ -172,8 +176,8 @@ def test_HH():
 
     apply_circuit = tk_to_qujax_symbolic(circuit)
 
-    st1 = apply_circuit(None)
-    st2 = apply_circuit(None, st1)
+    st1 = apply_circuit()
+    st2 = apply_circuit(st1)
     all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
 
