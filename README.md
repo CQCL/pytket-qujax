@@ -4,6 +4,9 @@ This repository contains the pytket-qujax extension, using CQC's
 [pytket](https://cqcl.github.io/tket/pytket/api/index.html) quantum SDK.
 The other pytket extensions can be found [here](https://github.com/CQCL/pytket-extensions)
 
+# Documentation
+
+You can find the API documentation of pytket-qujax [here](https://cqcl.github.io/pytket-qujax/api/index.html)
 
 # pytket-qujax
 
