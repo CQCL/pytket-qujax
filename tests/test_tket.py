@@ -26,13 +26,16 @@ def _test_circuit(circuit: Circuit, param: Union[None, jnp.ndarray]) -> None:
     true_sv = circuit.get_statevector()
 
     apply_circuit = tk_to_qujax(circuit)
-
-    test_st = apply_circuit(param)
-    test_sv = test_st.flatten()
-    assert jnp.all(jnp.abs(test_sv - true_sv) < 1e-5)
-
     jit_apply_circuit = jit(apply_circuit)
-    test_jit_sv = jit_apply_circuit(param).flatten()
+
+    if param is None:
+        test_sv = apply_circuit().flatten()
+        test_jit_sv = jit_apply_circuit().flatten()
+    else:
+        test_sv = apply_circuit(param).flatten()
+        test_jit_sv = jit_apply_circuit(param).flatten()
+
+    assert jnp.all(jnp.abs(test_sv - true_sv) < 1e-5)
     assert jnp.all(jnp.abs(test_jit_sv - true_sv) < 1e-5)
 
     if param is not None:
@@ -207,8 +210,8 @@ def test_HH() -> None:
 
     apply_circuit = tk_to_qujax(circuit)
 
-    st1 = apply_circuit(None)
-    st2 = apply_circuit(None, st1)
+    st1 = apply_circuit()
+    st2 = apply_circuit(st1)
 
     all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)  # type: ignore
 

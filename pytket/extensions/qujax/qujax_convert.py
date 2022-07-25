@@ -18,7 +18,7 @@ Methods to allow conversion between qujax and pytket
 
 from typing import Tuple, Sequence, Optional
 from jax import numpy as jnp
-from qujax.circuit import CallableOptionalArrayArg, get_params_to_statetensor_func  # type: ignore
+from qujax import UnionCallableOptionalArray, get_params_to_statetensor_func  # type: ignore
 from pytket import Qubit, Circuit  # type: ignore
 
 
@@ -35,7 +35,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
     return tuple(q.index[0] for q in tk_qubits)
 
 
-def tk_to_qujax(circuit: Circuit) -> CallableOptionalArrayArg:
+def tk_to_qujax(circuit: Circuit) -> UnionCallableOptionalArray:
     """
     Converts a tket circuit into a function that maps circuit parameters
     to a statetensor. Assumes all circuit gates can be found in qujax.gates.
@@ -69,7 +69,7 @@ def tk_to_qujax(circuit: Circuit) -> CallableOptionalArrayArg:
 
 def tk_to_qujax_symbolic(
     circuit: Circuit, symbol_map: Optional[dict] = None
-) -> CallableOptionalArrayArg:
+) -> UnionCallableOptionalArray:
     """
     Converts a tket circuit with symbolics parameters and a symbolic parameter map
     into a function that maps circuit parameters to a statetensor.
