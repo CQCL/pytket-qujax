@@ -5,3 +5,4 @@ Changelog
 -----------------
 
 * add tk_to_qujax and tk_to_qujax_symbolic
+* update to qujax version 0.1.3
