@@ -26,13 +26,16 @@ def _test_circuit(circuit: Circuit, param: Union[None, jnp.ndarray]) -> None:
     true_sv = circuit.get_statevector()
 
     apply_circuit = tk_to_qujax(circuit)
-
-    test_st = apply_circuit(param)
-    test_sv = test_st.flatten()
-    assert jnp.all(jnp.abs(test_sv - true_sv) < 1e-5)
-
     jit_apply_circuit = jit(apply_circuit)
-    test_jit_sv = jit_apply_circuit(param).flatten()
+
+    if param is None:
+        test_sv = apply_circuit().flatten()
+        test_jit_sv = jit_apply_circuit().flatten()
+    else:
+        test_sv = apply_circuit(param).flatten()
+        test_jit_sv = jit_apply_circuit(param).flatten()
+
+    assert jnp.all(jnp.abs(test_sv - true_sv) < 1e-5)
     assert jnp.all(jnp.abs(test_jit_sv - true_sv) < 1e-5)
 
     if param is not None:
@@ -207,8 +210,8 @@ def test_HH() -> None:
 
     apply_circuit = tk_to_qujax(circuit)
 
-    st1 = apply_circuit(None)
-    st2 = apply_circuit(None, st1)
+    st1 = apply_circuit()
+    st2 = apply_circuit(st1)
 
     all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)  # type: ignore
 
@@ -223,10 +226,10 @@ def test_quantum_hamiltonian() -> None:
         for j in range(n_qubits - 1)
     ]
     coefs_zz = random.normal(random.PRNGKey(0), shape=(len(strings_zz),))
-    tket_op_dict_zz = dict(zip(strings_zz, coefs_zz))
+    tket_op_dict_zz = dict(zip(strings_zz, coefs_zz.tolist()))
     strings_x = [QubitPauliString({Qubit(j): Pauli.X}) for j in range(n_qubits)]
     coefs_x = random.normal(random.PRNGKey(0), shape=(len(strings_x),))
-    tket_op_dict_x = dict(zip(strings_x, coefs_x))
+    tket_op_dict_x = dict(zip(strings_x, coefs_x.tolist()))
     tket_op = QubitPauliOperator({**tket_op_dict_zz, **tket_op_dict_x})
 
     gate_str_seq_seq = [["Z", "Z"]] * (n_qubits - 1) + [["X"]] * n_qubits
