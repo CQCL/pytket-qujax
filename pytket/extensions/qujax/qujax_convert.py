@@ -28,7 +28,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
 
     :param tk_qubits: Sequence of tket qubit object
         (as stored in pytket.Circuit.qubits).
-    :type param: Sequence[Qubit]
+    :type tk_qubits: Sequence[Qubit]
     :return: Tuple of qubit indices.
     :rtype: tuple
     """
@@ -46,7 +46,9 @@ def tk_to_qujax(circuit: Circuit) -> UnionCallableOptionalArray:
     :type circuit: pytket.Circuit
     :return: Function which maps parameters (and optional statetensor_in)
         to a statetensor.
-    :rtype: CallableOptionalArrayArg
+        If the circuit has no parameters, the resulting function
+        will only take the optional statetensor_in as an argument.
+    :rtype: UnionCallableOptionalArray
     """
     gate_name_seq = []
     qubit_inds_seq = []
@@ -88,7 +90,9 @@ def tk_to_qujax_symbolic(
     :type symbol_map: Optional[dict]
     :return: Function which maps parameters
         (and optional statetensor_in) to a statetensor.
-    :rtype: CallableOptionalArrayArg
+        If the circuit has no parameters, the resulting function
+        will only take the optional statetensor_in as an argument.
+    :rtype: UnionCallableOptionalArray
     """
     if symbol_map is None:
         free_symbols = circuit.free_symbols()
