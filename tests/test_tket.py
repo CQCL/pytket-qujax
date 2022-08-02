@@ -70,13 +70,13 @@ def test_CX_callable() -> None:
     param = jnp.array([0.25])  # type: ignore
 
     def H() -> Any:
-        return qujax.gates._H
+        return qujax.gates.H
 
     def Rz(p: float) -> Any:
         return qujax.gates.Rz(p)
 
     def CX() -> Any:
-        return qujax.gates._CX
+        return qujax.gates.CX
 
     gate_seq = [H, Rz, CX]
     qubit_inds_seq = [[0], [0], [0, 1]]
