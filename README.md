@@ -10,7 +10,7 @@ You can find the API documentation of pytket-qujax [here](https://cqcl.github.io
 
 # pytket-qujax
 
-[Pytket](https://cqcl.github.io/pytket) is a Python module for interfacing
+[Pytket](https://cqcl.github.io/tket/pytket/api/index.html) is a Python module for interfacing
 with CQC tket, a set of quantum programming tools.
 
 `pytket-qujax` is an extension to `pytket` that allows `pytket` circuits to
