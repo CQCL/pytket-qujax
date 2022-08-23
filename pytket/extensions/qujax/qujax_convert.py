@@ -39,8 +39,8 @@ def tk_to_qujax(circuit: Circuit) -> UnionCallableOptionalArray:
     """
     Converts a tket circuit into a function that maps circuit parameters
     to a statetensor. Assumes all circuit gates can be found in qujax.gates.
-    Input parameter to created function will be ordered as in circuit.get_commands()
-    (pytket automatically reorders some gates, consider using Barriers).
+    Parameter argument of created function will be ordered as in circuit.get_commands()
+    - pytket automatically reorders some gates, consider using Barriers.
 
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit
@@ -48,7 +48,9 @@ def tk_to_qujax(circuit: Circuit) -> UnionCallableOptionalArray:
         to a statetensor.
         If the circuit has no parameters, the resulting function
         will only take the optional statetensor_in as an argument.
-    :rtype: UnionCallableOptionalArray
+    :rtype: Callable[[jnp.ndarray, jnp.ndarray = None], jnp.ndarray]
+        or Callable[[jnp.ndarray = None], jnp.ndarray]
+        if no parameters found in circuit
     """
     gate_name_seq = []
     qubit_inds_seq = []
@@ -80,7 +82,7 @@ def tk_to_qujax_symbolic(
     is different to tk_to_qujax(circuit),
     tk_to_qujax_symbolic will look for parameters in circuit.free_symbols()
     and if there are none it will assume that none of the gates require parameters.
-    On the other hand,tk_to_qujax will work out which gates are parameterised
+    On the other hand, tk_to_qujax will work out which gates are parameterised
     based on e.g. circuit.get_commands()[0].op.params
 
     :param circuit: Circuit to be converted.
@@ -92,7 +94,9 @@ def tk_to_qujax_symbolic(
         (and optional statetensor_in) to a statetensor.
         If the circuit has no parameters, the resulting function
         will only take the optional statetensor_in as an argument.
-    :rtype: UnionCallableOptionalArray
+    :rtype: Callable[[jnp.ndarray, jnp.ndarray = None], jnp.ndarray]
+        or Callable[[jnp.ndarray = None], jnp.ndarray]
+        if no parameters found in circuit
     """
     if symbol_map is None:
         free_symbols = circuit.free_symbols()
