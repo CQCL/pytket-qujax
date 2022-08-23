@@ -1,6 +1,11 @@
 Changelog
 ~~~~~~~~~
 
+0.3.0 (August 2022)
+-------------------
+
+* Updated qujax version requirement to 0.2.4.
+
 0.2.0 (August 2022)
 -------------------
 
