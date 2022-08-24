@@ -16,7 +16,7 @@
 Methods to allow conversion between qujax and pytket
 """
 
-from typing import Tuple, Sequence, Optional, List, Union, Callable
+from typing import Tuple, Sequence, Optional, List
 
 import qujax
 from jax import numpy as jnp
