@@ -10,3 +10,4 @@ obj
 docs/extensions
 .ipynb_checkpoints
 .idea
+*_metadata.py
