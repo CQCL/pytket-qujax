@@ -207,7 +207,7 @@ def print_circuit(
     :rtype: List[str] each element represents a qubit
     """
     g, q, p, nq = tk_to_qujax_args(circuit)
-    return qujax.print_circuit(   # type: ignore
+    return qujax.print_circuit(  # type: ignore
         g, q, p, nq, qubit_min, qubit_max, gate_ind_min, gate_ind_max, sep_length
     )
 
