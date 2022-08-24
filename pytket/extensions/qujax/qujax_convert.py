@@ -16,7 +16,7 @@
 Methods to allow conversion between qujax and pytket
 """
 
-from typing import Tuple, Sequence, Optional, List, Union, Literal
+from typing import Tuple, Sequence, Optional, List
 from enum import Enum
 
 import qujax  # type: ignore
@@ -181,18 +181,14 @@ def tk_to_qujax_symbolic(
     )
 
 
-class SpecialVals(Enum):
-    inf: jnp.inf
-
-
 def print_circuit(
     circuit: Circuit,
     qubit_min: int = 0,
-    qubit_max: Union[int, Literal[SpecialVals.inf]] = jnp.inf,
+    qubit_max: int = jnp.inf,  # type: ignore
     gate_ind_min: int = 0,
-    gate_ind_max: Union[int, Literal[SpecialVals.inf]] = jnp.inf,
+    gate_ind_max: int = jnp.inf,  # type: ignore
     sep_length: int = 1,
-) -> List[str]:
+) -> List[str]:   # type: ignore
     """
     Returns and prints basic string representation of circuit.
 
@@ -221,11 +217,11 @@ def print_circuit_symbolic(
     circuit: Circuit,
     symbol_map: Optional[dict] = None,
     qubit_min: int = 0,
-    qubit_max: Union[int, Literal[SpecialVals.inf]] = jnp.inf,
+    qubit_max: int = jnp.inf,  # type: ignore
     gate_ind_min: int = 0,
-    gate_ind_max: Union[int, Literal[SpecialVals.inf]] = jnp.inf,
+    gate_ind_max: int = jnp.inf,  # type: ignore
     sep_length: int = 1,
-) -> List[str]:
+) -> List[str]:   # type: ignore
     """
     Returns and prints basic string representation of circuit
     with symbolic parameters.
