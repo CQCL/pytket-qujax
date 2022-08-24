@@ -187,7 +187,7 @@ def print_circuit(
     gate_ind_min: int = 0,
     gate_ind_max: int = jnp.inf,  # type: ignore
     sep_length: int = 1,
-) -> List[str]:  # type: ignore
+) -> List[str]:
     """
     Returns and prints basic string representation of circuit.
 
@@ -209,7 +209,7 @@ def print_circuit(
     g, q, p, nq = tk_to_qujax_args(circuit)
     return qujax.print_circuit(
         g, q, p, nq, qubit_min, qubit_max, gate_ind_min, gate_ind_max, sep_length
-    )
+    )  # type: ignore
 
 
 def print_circuit_symbolic(
@@ -220,7 +220,7 @@ def print_circuit_symbolic(
     gate_ind_min: int = 0,
     gate_ind_max: int = jnp.inf,  # type: ignore
     sep_length: int = 1,
-) -> List[str]:  # type: ignore
+) -> List[str]:
     """
     Returns and prints basic string representation of circuit
     with symbolic parameters.
@@ -246,7 +246,7 @@ def print_circuit_symbolic(
     g, q, p, nq = tk_to_qujax_args_symbolic(circuit, symbol_map)
     return qujax.print_circuit(
         g, q, p, nq, qubit_min, qubit_max, gate_ind_min, gate_ind_max, sep_length
-    )
+    )  # type: ignore
 
 
 def qujax_to_tk(
