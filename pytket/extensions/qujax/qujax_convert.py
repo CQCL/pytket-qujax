@@ -16,7 +16,8 @@
 Methods to allow conversion between qujax and pytket
 """
 
-from typing import Tuple, Sequence, Optional, List, Union
+from typing import Tuple, Sequence, Optional, List, Union, Literal
+from enum import Enum
 
 import qujax  # type: ignore
 from jax import numpy as jnp
@@ -37,7 +38,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
 
 
 def tk_to_qujax_args(
-        circuit: Circuit,
+    circuit: Circuit,
 ) -> Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]:
     """
     Converts a tket circuit into a tuple of arguments to be sent to qujax.
@@ -94,7 +95,7 @@ def tk_to_qujax(circuit: Circuit) -> qujax.UnionCallableOptionalArray:
 
 
 def tk_to_qujax_args_symbolic(
-        circuit: Circuit, symbol_map: Optional[dict] = None
+    circuit: Circuit, symbol_map: Optional[dict] = None
 ) -> Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]:
     """
     Converts a tket circuit with symbolics parameters and a symbolic parameter map
@@ -126,7 +127,7 @@ def tk_to_qujax_args_symbolic(
         symbol_map = dict(zip(free_symbols, range(n_symbols)))
     else:
         assert (
-                set(symbol_map.keys()) == circuit.free_symbols()
+            set(symbol_map.keys()) == circuit.free_symbols()
         ), "Circuit keys do not much symbol_map"
         assert set(symbol_map.values()) == set(
             range(len(circuit.free_symbols()))
@@ -149,7 +150,7 @@ def tk_to_qujax_args_symbolic(
 
 
 def tk_to_qujax_symbolic(
-        circuit: Circuit, symbol_map: Optional[dict] = None
+    circuit: Circuit, symbol_map: Optional[dict] = None
 ) -> qujax.UnionCallableOptionalArray:
     """
     Converts a tket circuit with symbolics parameters and a symbolic parameter map
@@ -180,13 +181,17 @@ def tk_to_qujax_symbolic(
     )
 
 
+class SpecialVals(Enum):
+    inf: jnp.inf
+
+
 def print_circuit(
-        circuit: Circuit,
-        qubit_min: int = 0,
-        qubit_max: Union[int, jnp.inf] = jnp.inf,
-        gate_ind_min: int = 0,
-        gate_ind_max: Union[int, jnp.inf] = jnp.inf,
-        sep_length: int = 1,
+    circuit: Circuit,
+    qubit_min: int = 0,
+    qubit_max: Union[int, Literal[SpecialVals.inf]] = jnp.inf,
+    gate_ind_min: int = 0,
+    gate_ind_max: Union[int, Literal[SpecialVals.inf]] = jnp.inf,
+    sep_length: int = 1,
 ) -> List[str]:
     """
     Returns and prints basic string representation of circuit.
@@ -213,14 +218,14 @@ def print_circuit(
 
 
 def print_circuit_symbolic(
-        circuit: Circuit,
-        symbol_map: Optional[dict] = None,
-        qubit_min: int = 0,
-        qubit_max: Union[int, jnp.inf] = jnp.inf,
-        gate_ind_min: int = 0,
-        gate_ind_max: Union[int, jnp.inf] = jnp.inf,
-        sep_length: int = 1,
-) -> List[str]:  # type: ignore
+    circuit: Circuit,
+    symbol_map: Optional[dict] = None,
+    qubit_min: int = 0,
+    qubit_max: Union[int, Literal[SpecialVals.inf]] = jnp.inf,
+    gate_ind_min: int = 0,
+    gate_ind_max: Union[int, Literal[SpecialVals.inf]] = jnp.inf,
+    sep_length: int = 1,
+) -> List[str]:
     """
     Returns and prints basic string representation of circuit
     with symbolic parameters.
@@ -250,10 +255,10 @@ def print_circuit_symbolic(
 
 
 def qujax_to_tk(
-        gate_seq: Sequence[str],
-        qubit_inds_seq: Sequence[Sequence[int]],
-        param_inds_seq: Sequence[Sequence[int]],
-        n_qubits: Optional[int] = None,
+    gate_seq: Sequence[str],
+    qubit_inds_seq: Sequence[Sequence[int]],
+    param_inds_seq: Sequence[Sequence[int]],
+    n_qubits: Optional[int] = None,
 ) -> Circuit:
     """
     Convert qujax args into pytket Circuit.
