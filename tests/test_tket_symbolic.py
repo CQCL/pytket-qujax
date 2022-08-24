@@ -18,10 +18,16 @@ from sympy import Symbol  # type: ignore
 from jax import numpy as jnp, jit, grad, random
 
 from pytket.circuit import Circuit
-from pytket.extensions.qujax import tk_to_qujax_symbolic
+from pytket.extensions.qujax import (
+    tk_to_qujax_symbolic,
+    tk_to_qujax_args_symbolic,
+    qujax_to_tk,
+)
 
 
-def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]) -> None:
+def _test_circuit(
+    circuit: Circuit, symbols: Sequence[Symbol], test_two_way=False
+) -> None:
     params = random.uniform(random.PRNGKey(0), (len(symbols),)) * 2
     param_map = dict(zip(symbols, params))
     symbol_map = dict(zip(symbols, range(len(symbols))))
@@ -52,6 +58,20 @@ def _test_circuit(circuit: Circuit, symbols: Sequence[Symbol]) -> None:
         grad_cost_jit_func = grad(cost_jit_func)
         assert isinstance(grad_cost_jit_func(params), jnp.ndarray)
 
+    if test_two_way:
+        circuit_commands = [
+            com for com in circuit.get_commands() if str(com.op) != "Barrier"
+        ]
+        circuit_2 = qujax_to_tk(*tk_to_qujax_args_symbolic(circuit, symbol_map))
+        assert all(
+            g.op.type == g2.op.type
+            for g, g2 in zip(circuit_commands, circuit_2.get_commands())
+        )
+        assert all(
+            g.qubits == g2.qubits
+            for g, g2 in zip(circuit_commands, circuit_2.get_commands())
+        )
+
 
 def test_H() -> None:
     symbols: Sequence = []
@@ -59,7 +79,7 @@ def test_H() -> None:
     circuit = Circuit(3)
     circuit.H(0)
 
-    _test_circuit(circuit, symbols)
+    _test_circuit(circuit, symbols, True)
 
 
 def test_CX() -> None:
@@ -70,7 +90,7 @@ def test_CX() -> None:
     circuit.Rz(symbols[0], 0)
     circuit.CX(0, 1)
 
-    _test_circuit(circuit, symbols)
+    _test_circuit(circuit, symbols, True)
 
 
 def test_CX_qrev() -> None:
@@ -81,7 +101,7 @@ def test_CX_qrev() -> None:
     circuit.Rx(symbols[1], 1)
     circuit.CX(1, 0)
 
-    _test_circuit(circuit, symbols)
+    _test_circuit(circuit, symbols, True)
 
 
 def test_CZ() -> None:
@@ -92,7 +112,7 @@ def test_CZ() -> None:
     circuit.Rz(symbols[0], 0)
     circuit.CZ(0, 1)
 
-    _test_circuit(circuit, symbols)
+    _test_circuit(circuit, symbols, True)
 
 
 def test_CZ_qrev() -> None:
@@ -103,7 +123,7 @@ def test_CZ_qrev() -> None:
     circuit.Rz(symbols[0], 0)
     circuit.CZ(1, 0)
 
-    _test_circuit(circuit, symbols)
+    _test_circuit(circuit, symbols, True)
 
 
 def test_CX_Barrier_Rx() -> None:
