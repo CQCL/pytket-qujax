@@ -188,7 +188,7 @@ def print_circuit(
     gate_ind_min: int = 0,
     gate_ind_max: int = jnp.inf,  # type: ignore
     sep_length: int = 1,
-) -> List[str]:   # type: ignore
+) -> List[str]:  # type: ignore
     """
     Returns and prints basic string representation of circuit.
 
@@ -221,7 +221,7 @@ def print_circuit_symbolic(
     gate_ind_min: int = 0,
     gate_ind_max: int = jnp.inf,  # type: ignore
     sep_length: int = 1,
-) -> List[str]:   # type: ignore
+) -> List[str]:  # type: ignore
     """
     Returns and prints basic string representation of circuit
     with symbolic parameters.
