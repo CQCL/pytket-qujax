@@ -17,7 +17,6 @@ from jax import numpy as jnp, jit, grad, random  # type: ignore
 import qujax  # type: ignore
 
 from pytket.circuit import Circuit, Qubit  # type: ignore
-from pytket.passes import RemoveBarriers  # type: ignore
 from pytket.pauli import Pauli, QubitPauliString  # type: ignore
 from pytket.utils import QubitPauliOperator  # type: ignore
 from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_args, qujax_to_tk
