@@ -17,7 +17,6 @@ Methods to allow conversion between qujax and pytket
 """
 
 from typing import Tuple, Sequence, Optional, List
-from enum import Enum
 
 import qujax  # type: ignore
 from jax import numpy as jnp
