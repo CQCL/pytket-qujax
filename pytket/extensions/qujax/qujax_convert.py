@@ -207,9 +207,9 @@ def print_circuit(
     :rtype: List[str] each element represents a qubit
     """
     g, q, p, nq = tk_to_qujax_args(circuit)
-    return qujax.print_circuit(
+    return qujax.print_circuit(   # type: ignore
         g, q, p, nq, qubit_min, qubit_max, gate_ind_min, gate_ind_max, sep_length
-    )  # type: ignore
+    )
 
 
 def print_circuit_symbolic(
@@ -244,9 +244,9 @@ def print_circuit_symbolic(
     :rtype: List[str] each element represents a qubit
     """
     g, q, p, nq = tk_to_qujax_args_symbolic(circuit, symbol_map)
-    return qujax.print_circuit(
+    return qujax.print_circuit(  # type: ignore
         g, q, p, nq, qubit_min, qubit_max, gate_ind_min, gate_ind_max, sep_length
-    )  # type: ignore
+    )
 
 
 def qujax_to_tk(
