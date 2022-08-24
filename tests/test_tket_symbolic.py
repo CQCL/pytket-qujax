@@ -26,7 +26,7 @@ from pytket.extensions.qujax import (
 
 
 def _test_circuit(
-    circuit: Circuit, symbols: Sequence[Symbol], test_two_way=False
+    circuit: Circuit, symbols: Sequence[Symbol], test_two_way: bool = False
 ) -> None:
     params = random.uniform(random.PRNGKey(0), (len(symbols),)) * 2
     param_map = dict(zip(symbols, params))

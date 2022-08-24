@@ -23,7 +23,7 @@ from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_args, qujax_to_tk
 
 
 def _test_circuit(
-    circuit: Circuit, param: Union[None, jnp.ndarray], test_two_way=False
+    circuit: Circuit, param: Union[None, jnp.ndarray], test_two_way: bool = False
 ) -> None:
     true_sv = circuit.get_statevector()
 
