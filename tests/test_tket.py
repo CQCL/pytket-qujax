@@ -19,10 +19,12 @@ import qujax  # type: ignore
 from pytket.circuit import Circuit, Qubit  # type: ignore
 from pytket.pauli import Pauli, QubitPauliString  # type: ignore
 from pytket.utils import QubitPauliOperator  # type: ignore
-from pytket.extensions.qujax import tk_to_qujax
+from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_args, qujax_to_tk
 
 
-def _test_circuit(circuit: Circuit, param: Union[None, jnp.ndarray]) -> None:
+def _test_circuit(
+    circuit: Circuit, param: Union[None, jnp.ndarray], test_two_way: bool = False
+) -> None:
     true_sv = circuit.get_statevector()
 
     apply_circuit = tk_to_qujax(circuit)
@@ -47,12 +49,26 @@ def _test_circuit(circuit: Circuit, param: Union[None, jnp.ndarray]) -> None:
         grad_cost_jit_func = grad(cost_jit_func)
         assert isinstance(grad_cost_jit_func(param), jnp.ndarray)
 
+    if test_two_way:
+        circuit_commands = [
+            com for com in circuit.get_commands() if str(com.op) != "Barrier"
+        ]
+        circuit_2 = qujax_to_tk(*tk_to_qujax_args(circuit))
+        assert all(
+            g.op.type == g2.op.type
+            for g, g2 in zip(circuit_commands, circuit_2.get_commands())
+        )
+        assert all(
+            g.qubits == g2.qubits
+            for g, g2 in zip(circuit_commands, circuit_2.get_commands())
+        )
+
 
 def test_H() -> None:
     circuit = Circuit(3)
     circuit.H(0)
 
-    _test_circuit(circuit, None)
+    _test_circuit(circuit, None, True)
 
 
 def test_CX() -> None:
@@ -63,7 +79,7 @@ def test_CX() -> None:
     circuit.Rz(param[0], 0)
     circuit.CX(0, 1)
 
-    _test_circuit(circuit, param)
+    _test_circuit(circuit, param, True)
 
 
 def test_CX_callable() -> None:
@@ -109,7 +125,7 @@ def test_CX_qrev() -> None:
     circuit.Rx(param[1], 1)
     circuit.CX(1, 0)
 
-    _test_circuit(circuit, param)
+    _test_circuit(circuit, param, True)
 
 
 def test_CZ() -> None:
@@ -120,7 +136,7 @@ def test_CZ() -> None:
     circuit.Rz(param[0], 0)
     circuit.CZ(0, 1)
 
-    _test_circuit(circuit, param)
+    _test_circuit(circuit, param, True)
 
 
 def test_CZ_qrev() -> None:
@@ -131,7 +147,7 @@ def test_CZ_qrev() -> None:
     circuit.Rz(param[0], 0)
     circuit.CZ(1, 0)
 
-    _test_circuit(circuit, param)
+    _test_circuit(circuit, param, True)
 
 
 def test_CX_Barrier_Rx() -> None:

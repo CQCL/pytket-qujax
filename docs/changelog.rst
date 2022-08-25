@@ -1,6 +1,13 @@
 Changelog
 ~~~~~~~~~
 
+0.4.0 (August 2022)
+-------------------
+
+* Add tk_to_qujax_args, tk_to_qujax_args_symbolic
+* Add print_circuit, print_circuit_symbolic
+* Updated qujax version requirement to 0.2.5.
+
 0.3.0 (August 2022)
 -------------------
 
