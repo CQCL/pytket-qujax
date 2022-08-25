@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API documentation &mdash; pytket-qujax 0.3.0 documentation</title>
+  <title>API documentation &mdash; pytket-qujax 0.4.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -30,7 +30,7 @@
             <a href="index.html" class="icon icon-home"> pytket-qujax
           </a>
               <div class="version">
-                0.3.0
+                0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -80,9 +80,92 @@
 <p>Conversion from pytket to qujax circuits</p>
 <span class="target" id="module-pytket.extensions.qujax"></span><p>Methods to allow conversion between qujax and pytket</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="pytket.extensions.qujax.print_circuit">
+<span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.</span></span><span class="sig-name descname"><span class="pre">print_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.5)"><span class="pre">pytket._tket.circuit.Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">qubit_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qubit_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gate_ind_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gate_ind_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pytket.extensions.qujax.print_circuit" title="Permalink to this definition"></a></dt>
+<dd><p>Returns and prints basic string representation of circuit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>circuit</strong> (<em>pytket.Circuit</em>) – Circuit to be converted.</p></li>
+<li><p><strong>qubit_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of first qubit to display.</p></li>
+<li><p><strong>qubit_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of final qubit to display.</p></li>
+<li><p><strong>gate_ind_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of gate to start circuit printing.</p></li>
+<li><p><strong>gate_ind_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of gate to stop circuit printing.</p></li>
+<li><p><strong>sep_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of dashes to separate gates.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String representation of circuit</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>] each element represents a qubit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pytket.extensions.qujax.print_circuit_symbolic">
+<span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.</span></span><span class="sig-name descname"><span class="pre">print_circuit_symbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.5)"><span class="pre">pytket._tket.circuit.Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qubit_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qubit_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gate_ind_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gate_ind_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pytket.extensions.qujax.print_circuit_symbolic" title="Permalink to this definition"></a></dt>
+<dd><p>Returns and prints basic string representation of circuit
+with symbolic parameters.</p>
+<p>Note that the behaviour of print_circuit(circuit)
+is different to print_circuit_symbolic(circuit),
+print_circuit_symbolic will look for parameters in circuit.free_symbols()
+and if there are none it will assume that none of the gates require parameters.
+On the other hand, print_circuit will work out which gates are parameterised
+based on e.g. circuit.get_commands()[0].op.params</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>circuit</strong> (<em>pytket.Circuit</em>) – Circuit to be converted.</p></li>
+<li><p><strong>symbol_map</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>]</em>) – dict that maps elements of circuit.free_symbols() (sympy)
+to parameter indices.</p></li>
+<li><p><strong>qubit_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of first qubit to display.</p></li>
+<li><p><strong>qubit_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of final qubit to display.</p></li>
+<li><p><strong>gate_ind_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of gate to start circuit printing.</p></li>
+<li><p><strong>gate_ind_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Index of gate to stop circuit printing.</p></li>
+<li><p><strong>sep_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of dashes to separate gates.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String representation of circuit</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>] each element represents a qubit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pytket.extensions.qujax.qujax_to_tk">
+<span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.</span></span><span class="sig-name descname"><span class="pre">qujax_to_tk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gate_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qubit_inds_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_inds_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.5)"><span class="pre">pytket._tket.circuit.Circuit</span></a></span></span><a class="headerlink" href="#pytket.extensions.qujax.qujax_to_tk" title="Permalink to this definition"></a></dt>
+<dd><p>Convert qujax args into pytket Circuit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gate_seq</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – Sequence of gates. Each element is a string matching an array
+or function in qujax.gates</p></li>
+<li><p><strong>qubit_inds_seq</strong> (<em>Sequence</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em><em>]</em>) – Sequences of qubits (ints) that gates are acting on.</p></li>
+<li><p><strong>param_inds_seq</strong> – Sequence of parameter indices that gates are using,
+i.e. [[0], [], [5, 2]] tells qujax that the first gate uses the first parameter,
+the second gate is not parameterised and the third gates used the fifth and
+second parameters.</p></li>
+<li><p><strong>n_qubits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of qubits, if fixed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Circuit</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pytket.Circuit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pytket.extensions.qujax.tk_to_qujax">
 <span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.</span></span><span class="sig-name descname"><span class="pre">tk_to_qujax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.5)"><span class="pre">pytket._tket.circuit.Circuit</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">qujax.circuit.CallableArrayAndOptionalArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qujax.circuit.CallableOptionalArray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pytket.extensions.qujax.tk_to_qujax" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a tket circuit into a function that maps circuit parameters
+<dd><p>Converts a pytket circuit into a function that maps circuit parameters
 to a statetensor. Assumes all circuit gates can be found in qujax.gates.
 Parameter argument of created function will be ordered as in circuit.get_commands()
 - pytket automatically reorders some gates, consider using Barriers.</p>
@@ -105,9 +188,69 @@ if no parameters found in circuit</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pytket.extensions.qujax.tk_to_qujax_args">
+<span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.</span></span><span class="sig-name descname"><span class="pre">tk_to_qujax_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.5)"><span class="pre">pytket._tket.circuit.Circuit</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pytket.extensions.qujax.tk_to_qujax_args" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a pytket circuit into a tuple of arguments representing
+a qujax quantum circuit.
+Assumes all circuit gates can be found in qujax.gates.
+Parameter argument of created function will be ordered as in circuit.get_commands()
+- pytket automatically reorders some gates, consider using Barriers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>circuit</strong> (<em>pytket.Circuit.</em>) – Circuit to be converted.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple of arguments defining a (parameterised) quantum circuit
+that can be sent to qujax.get_params_to_statetensor_func.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple
+gate_name_seq: Sequence of gate name strings to be found in qujax.gates.
+qubit_inds_seq: Sequence of sequences describing which qubits gates act on.
+param_inds_seq: Sequence of sequences parameter indices that gates are using.
+n_qubits: Number of qubits.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pytket.extensions.qujax.tk_to_qujax_args_symbolic">
+<span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.</span></span><span class="sig-name descname"><span class="pre">tk_to_qujax_args_symbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.5)"><span class="pre">pytket._tket.circuit.Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pytket.extensions.qujax.tk_to_qujax_args_symbolic" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a pytket circuit with symbolics parameters and a symbolic parameter map
+into a tuple of arguments representing a qujax quantum circuit.
+Assumes all circuit gates can be found in qujax.gates.
+Note that the behaviour of tk_to_qujax_args_symbolic(circuit)
+is different to tk_to_qujax_args(circuit),
+tk_to_qujax_args_symbolic will look for parameters in circuit.free_symbols()
+and if there are none it will assume that none of the gates require parameters.
+On the other hand, tk_to_qujax_args will work out which gates are parameterised
+based on e.g. circuit.get_commands()[0].op.params</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>circuit</strong> (<em>pytket.Circuit</em>) – Circuit to be converted.</p></li>
+<li><p><strong>symbol_map</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>]</em>) – dict that maps elements of circuit.free_symbols() (sympy)
+to parameter indices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple of arguments defining a (parameterised) quantum circuit
+that can be sent to qujax.get_params_to_statetensor_func.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple
+gate_name_seq: Sequence of gate name strings to be found in qujax.gates.
+qubit_inds_seq: Sequence of sequences describing which qubits gates act on.
+param_inds_seq: Sequence of sequences parameter indices that gates are using.
+n_qubits: Number of qubits.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pytket.extensions.qujax.tk_to_qujax_symbolic">
 <span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.</span></span><span class="sig-name descname"><span class="pre">tk_to_qujax_symbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.5)"><span class="pre">pytket._tket.circuit.Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">qujax.circuit.CallableArrayAndOptionalArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qujax.circuit.CallableOptionalArray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pytket.extensions.qujax.tk_to_qujax_symbolic" title="Permalink to this definition"></a></dt>
-<dd><p>Converts a tket circuit with symbolics parameters and a symbolic parameter map
+<dd><p>Converts a pytket circuit with symbolics parameters and a symbolic parameter map
 into a function that maps circuit parameters to a statetensor.
 Assumes all circuit gates can be found in qujax.gates.
 Note that the behaviour of tk_to_qujax_symbolic(circuit)
