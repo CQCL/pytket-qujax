@@ -8,7 +8,6 @@ Changelog
 * Add print_circuit, print_circuit_symbolic
 * Updated qujax version requirement to 0.2.5.
 
-
 0.3.0 (August 2022)
 -------------------
 
