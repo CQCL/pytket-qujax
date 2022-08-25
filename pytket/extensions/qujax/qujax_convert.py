@@ -40,7 +40,8 @@ def tk_to_qujax_args(
     circuit: Circuit,
 ) -> Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]:
     """
-    Converts a pytket circuit into a tuple of arguments representing a qujax quantum circuit.
+    Converts a pytket circuit into a tuple of arguments representing
+    a qujax quantum circuit.
     Assumes all circuit gates can be found in qujax.gates.
     Parameter argument of created function will be ordered as in circuit.get_commands()
     - pytket automatically reorders some gates, consider using Barriers.
