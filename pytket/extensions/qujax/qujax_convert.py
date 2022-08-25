@@ -276,7 +276,7 @@ def qujax_to_tk(
         the second gate is not parameterised and the third gates used the fifth and
         second parameters.
     :param n_qubits: Number of qubits, if fixed.
-    :type int
+    :type n_qubits: int
     :return: Circuit
     :rtype: pytket.Circuit
     """
