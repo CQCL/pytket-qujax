@@ -270,7 +270,7 @@ def qujax_to_tk(
         or function in qujax.gates
     :type gate_seq: Sequence[str]
     :param qubit_inds_seq: Sequences of qubits (ints) that gates are acting on.
-    :type Sequence[Sequence[int]]
+    :type qubit_inds_seq: Sequence[Sequence[int]]
     :param param_inds_seq: Sequence of parameter indices that gates are using,
         i.e. [[0], [], [5, 2]] tells qujax that the first gate uses the first parameter,
         the second gate is not parameterised and the third gates used the fifth and
