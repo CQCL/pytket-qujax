@@ -37,8 +37,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
 
 
 def tk_to_qujax_args(
-    circuit: Circuit,
-    symbol_map: Optional[Union[bool, dict]] = False
+    circuit: Circuit, symbol_map: Optional[Union[bool, dict]] = False
 ) -> Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]:
     """
     Converts a pytket circuit into a tuple of arguments representing
@@ -99,8 +98,7 @@ def tk_to_qujax_args(
 
 
 def tk_to_qujax(
-        circuit: Circuit,
-        symbol_map: Optional[Union[bool, dict]] = False
+    circuit: Circuit, symbol_map: Optional[Union[bool, dict]] = False
 ) -> qujax.UnionCallableOptionalArray:
     """
     Converts a pytket circuit into a function that maps circuit parameters
@@ -128,9 +126,7 @@ def tk_to_qujax(
         if no parameters found in circuit
     """
 
-    return qujax.get_params_to_statetensor_func(
-        *tk_to_qujax_args(circuit, symbol_map)
-    )
+    return qujax.get_params_to_statetensor_func(*tk_to_qujax_args(circuit, symbol_map))
 
 
 def print_circuit(

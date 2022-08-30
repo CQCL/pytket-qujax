@@ -256,7 +256,7 @@ def test_quantum_hamiltonian() -> None:
         gate_str_seq_seq, qubit_inds_seq, jnp.concatenate([coefs_zz, coefs_x])
     )
 
-    state = random.uniform(random.PRNGKey(0), shape=(2**n_qubits,))
+    state = random.uniform(random.PRNGKey(0), shape=(2 ** n_qubits,))
     state /= jnp.linalg.norm(state)
 
     tket_exp = tket_op.state_expectation(state)  # type: ignore
