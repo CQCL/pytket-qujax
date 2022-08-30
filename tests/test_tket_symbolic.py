@@ -19,8 +19,8 @@ from jax import numpy as jnp, jit, grad, random
 
 from pytket.circuit import Circuit
 from pytket.extensions.qujax import (
-    tk_to_qujax_symbolic,
-    tk_to_qujax_args_symbolic,
+    tk_to_qujax,
+    tk_to_qujax_args,
     qujax_to_tk,
 )
 
@@ -36,7 +36,7 @@ def _test_circuit(
     circuit_inst.symbol_substitution(param_map)
     true_sv = circuit_inst.get_statevector()
 
-    apply_circuit = tk_to_qujax_symbolic(circuit, symbol_map)
+    apply_circuit = tk_to_qujax(circuit, symbol_map)
     jit_apply_circuit = jit(apply_circuit)
 
     if not len(params):
@@ -62,7 +62,7 @@ def _test_circuit(
         circuit_commands = [
             com for com in circuit.get_commands() if str(com.op) != "Barrier"
         ]
-        circuit_2 = qujax_to_tk(*tk_to_qujax_args_symbolic(circuit, symbol_map))
+        circuit_2 = qujax_to_tk(*tk_to_qujax_args(circuit, symbol_map))
         assert all(
             g.op.type == g2.op.type
             for g, g2 in zip(circuit_commands, circuit_2.get_commands())
@@ -194,7 +194,7 @@ def test_HH() -> None:
     circuit = Circuit(3)
     circuit.H(0)
 
-    apply_circuit = tk_to_qujax_symbolic(circuit)
+    apply_circuit = tk_to_qujax(circuit)
 
     st1 = apply_circuit()
     st2 = apply_circuit(st1)

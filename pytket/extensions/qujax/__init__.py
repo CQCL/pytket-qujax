@@ -19,11 +19,8 @@
 from ._metadata import __extension_version__, __extension_name__  # type: ignore
 from .qujax_convert import (
     tk_to_qujax,
-    tk_to_qujax_symbolic,
     tk_to_qujax_args,
-    tk_to_qujax_args_symbolic,
     print_circuit,
-    print_circuit_symbolic,
     qujax_to_tk,
     _tk_qubits_to_inds,
 )
