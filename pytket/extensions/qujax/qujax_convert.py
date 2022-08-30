@@ -43,16 +43,18 @@ def tk_to_qujax_args(
     Converts a pytket circuit into a tuple of arguments representing
     a qujax quantum circuit.
     Assumes all circuit gates can be found in qujax.gates.
-    If symbol_map is False, parameter arguments of created function will be ordered as in circuit.get_commands()
-    - pytket automatically reorders some gates, consider using Barriers.
-    If symbol_map is True or provided, look for parameters in circuit.free_symbols() instead. Remaining parameters
-    will be treated as constants. If there are no symbolic params, will assume that none of the gates require parameters
+    If symbol_map is False, parameter arguments of created function are ordered as in
+    circuit.get_commands() - pytket automatically reorders some gates.
+    Consider Barriers. If symbol_map is True or provided, look for parameters in
+    circuit.free_symbols() instead. Remaining parameters will be treated as constants.
+    If there are no symbolic params,
+    will assume that none of the gates require parameters.
 
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit.
     :param symbol_map:
         if False, treats all tket parameters as qujax arguments
-        if True, treats symbolic tket parameters as qujax arguments and numerical tket parameters as constants
+        if True, symbolic parameters are arguments and numerical parameters as constants
         if dict, maps tket parameters to qujax arguments following the dict provided
     :type symbol_map: Optional[Union[bool, dict]]
     :return: Tuple of arguments defining a (parameterised) quantum circuit
@@ -103,18 +105,18 @@ def tk_to_qujax(
     """
     Converts a pytket circuit into a function that maps circuit parameters
     to a statetensor. Assumes all circuit gates can be found in qujax.gates.
-    Parameter argument of created function will be ordered as in circuit.get_commands()
-    - pytket automatically reorders some gates, consider using Barriers.
-    If symbol_map is False, parameter arguments of created function will be ordered as in circuit.get_commands()
-    - pytket automatically reorders some gates, consider using Barriers.
-    If symbol_map is True or provided, look for parameters in circuit.free_symbols() instead. Remaining parameters
-    will be treated as constants. If there are no symbolic params, will assume that none of the gates require parameters
+    If symbol_map is False, parameter arguments of created function are ordered as in
+    circuit.get_commands() - pytket automatically reorders some gates.
+    Consider Barriers. If symbol_map is True or provided, look for parameters in
+    circuit.free_symbols() instead. Remaining parameters will be treated as constants.
+    If there are no symbolic params,
+    will assume that none of the gates require parameters.
 
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit
     :param symbol_map:
         if False, treats all tket parameters as qujax arguments
-        if True, treats symbolic tket parameters as qujax arguments and numerical tket parameters as constants
+        if True, symbolic parameters are arguments and numerical parameters as constants
         if dict, maps tket parameters to qujax arguments following the dict provided
     :type symbol_map: Optional[Union[bool, dict]]
     :return: Function which maps parameters (and optional statetensor_in)
@@ -143,7 +145,7 @@ def print_circuit(
 
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit
-    :param symbol_map: whether or not to use symbolic parameters and if yes, in which order
+    :param symbol_map: whether or not to use symbolic parameters and their order
     :type symbol_map: Optional[Union[bool, dict]]
     :param qubit_min: Index of first qubit to display.
     :type qubit_min: int
