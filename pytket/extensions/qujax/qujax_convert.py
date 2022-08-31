@@ -43,19 +43,23 @@ def tk_to_qujax_args(
     Converts a pytket circuit into a tuple of arguments representing
     a qujax quantum circuit.
     Assumes all circuit gates can be found in qujax.gates.
-    If symbol_map is False, parameter arguments of created function are ordered as in
-    circuit.get_commands() - pytket automatically reorders some gates.
-    Consider Barriers. If symbol_map is True or provided, look for parameters in
-    circuit.free_symbols() instead. Remaining parameters will be treated as constants.
-    If there are no symbolic params,
-    will assume that none of the gates require parameters.
+    If symbol_map is False, iterates through all circuit gates and assigns tket
+    parameters of each gate as new qujax circuit parameters. Doesn't differentiate
+    between symbolic and numerical parameters.
+    If symbol_map is True, assign qujax circuit parameters to symbolic parameters in
+    circuit.free_symbols(). Numerical parameters of circuit become constants.
+    The order of qujax circuit parameters is arbitrary.
+    If symbolc_map is provided as a dict, does the same as with symbol_map = True,
+    but the order of qujax circuit parameters will be given by this dict.
+    Keys of the dict  should be symbolic tket parameters as in circuit.free_symbols()
+    and values -- integer indices starting from 0.
 
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit.
     :param symbol_map:
-        if False, treats all tket parameters as qujax arguments
-        if True, symbolic parameters are arguments and numerical parameters as constants
-        if dict, maps tket parameters to qujax arguments following the dict provided
+        if False, maps all tket parameters to qujax circuit parameters
+        if True, maps symbolic tket parameters only in a random order
+        if dict, maps symbolic tket parameters following the order in this dict
     :type symbol_map: Union[bool, dict]
     :return: Tuple of arguments defining a (parameterised) quantum circuit
         that can be sent to qujax.get_params_to_statetensor_func.
@@ -105,19 +109,23 @@ def tk_to_qujax(
     """
     Converts a pytket circuit into a function that maps circuit parameters
     to a statetensor. Assumes all circuit gates can be found in qujax.gates.
-    If symbol_map is False, parameter arguments of created function are ordered as in
-    circuit.get_commands() - pytket automatically reorders some gates.
-    Consider Barriers. If symbol_map is True or provided, look for parameters in
-    circuit.free_symbols() instead. Remaining parameters will be treated as constants.
-    If there are no symbolic params,
-    will assume that none of the gates require parameters.
+    If symbol_map is False, iterates through all circuit gates and assigns tket
+    parameters of each gate as new qujax circuit parameters. Doesn't differentiate
+    between symbolic and numerical parameters.
+    If symbol_map is True, assign qujax circuit parameters to symbolic parameters in
+    circuit.free_symbols(). Numerical parameters of circuit become constants.
+    The order of qujax circuit parameters is arbitrary.
+    If symbolc_map is provided as a dict, does the same as with symbol_map = True,
+    but the order of qujax circuit parameters will be given by this dict.
+    Keys of the dict  should be symbolic tket parameters as in circuit.free_symbols()
+    and values -- integer indices starting from 0.
 
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit
     :param symbol_map:
-        if False, treats all tket parameters as qujax arguments
-        if True, symbolic parameters are arguments and numerical parameters as constants
-        if dict, maps tket parameters to qujax arguments following the dict provided
+        if False, maps all tket parameters to qujax circuit parameters
+        if True, maps symbolic tket parameters only in a random order
+        if dict, maps symbolic tket parameters following the order in this dict
     :type symbol_map: Union[bool, dict]
     :return: Function which maps parameters (and optional statetensor_in)
         to a statetensor.
