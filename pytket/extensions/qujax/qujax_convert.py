@@ -37,7 +37,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
 
 
 def tk_to_qujax_args(
-    circuit: Circuit, symbol_map: Optional[Union[bool, dict]] = False
+    circuit: Circuit, symbol_map: Union[bool, dict] = False
 ) -> Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]:
     """
     Converts a pytket circuit into a tuple of arguments representing
@@ -56,7 +56,7 @@ def tk_to_qujax_args(
         if False, treats all tket parameters as qujax arguments
         if True, symbolic parameters are arguments and numerical parameters as constants
         if dict, maps tket parameters to qujax arguments following the dict provided
-    :type symbol_map: Optional[Union[bool, dict]]
+    :type symbol_map: Union[bool, dict]
     :return: Tuple of arguments defining a (parameterised) quantum circuit
         that can be sent to qujax.get_params_to_statetensor_func.
     :rtype: tuple
@@ -100,7 +100,7 @@ def tk_to_qujax_args(
 
 
 def tk_to_qujax(
-    circuit: Circuit, symbol_map: Optional[Union[bool, dict]] = False
+    circuit: Circuit, symbol_map: Union[bool, dict] = False
 ) -> qujax.UnionCallableOptionalArray:
     """
     Converts a pytket circuit into a function that maps circuit parameters
@@ -118,7 +118,7 @@ def tk_to_qujax(
         if False, treats all tket parameters as qujax arguments
         if True, symbolic parameters are arguments and numerical parameters as constants
         if dict, maps tket parameters to qujax arguments following the dict provided
-    :type symbol_map: Optional[Union[bool, dict]]
+    :type symbol_map: Union[bool, dict]
     :return: Function which maps parameters (and optional statetensor_in)
         to a statetensor.
         If the circuit has no parameters, the resulting function
@@ -133,7 +133,7 @@ def tk_to_qujax(
 
 def print_circuit(
     circuit: Circuit,
-    symbol_map: Optional[Union[bool, dict]] = False,
+    symbol_map: Union[bool, dict] = False,
     qubit_min: int = 0,
     qubit_max: int = jnp.inf,  # type: ignore
     gate_ind_min: int = 0,
@@ -146,7 +146,7 @@ def print_circuit(
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit
     :param symbol_map: whether or not to use symbolic parameters and their order
-    :type symbol_map: Optional[Union[bool, dict]]
+    :type symbol_map: Union[bool, dict]
     :param qubit_min: Index of first qubit to display.
     :type qubit_min: int
     :param qubit_max: Index of final qubit to display.
