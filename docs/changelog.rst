@@ -6,7 +6,7 @@ Changelog
 
 * Consolidate `tk_to_qujax_args` with `tk_to_qujax_args_symbolic`,
   `tk_to_qujax` with `tk_to_qujax_symbolic`,
-  print_circuit with print_circuit_symbolic
+  `print_circuit` with `print_circuit_symbolic`
   and removed all the symbolic versions.
   Now, all the functions have a default symbol_map argument
   which tells wherther or not to make it symbolic.
