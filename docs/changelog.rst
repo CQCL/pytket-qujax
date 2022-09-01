@@ -1,8 +1,8 @@
 Changelog
 ~~~~~~~~~
 
-0.5.0 (unreleased )
--------------------
+0.5.0 (September 2022)
+----------------------
 
 * Consolidate `tk_to_qujax_args` with `tk_to_qujax_args_symbolic`,
   `tk_to_qujax` with `tk_to_qujax_symbolic`,
