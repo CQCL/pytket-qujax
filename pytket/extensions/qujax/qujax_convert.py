@@ -55,7 +55,7 @@ def tk_to_qujax_args(
     and values -- integer indices starting from 0.
 
     :param circuit: Circuit to be converted.
-    :type circuit: pytket.Circuit.
+    :type circuit: pytket.Circuit
     :param symbol_map:
         if False, maps all tket parameters to qujax circuit parameters
         if True, maps symbolic tket parameters only in a random order
@@ -174,7 +174,7 @@ def print_circuit(
     )
 
 
-def qujax_to_tk(
+def qujax_args_to_tk(
     gate_seq: Sequence[str],
     qubit_inds_seq: Sequence[Sequence[int]],
     param_inds_seq: Sequence[Sequence[int]],
@@ -192,13 +192,14 @@ def qujax_to_tk(
         i.e. [[0], [], [5, 2]] tells qujax that the first gate uses the first parameter,
         the second gate is not parameterised and the third gates used the fifth and
         second parameters.
+    :type param_inds_seq: Sequence[Sequence[int]]
     :param n_qubits: Number of qubits, if fixed.
     :type n_qubits: int
     :return: Circuit
     :rtype: pytket.Circuit
     """
     if any(not isinstance(gate_name, str) for gate_name in gate_seq):
-        raise TypeError("qujax_to_tk only currently only supports gates as strings")
+        raise TypeError("qujax_args_to_tk currently only supports gates as strings")
 
     qujax.check_circuit(gate_seq, qubit_inds_seq, param_inds_seq, n_qubits)
 

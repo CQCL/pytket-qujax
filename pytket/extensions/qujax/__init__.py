@@ -21,6 +21,6 @@ from .qujax_convert import (
     tk_to_qujax,
     tk_to_qujax_args,
     print_circuit,
-    qujax_to_tk,
+    qujax_args_to_tk,
     _tk_qubits_to_inds,
 )
