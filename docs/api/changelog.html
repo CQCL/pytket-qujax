@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; pytket-qujax 0.4.0 documentation</title>
+  <title>Changelog &mdash; pytket-qujax 0.5.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
             <a href="index.html" class="icon icon-home"> pytket-qujax
           </a>
               <div class="version">
-                0.4.0
+                0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -42,6 +42,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#september-2022">0.5.0 (September 2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#august-2022">0.4.0 (August 2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">0.3.0 (August 2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">0.2.0 (August 2022)</a></li>
@@ -83,6 +84,18 @@
              
   <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
+<section id="september-2022">
+<h2>0.5.0 (September 2022)<a class="headerlink" href="#september-2022" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Consolidate <cite>tk_to_qujax_args</cite> with <cite>tk_to_qujax_args_symbolic</cite>,
+<cite>tk_to_qujax</cite> with <cite>tk_to_qujax_symbolic</cite>,
+<cite>print_circuit</cite> with <cite>print_circuit_symbolic</cite>
+and removed all the symbolic versions.
+Now, all the functions have a default symbol_map argument
+which tells wherther or not to make it symbolic.</p></li>
+<li><p>Renamed <cite>qujax_to_tk</cite> to <cite>qujax_args_to_tk</cite></p></li>
+</ul>
+</section>
 <section id="august-2022">
 <h2>0.4.0 (August 2022)<a class="headerlink" href="#august-2022" title="Permalink to this headline"></a></h2>
 <ul class="simple">
