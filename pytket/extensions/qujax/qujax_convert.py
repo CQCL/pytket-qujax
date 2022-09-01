@@ -174,7 +174,7 @@ def print_circuit(
     :param sep_length: Number of dashes to separate gates.
     :type sep_length: int
     :return: String representation of circuit
-    :rtype: List[str] each element represents a qubit
+    :rtype: List[str]
     """
     g, q, p, nq = tk_to_qujax_args(circuit, symbol_map)
     return qujax.print_circuit(  # type: ignore
