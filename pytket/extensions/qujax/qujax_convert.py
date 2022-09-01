@@ -157,6 +157,9 @@ def print_circuit(
     """
     Returns and prints basic string representation of circuit.
 
+    For more information on the ``symbol_map`` parameter refer to the
+    ``tk_to_qujax`` or ``tk_to_qujax_args`` documentation.
+
     :param circuit: Circuit to be converted.
     :type circuit: pytket.Circuit
     :param symbol_map:
