@@ -19,7 +19,7 @@ import qujax  # type: ignore
 from pytket.circuit import Circuit, Qubit  # type: ignore
 from pytket.pauli import Pauli, QubitPauliString  # type: ignore
 from pytket.utils import QubitPauliOperator  # type: ignore
-from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_args, qujax_to_tk
+from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_args, qujax_args_to_tk
 
 
 def _test_circuit(
@@ -53,7 +53,7 @@ def _test_circuit(
         circuit_commands = [
             com for com in circuit.get_commands() if str(com.op) != "Barrier"
         ]
-        circuit_2 = qujax_to_tk(*tk_to_qujax_args(circuit))
+        circuit_2 = qujax_args_to_tk(*tk_to_qujax_args(circuit))
         assert all(
             g.op.type == g2.op.type
             for g, g2 in zip(circuit_commands, circuit_2.get_commands())
