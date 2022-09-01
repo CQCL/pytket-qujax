@@ -61,7 +61,7 @@ def tk_to_qujax_args(
     The conversion can also be checked with `print_circuit``.
 
     :param circuit: Circuit to be converted.
-    :type circuit: pytket.Circuit.
+    :type circuit: pytket.Circuit
     :param symbol_map:
         if ``False``, parameterised gates determined by ``qujax.gates``
         if ``True``, maps symbolic pytket parameters in arbitrary order
@@ -134,7 +134,7 @@ def tk_to_qujax(
     or ``print_circuit``.
 
     :param circuit: Circuit to be converted.
-    :type circuit: pytket.Circuit.
+    :type circuit: pytket.Circuit
     :param symbol_map:
         if ``False``, parameterised gates determined by ``qujax.gates``
         if ``True``, maps symbolic pytket parameters in arbitrary order
