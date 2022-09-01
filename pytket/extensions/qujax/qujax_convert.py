@@ -50,11 +50,12 @@ def tk_to_qujax_args(
       Parameterised gates will be determined based on whether they are stored as
       functions (parameterised) or arrays (unparameterised) in qujax.gates. The order
       of parameters is the same as in circuit.get_commands().
-    - If ``symbol_map`` is ``True``, assign qujax parameters to symbolic parameters in
-      ``circuit.free_symbols()``. The order of the qujax parameters is arbitrary.
+    - If ``symbol_map`` is ``True``, assign qujax circuit parameters to symbolic
+      parameters in ``circuit.free_symbols()``. The order of the qujax circuit
+      parameters is arbitrary.
     - If ``symbol_map`` is provided as a ``dict``, does the same as with
-      ``symbol_map = True``, but the order of qujax parameters will be given by this
-      dict. Keys of the dict should be symbolic pytket parameters as in
+      ``symbol_map = True``, but the order of qujax circuit parameters will be given by
+      this dict. Keys of the dict should be symbolic pytket parameters as in
       ``circuit.free_symbols()`` and the values indicate the index of the qujax
       parameter -- integer indices starting from 0.
 
@@ -68,11 +69,14 @@ def tk_to_qujax_args(
         if ``dict``, maps symbolic pytket parameters following the order in this dict
     :type symbol_map: Union[bool, dict]
     :return: Tuple of arguments defining a (parameterised) quantum circuit
-        that can be sent to qujax.get_params_to_statetensor_func.\n
-        gate_name_seq: Sequence of gate name strings to be found in qujax.gates.\n
-        qubit_inds_seq: Sequence of sequences describing which qubits gates act on.\n
-        param_inds_seq: Sequence of sequences parameter indices that gates are using.\n
-        n_qubits: Number of qubits.
+        that can be sent to ``qujax.get_params_to_statetensor_func``. The elements of
+        the tuple (qujax args) are as follows
+
+        - Sequence of gate name strings to be found in ``qujax.gates``.
+        - Sequence of sequences describing which qubits gates act on.
+        - Sequence of sequences parameter indices that gates are using.
+        - Number of qubits.
+
     :rtype: Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]
     """
     if symbol_map is True:
@@ -122,11 +126,12 @@ def tk_to_qujax(
       Parameterised gates will be determined based on whether they are stored as
       functions (parameterised) or arrays (unparameterised) in qujax.gates. The order
       of parameters is the same as in circuit.get_commands().
-    - If ``symbol_map`` is ``True``, assign qujax parameters to symbolic parameters in
-      ``circuit.free_symbols()``. The order of the qujax parameters is arbitrary.
+    - If ``symbol_map`` is ``True``, assign qujax circuit parameters to symbolic
+      parameters in ``circuit.free_symbols()``. The order of the qujax circuit
+      parameters is arbitrary.
     - If ``symbol_map`` is provided as a ``dict``, does the same as with
-      ``symbol_map = True``, but the order of qujax parameters will be given by this
-      dict. Keys of the dict should be symbolic pytket parameters as in
+      ``symbol_map = True``, but the order of qujax circuit parameters will be given by
+      this dict. Keys of the dict should be symbolic pytket parameters as in
       ``circuit.free_symbols()`` and the values indicate the index of the qujax
       parameter -- integer indices starting from 0.
 
