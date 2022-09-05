@@ -101,7 +101,7 @@ def tk_to_qujax_args(
 
             if gate_name not in qujax.gates.__dict__:
                 if len(gate_symbols) == 0:
-                    gate_name = jnp.array(c.op.get_unitary())
+                    gate_name = jnp.array(c.op.get_unitary())  # type: ignore
                 else:
                     raise TypeError("Parameterised gate not found in qujax.gates")
             else:
