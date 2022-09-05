@@ -126,6 +126,28 @@ def test_CZ_qrev() -> None:
     _test_circuit(circuit, symbols, True)
 
 
+def test_symbolic_numeric_blend() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
+
+    circuit = Circuit(2)
+    circuit.H(0)
+    circuit.Rz(symbols[0], 1)
+    circuit.Rx(0.1, 1)
+    circuit.Rz(0.2, 1)
+
+    _test_circuit(circuit, symbols)
+
+
+def test_not_in_qujaxgates() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
+
+    circuit = Circuit(2)
+    circuit.Rx(symbols[0], 0)
+    circuit.ZZPhase(0.1, 0, 1)
+
+    _test_circuit(circuit, symbols)
+
+
 def test_CX_Barrier_Rx() -> None:
     symbols = [Symbol("p0"), Symbol("p1")]  # type: ignore
 

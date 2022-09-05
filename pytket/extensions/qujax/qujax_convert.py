@@ -23,6 +23,10 @@ from jax import numpy as jnp
 from pytket import Qubit, Circuit  # type: ignore
 
 
+class NamedArray(jnp.DeviceArray):
+    __name__: str
+
+
 def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
     """
     Convert Sequence of pytket qubits objects to tuple of integers qubit indices.
@@ -48,7 +52,7 @@ def tk_to_qujax_args(
 
     - If ``symbol_map`` is ``None``, circuit.free_symbols() will be ignored.
       Parameterised gates will be determined based on whether they are stored as
-      functions (parameterised) or arrays (unparameterised) in qujax.gates. The order
+      functions (parameterised) or arrays (non-parameterised) in qujax.gates. The order
       of qujax circuit parameters is the same as in circuit.get_commands().
     - If ``symbol_map`` is provided as a ``dict``, assign qujax circuit parameters to
       symbolic parameters in ``circuit.free_symbols()``; the order of qujax circuit
@@ -91,16 +95,38 @@ def tk_to_qujax_args(
         gate_name = c.op.type.name
         if gate_name == "Barrier":
             continue
-        gate_name_seq.append(gate_name)
-        qubit_inds_seq.append(_tk_qubits_to_inds(c.qubits))
+
         if symbol_map:
+            gate_symbols = c.op.free_symbols()
+
+            if gate_name not in qujax.gates.__dict__:
+                if len(gate_symbols) == 0:
+                    gate_name = jnp.array(c.op.get_unitary())
+                else:
+                    raise TypeError("Parameterised gate not found in qujax.gates")
+            else:
+                qujax_gate = getattr(qujax.gates, gate_name)
+                if len(gate_symbols) == 0 and callable(qujax_gate):
+                    gate_name = qujax_gate(*c.op.params)
+
             param_inds_seq.append(
-                jnp.array([symbol_map[symbol] for symbol in c.op.free_symbols()])  # type: ignore
+                jnp.array([symbol_map[symbol] for symbol in gate_symbols])  # type: ignore
             )
         else:
+            if gate_name not in qujax.gates.__dict__:
+                raise TypeError(
+                    "Gate not found in qujax.gates. \n pytket-qujax can automatically "
+                    "convert aribtrary non-parameterised gates when specified in a "
+                    "symbolic circuit and absent from the symbol_map argument. \n"
+                    "Arbitrary parameterised gates can be added to a local "
+                    "qujax.gates installation and/or submitted via pull request."
+                )
+
             n_params = len(c.op.params)
             param_inds_seq.append(jnp.arange(param_index, param_index + n_params))
             param_index += n_params
+        gate_name_seq.append(gate_name)
+        qubit_inds_seq.append(_tk_qubits_to_inds(c.qubits))
 
     return gate_name_seq, qubit_inds_seq, param_inds_seq, circuit.n_qubits
 
@@ -116,7 +142,7 @@ def tk_to_qujax(
 
     - If ``symbol_map`` is ``None``, circuit.free_symbols() will be ignored.
       Parameterised gates will be determined based on whether they are stored as
-      functions (parameterised) or arrays (unparameterised) in qujax.gates. The order
+      functions (parameterised) or arrays (non-parameterised) in qujax.gates. The order
       of qujax circuit parameters is the same as in circuit.get_commands().
     - If ``symbol_map`` is provided as a ``dict``, assign qujax circuit parameters to
       symbolic parameters in ``circuit.free_symbols()``; the order of qujax circuit
