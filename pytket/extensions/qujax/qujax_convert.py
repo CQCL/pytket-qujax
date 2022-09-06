@@ -23,10 +23,6 @@ from jax import numpy as jnp
 from pytket import Qubit, Circuit  # type: ignore
 
 
-class NamedArray(jnp.DeviceArray):
-    __name__: str
-
-
 def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
     """
     Convert Sequence of pytket qubits objects to tuple of integers qubit indices.
