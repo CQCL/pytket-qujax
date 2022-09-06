@@ -92,9 +92,11 @@ def tk_to_qujax_args(
         if gate_name == "Barrier":
             continue
         if gate_name == "Measure":
-            raise TypeError("Measurements not supported in qujax. \n"
-                            "qujax produces statetensor corresponding"
-                            "to all qubits.")
+            raise TypeError(
+                "Measurements not supported in qujax. \n"
+                "qujax produces statetensor corresponding"
+                "to all qubits."
+            )
 
         if symbol_map:
             gate_symbols = c.op.free_symbols()
