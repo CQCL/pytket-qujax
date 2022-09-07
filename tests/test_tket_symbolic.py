@@ -160,6 +160,18 @@ def test_CX_Barrier_Rx() -> None:
     _test_circuit(circuit, symbols)
 
 
+def test_measure_error() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
+    symbol_map = dict(zip(symbols, range(len(symbols))))
+
+    circuit = Circuit(3, 3)
+    circuit.Rx(symbols[0], 0)
+    circuit.Measure(0, 0)
+
+    with pytest.raises(TypeError):
+        apply_circuit = tk_to_qujax(circuit, symbol_map)
+
+
 def test_circuit1() -> None:
     n_qubits = 4
     depth = 1

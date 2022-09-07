@@ -58,7 +58,7 @@ def tk_to_qujax_args(
 
     The conversion can also be checked with `print_circuit``.
 
-    :param circuit: Circuit to be converted.
+    :param circuit: Circuit to be converted (without any measurement commands).
     :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
@@ -94,7 +94,7 @@ def tk_to_qujax_args(
         if gate_name == "Measure":
             raise TypeError(
                 "Measurements not supported in qujax. \n"
-                "qujax produces statetensor corresponding"
+                "qujax produces statetensor corresponding "
                 "to all qubits."
             )
 
@@ -155,7 +155,7 @@ def tk_to_qujax(
     The conversion can be checked by examining the output from ``tk_to_qujax_args``
     or ``print_circuit``.
 
-    :param circuit: Circuit to be converted.
+    :param circuit: Circuit to be converted (without any measurement commands).
     :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
@@ -188,7 +188,7 @@ def print_circuit(
     For more information on the ``symbol_map`` parameter refer to the
     ``tk_to_qujax`` or ``tk_to_qujax_args`` documentation.
 
-    :param circuit: Circuit to be converted.
+    :param circuit: Circuit to be converted (without any measurement commands).
     :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
