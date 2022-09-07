@@ -15,6 +15,7 @@
 from typing import Union, Any
 from jax import numpy as jnp, jit, grad, random  # type: ignore
 import qujax  # type: ignore
+import pytest
 
 from pytket.circuit import Circuit, Qubit  # type: ignore
 from pytket.pauli import Pauli, QubitPauliString  # type: ignore
@@ -232,6 +233,15 @@ def test_HH() -> None:
     all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)  # type: ignore
 
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
+
+
+def test_measure_error() -> None:
+    circuit = Circuit(3, 3)
+    circuit.H(0)
+    circuit.Measure(0, 0)
+
+    with pytest.raises(TypeError):
+        _ = tk_to_qujax(circuit)
 
 
 def test_quantum_hamiltonian() -> None:

@@ -1,6 +1,15 @@
 Changelog
 ~~~~~~~~~
 
+0.6.0 (September 2022)
+-------------------
+
+* Added support for a blend of numerical and symbolic
+  parameterised gates.
+* Added automatic conversion of non-parameterised gates
+  not found in qujax.gates (in symbolic implementation only)
+* Raises error if measurements found
+
 0.5.0 (September 2022)
 ----------------------
 
