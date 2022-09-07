@@ -9,6 +9,7 @@ Changelog
 * Added automatic conversion of non-parameterised gates
   not found in qujax.gates (in symbolic implementation only)
 * Raises error if measurements found
+* Updated pytket version requirement to 1.6.
 
 0.5.0 (September 2022)
 ----------------------
