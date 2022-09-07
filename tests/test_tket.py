@@ -241,7 +241,7 @@ def test_measure_error() -> None:
     circuit.Measure(0, 0)
 
     with pytest.raises(TypeError):
-        apply_circuit = tk_to_qujax(circuit)
+        _ = tk_to_qujax(circuit)
 
 
 def test_quantum_hamiltonian() -> None:

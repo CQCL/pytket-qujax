@@ -169,7 +169,7 @@ def test_measure_error() -> None:
     circuit.Measure(0, 0)
 
     with pytest.raises(TypeError):
-        apply_circuit = tk_to_qujax(circuit, symbol_map)
+        _ = tk_to_qujax(circuit, symbol_map)
 
 
 def test_circuit1() -> None:
