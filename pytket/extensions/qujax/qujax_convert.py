@@ -48,7 +48,7 @@ def tk_to_qujax_args(
 
     - If ``symbol_map`` is ``None``, circuit.free_symbols() will be ignored.
       Parameterised gates will be determined based on whether they are stored as
-      functions (parameterised) or arrays (unparameterised) in qujax.gates. The order
+      functions (parameterised) or arrays (non-parameterised) in qujax.gates. The order
       of qujax circuit parameters is the same as in circuit.get_commands().
     - If ``symbol_map`` is provided as a ``dict``, assign qujax circuit parameters to
       symbolic parameters in ``circuit.free_symbols()``; the order of qujax circuit
@@ -58,7 +58,7 @@ def tk_to_qujax_args(
 
     The conversion can also be checked with `print_circuit``.
 
-    :param circuit: Circuit to be converted.
+    :param circuit: Circuit to be converted (without any measurement commands).
     :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
@@ -91,16 +91,44 @@ def tk_to_qujax_args(
         gate_name = c.op.type.name
         if gate_name == "Barrier":
             continue
-        gate_name_seq.append(gate_name)
-        qubit_inds_seq.append(_tk_qubits_to_inds(c.qubits))
+        if gate_name == "Measure":
+            raise TypeError(
+                "Measurements not supported in qujax. \n"
+                "qujax produces statetensor corresponding "
+                "to all qubits."
+            )
+
         if symbol_map:
+            gate_symbols = c.op.free_symbols()
+
+            if gate_name not in qujax.gates.__dict__:
+                if len(gate_symbols) == 0:
+                    gate_name = jnp.array(c.op.get_unitary())  # type: ignore
+                else:
+                    raise TypeError("Parameterised gate not found in qujax.gates")
+            else:
+                qujax_gate = getattr(qujax.gates, gate_name)
+                if len(gate_symbols) == 0 and callable(qujax_gate):
+                    gate_name = qujax_gate(*c.op.params)
+
             param_inds_seq.append(
-                jnp.array([symbol_map[symbol] for symbol in c.op.free_symbols()])  # type: ignore
+                jnp.array([symbol_map[symbol] for symbol in gate_symbols])  # type: ignore
             )
         else:
+            if gate_name not in qujax.gates.__dict__:
+                raise TypeError(
+                    "Gate not found in qujax.gates. \n pytket-qujax can automatically "
+                    "convert aribtrary non-parameterised gates when specified in a "
+                    "symbolic circuit and absent from the symbol_map argument. \n"
+                    "Arbitrary parameterised gates can be added to a local "
+                    "qujax.gates installation and/or submitted via pull request."
+                )
+
             n_params = len(c.op.params)
             param_inds_seq.append(jnp.arange(param_index, param_index + n_params))
             param_index += n_params
+        gate_name_seq.append(gate_name)
+        qubit_inds_seq.append(_tk_qubits_to_inds(c.qubits))
 
     return gate_name_seq, qubit_inds_seq, param_inds_seq, circuit.n_qubits
 
@@ -116,7 +144,7 @@ def tk_to_qujax(
 
     - If ``symbol_map`` is ``None``, circuit.free_symbols() will be ignored.
       Parameterised gates will be determined based on whether they are stored as
-      functions (parameterised) or arrays (unparameterised) in qujax.gates. The order
+      functions (parameterised) or arrays (non-parameterised) in qujax.gates. The order
       of qujax circuit parameters is the same as in circuit.get_commands().
     - If ``symbol_map`` is provided as a ``dict``, assign qujax circuit parameters to
       symbolic parameters in ``circuit.free_symbols()``; the order of qujax circuit
@@ -127,7 +155,7 @@ def tk_to_qujax(
     The conversion can be checked by examining the output from ``tk_to_qujax_args``
     or ``print_circuit``.
 
-    :param circuit: Circuit to be converted.
+    :param circuit: Circuit to be converted (without any measurement commands).
     :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
@@ -160,7 +188,7 @@ def print_circuit(
     For more information on the ``symbol_map`` parameter refer to the
     ``tk_to_qujax`` or ``tk_to_qujax_args`` documentation.
 
-    :param circuit: Circuit to be converted.
+    :param circuit: Circuit to be converted (without any measurement commands).
     :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
