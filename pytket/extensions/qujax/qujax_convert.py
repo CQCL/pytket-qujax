@@ -55,7 +55,7 @@ def _append_func(f: Callable, func_to_append: Callable) -> Callable:
     """
 
     @wraps(f)
-    def g(*args: Any, **kwargs: Any) -> Callable:
+    def g(*args: Any, **kwargs: Any) -> Any:
         return func_to_append(*f(*args, **kwargs))
 
     return g
