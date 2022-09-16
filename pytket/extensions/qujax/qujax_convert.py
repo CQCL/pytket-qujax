@@ -53,6 +53,7 @@ def _append_func(f: Callable, func_to_append: Callable) -> Callable:
     :return: Decorated function that executes func_to_append(f(*args **kwargs))
     :rtype: Callable
     """
+
     @wraps(f)
     def g(*args, **kwargs):
         return func_to_append(*f(*args, **kwargs))
@@ -68,7 +69,8 @@ def _symbolic_command_to_gate_and_param_inds(
 
     :param command: pytket circuit command from .get_commands()
     :type command: Command
-    :param symbol_map: ``dict``, maps symbolic pytket parameters following the order in this dict.
+    :param symbol_map: ``dict``, maps symbolic pytket parameters following the order
+        in this dict.
     :type symbol_map: dict
     :return: tuple of gate and parameter indices
         gate will given as either a string in qujax.gates (if command is not symbolic
