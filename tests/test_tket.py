@@ -54,7 +54,7 @@ def _test_circuit(
         circuit_commands = [
             com for com in circuit.get_commands() if str(com.op) != "Barrier"
         ]
-        circuit_2 = qujax_args_to_tk(*tk_to_qujax_args(circuit))
+        circuit_2 = qujax_args_to_tk(*tk_to_qujax_args(circuit))  # type: ignore
         assert all(
             g.op.type == g2.op.type
             for g, g2 in zip(circuit_commands, circuit_2.get_commands())

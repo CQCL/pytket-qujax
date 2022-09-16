@@ -16,7 +16,7 @@
 Methods to allow conversion between qujax and pytket
 """
 
-from typing import Tuple, Sequence, Optional, List, Union, Callable
+from typing import Tuple, Sequence, Optional, List, Union, Callable, Any
 from functools import wraps
 
 import qujax  # type: ignore
@@ -55,7 +55,7 @@ def _append_func(f: Callable, func_to_append: Callable) -> Callable:
     """
 
     @wraps(f)
-    def g(*args, **kwargs) -> Callable:  # type: ignore
+    def g(*args: Any, **kwargs: Any) -> Callable:
         return func_to_append(*f(*args, **kwargs))
 
     return g
