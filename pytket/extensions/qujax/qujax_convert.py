@@ -55,7 +55,7 @@ def _append_func(f: Callable, func_to_append: Callable) -> Callable:
     """
 
     @wraps(f)
-    def g(*args, **kwargs):
+    def g(*args, **kwargs) -> Callable:  # type: ignore
         return func_to_append(*f(*args, **kwargs))
 
     return g
@@ -106,7 +106,12 @@ def _symbolic_command_to_gate_and_param_inds(
 
 def tk_to_qujax_args(
     circuit: Circuit, symbol_map: Optional[dict] = None
-) -> Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]:
+) -> Tuple[
+    Sequence[Union[str, Callable[[jnp.ndarray], jnp.ndarray]]],
+    Sequence[Sequence[int]],
+    Sequence[Sequence[int]],
+    int,
+]:
     """
     Converts a pytket circuit into a tuple of arguments representing
     a qujax quantum circuit.
