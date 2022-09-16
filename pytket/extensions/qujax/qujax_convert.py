@@ -21,9 +21,9 @@ from functools import wraps
 
 import qujax  # type: ignore
 from jax import numpy as jnp
+from sympy import lambdify, Symbol  # type: ignore
 from pytket import Qubit, Circuit  # type: ignore
 from pytket._tket.circuit import Command  # type: ignore
-from sympy import lambdify, Symbol  # type: ignore
 
 
 def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
