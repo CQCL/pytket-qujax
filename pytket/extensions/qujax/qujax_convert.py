@@ -39,7 +39,20 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
     return tuple(q.index[0] for q in tk_qubits)
 
 
-def _append_func(f, func_to_append):
+def _append_func(f: Callable, func_to_append: Callable) -> Callable:
+    """
+    Decorates function f by applying func_to_append on the output of f.
+    Retains signature of f.
+    I.e. returns a function that executes func_to_append(f(*args **kwargs))
+    with the same signature as f.
+
+    :param f: Base function, whose signature is retained.
+    :type f: Callable
+    :param func_to_append: Function to apply to the output of
+    :type func_to_append: Callable
+    :return: Decorated function that executes func_to_append(f(*args **kwargs))
+    :rtype: Callable
+    """
     @wraps(f)
     def g(*args, **kwargs):
         return func_to_append(*f(*args, **kwargs))
@@ -50,6 +63,19 @@ def _append_func(f, func_to_append):
 def _symbolic_command_to_gate_and_param_inds(
     command: Command, symbol_map: dict
 ) -> Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]:
+    """
+    Convert pytket command to qujax (gate, parameter indices) tuple.
+
+    :param command: pytket circuit command from .get_commands()
+    :type command: Command
+    :param symbol_map: ``dict``, maps symbolic pytket parameters following the order in this dict.
+    :type symbol_map: dict
+    :return: tuple of gate and parameter indices
+        gate will given as either a string in qujax.gates (if command is not symbolic
+        has single symbolic argument with no operations) or a function that maps
+        parameters to a jax unitary matrix.
+    :rtype: Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]
+    """
     gate_str = command.op.type.name
     free_symbols = list(command.op.free_symbols())
 

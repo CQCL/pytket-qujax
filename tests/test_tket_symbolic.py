@@ -17,7 +17,7 @@ import pytest
 from sympy import Symbol  # type: ignore
 from jax import numpy as jnp, jit, grad, random
 
-from pytket.circuit import Circuit, OpType
+from pytket.circuit import Circuit, OpType  # type: ignore
 from pytket.extensions.qujax import (
     tk_to_qujax,
     tk_to_qujax_args,
