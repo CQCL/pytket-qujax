@@ -2,7 +2,7 @@ Changelog
 ~~~~~~~~~
 
 0.6.1 (September 2022)
--------------------
+----------------------
 
 * Added support for a blend of constants and symbolic
   arguments (or more complex operations) within a single gate.
