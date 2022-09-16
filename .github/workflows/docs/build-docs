@@ -111,4 +111,4 @@ if __name__ == "__main__":
             MODULES_DIR / "docs" / "build",
             dest,
             dirs_exist_ok=True,
-        )
+            )
