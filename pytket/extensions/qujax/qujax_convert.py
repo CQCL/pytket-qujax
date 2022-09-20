@@ -16,11 +16,14 @@
 Methods to allow conversion between qujax and pytket
 """
 
-from typing import Tuple, Sequence, Optional, List
+from typing import Tuple, Sequence, Optional, List, Union, Callable, Any
+from functools import wraps
 
 import qujax  # type: ignore
 from jax import numpy as jnp
+from sympy import lambdify, Symbol  # type: ignore
 from pytket import Qubit, Circuit  # type: ignore
+from pytket._tket.circuit import Command  # type: ignore
 
 
 def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
@@ -36,9 +39,79 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
     return tuple(q.index[0] for q in tk_qubits)
 
 
+def _append_func(f: Callable, func_to_append: Callable) -> Callable:
+    """
+    Decorates function f by applying func_to_append on the output of f.
+    Retains signature of f.
+    I.e. returns a function that executes func_to_append(f(*args **kwargs))
+    with the same signature as f.
+
+    :param f: Base function, whose signature is retained.
+    :type f: Callable
+    :param func_to_append: Function to apply to the output of
+    :type func_to_append: Callable
+    :return: Decorated function that executes func_to_append(f(*args **kwargs))
+    :rtype: Callable
+    """
+
+    @wraps(f)
+    def g(*args: Any, **kwargs: Any) -> Any:
+        return func_to_append(*f(*args, **kwargs))
+
+    return g
+
+
+def _symbolic_command_to_gate_and_param_inds(
+    command: Command, symbol_map: dict
+) -> Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]:
+    """
+    Convert pytket command to qujax (gate, parameter indices) tuple.
+
+    :param command: pytket circuit command from .get_commands()
+    :type command: Command
+    :param symbol_map: ``dict``, maps symbolic pytket parameters following the order
+        in this dict.
+    :type symbol_map: dict
+    :return: tuple of gate and parameter indices
+        gate will given as either a string in qujax.gates (if command is not symbolic
+        has single symbolic argument with no operations) or a function that maps
+        parameters to a jax unitary matrix.
+    :rtype: Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]
+    """
+    gate_str = command.op.type.name
+    free_symbols = list(command.op.free_symbols())
+
+    if gate_str in qujax.gates.__dict__:
+        qujax_gate = getattr(qujax.gates, gate_str)
+        if callable(qujax_gate):
+            gate_params = command.op.params
+            if len(free_symbols) == 0:
+                gate = qujax_gate(*gate_params)
+            elif len(free_symbols) == 1 and isinstance(free_symbols[0], Symbol):
+                gate = gate_str
+            else:
+                gate_lambda = lambdify(free_symbols, gate_params)
+                gate = _append_func(gate_lambda, qujax_gate)
+        else:
+            gate = gate_str
+    else:
+        if len(free_symbols) == 0:
+            gate = jnp.array(command.op.get_unitary())  # type: ignore
+        else:
+            raise TypeError("Parameterised gate not found in qujax.gates")
+
+    param_inds = jnp.array([symbol_map[symbol] for symbol in free_symbols])  # type: ignore
+    return gate, param_inds
+
+
 def tk_to_qujax_args(
     circuit: Circuit, symbol_map: Optional[dict] = None
-) -> Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]:
+) -> Tuple[
+    Sequence[Union[str, Callable[[jnp.ndarray], jnp.ndarray]]],
+    Sequence[Sequence[int]],
+    Sequence[Sequence[int]],
+    int,
+]:
     """
     Converts a pytket circuit into a tuple of arguments representing
     a qujax quantum circuit.
@@ -56,7 +129,7 @@ def tk_to_qujax_args(
       parameters as in ``circuit.free_symbols()`` and the values indicate
       the index of the qujax circuit parameter -- integer indices starting from 0.
 
-    The conversion can also be checked with `print_circuit``.
+    The conversion can also be checked with ``print_circuit``.
 
     :param circuit: Circuit to be converted (without any measurement commands).
     :type circuit: pytket.Circuit
@@ -99,36 +172,24 @@ def tk_to_qujax_args(
             )
 
         if symbol_map:
-            gate_symbols = c.op.free_symbols()
-
-            if gate_name not in qujax.gates.__dict__:
-                if len(gate_symbols) == 0:
-                    gate_name = jnp.array(c.op.get_unitary())  # type: ignore
-                else:
-                    raise TypeError("Parameterised gate not found in qujax.gates")
-            else:
-                qujax_gate = getattr(qujax.gates, gate_name)
-                if len(gate_symbols) == 0 and callable(qujax_gate):
-                    gate_name = qujax_gate(*c.op.params)
-
-            param_inds_seq.append(
-                jnp.array([symbol_map[symbol] for symbol in gate_symbols])  # type: ignore
-            )
+            gate, param_inds = _symbolic_command_to_gate_and_param_inds(c, symbol_map)
         else:
             if gate_name not in qujax.gates.__dict__:
                 raise TypeError(
                     "Gate not found in qujax.gates. \n pytket-qujax can automatically "
-                    "convert aribtrary non-parameterised gates when specified in a "
+                    "convert arbitrary non-parameterised gates when specified in a "
                     "symbolic circuit and absent from the symbol_map argument. \n"
                     "Arbitrary parameterised gates can be added to a local "
                     "qujax.gates installation and/or submitted via pull request."
                 )
-
+            gate = gate_name
             n_params = len(c.op.params)
-            param_inds_seq.append(jnp.arange(param_index, param_index + n_params))
+            param_inds = jnp.arange(param_index, param_index + n_params)
             param_index += n_params
-        gate_name_seq.append(gate_name)
+
+        gate_name_seq.append(gate)
         qubit_inds_seq.append(_tk_qubits_to_inds(c.qubits))
+        param_inds_seq.append(param_inds)
 
     return gate_name_seq, qubit_inds_seq, param_inds_seq, circuit.n_qubits
 
