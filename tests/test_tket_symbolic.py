@@ -17,7 +17,7 @@ import pytest
 from sympy import Symbol  # type: ignore
 from jax import numpy as jnp, jit, grad, random
 
-from pytket.circuit import Circuit
+from pytket.circuit import Circuit, OpType  # type: ignore
 from pytket.extensions.qujax import (
     tk_to_qujax,
     tk_to_qujax_args,
@@ -62,7 +62,7 @@ def _test_circuit(
         circuit_commands = [
             com for com in circuit.get_commands() if str(com.op) != "Barrier"
         ]
-        circuit_2 = qujax_args_to_tk(*tk_to_qujax_args(circuit, symbol_map))
+        circuit_2 = qujax_args_to_tk(*tk_to_qujax_args(circuit, symbol_map))  # type: ignore
         assert all(
             g.op.type == g2.op.type
             for g, g2 in zip(circuit_commands, circuit_2.get_commands())
@@ -126,7 +126,7 @@ def test_CZ_qrev() -> None:
     _test_circuit(circuit, symbols, True)
 
 
-def test_symbolic_numeric_blend() -> None:
+def test_symbolic_numeric_blend_circuit() -> None:
     symbols = [Symbol("p0")]  # type: ignore
 
     circuit = Circuit(2)
@@ -138,12 +138,28 @@ def test_symbolic_numeric_blend() -> None:
     _test_circuit(circuit, symbols)
 
 
+def test_symbolic_numeric_blend_gate() -> None:
+    symbols = [Symbol("p0"), Symbol("p1"), Symbol("p2")]  # type: ignore
+
+    circuit = Circuit(1)
+    circuit.add_gate(OpType.U2, [symbols[0] * 3.0, symbols[1] + symbols[2] + 2], [0])
+
+    _test_circuit(circuit, symbols)
+
+    circuit = Circuit(1)
+    circuit.H(0)
+    circuit.Rx(symbols[2], 0)
+    circuit.add_gate(OpType.U2, [symbols[0], symbols[1]], [0])
+
+    _test_circuit(circuit, symbols)
+
+
 def test_not_in_qujaxgates() -> None:
     symbols = [Symbol("p0")]  # type: ignore
 
-    circuit = Circuit(2)
+    circuit = Circuit(3)
     circuit.Rx(symbols[0], 0)
-    circuit.ZZPhase(0.1, 0, 1)
+    circuit.XXPhase3(0.1, 0, 1, 2)
 
     _test_circuit(circuit, symbols)
 
