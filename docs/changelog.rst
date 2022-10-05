@@ -9,7 +9,7 @@ Changelog
 
 
 0.6.0 (September 2022)
--------------------
+----------------------
 
 * Added support for a blend of numerical and symbolic
   parameterised gates.
