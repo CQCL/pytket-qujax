@@ -100,7 +100,7 @@ def _symbolic_command_to_gate_and_param_inds(
         else:
             raise TypeError("Parameterised gate not found in qujax.gates")
 
-    param_inds = jnp.array([symbol_map[symbol] for symbol in free_symbols])  # type: ignore
+    param_inds = jnp.array([symbol_map[symbol] for symbol in free_symbols], dtype="int32")  # type: ignore
     return gate, param_inds
 
 
@@ -279,6 +279,7 @@ def qujax_args_to_tk(
     qubit_inds_seq: Sequence[Sequence[int]],
     param_inds_seq: Sequence[Sequence[int]],
     n_qubits: Optional[int] = None,
+    param: Optional[jnp.ndarray] = None,
 ) -> Circuit:
     """
     Convert qujax args into pytket Circuit.
@@ -295,21 +296,29 @@ def qujax_args_to_tk(
     :type param_inds_seq: Sequence[Sequence[int]]
     :param n_qubits: Number of qubits, if fixed.
     :type n_qubits: int
+    :param param: Circuit parameters, if parameterised. Defaults to all zeroes.
+    :type param: jnp.ndarray
     :return: Circuit
     :rtype: pytket.Circuit
     """
     if any(not isinstance(gate_name, str) for gate_name in gate_seq):
-        raise TypeError("qujax_args_to_tk currently only supports gates as strings")
+        raise TypeError(
+            "qujax_args_to_tk currently only supports gates as strings (found in qujax.gates)"
+        )
 
     qujax.check_circuit(gate_seq, qubit_inds_seq, param_inds_seq, n_qubits)
 
     if n_qubits is None:
         n_qubits = max([max(qi) for qi in qubit_inds_seq]) + 1
 
+    if param is None:
+        n_params = max([max(p) + 1 if len(p) > 0 else 0 for p in param_inds_seq])
+        param = jnp.zeros(n_params)
+
     c = Circuit(n_qubits)
 
     for g, q, p in zip(gate_seq, qubit_inds_seq, param_inds_seq):
         g_apply_func = c.__getattribute__(g)
-        g_apply_func(*p, *q)
+        g_apply_func(*param[p], *q)
 
     return c
