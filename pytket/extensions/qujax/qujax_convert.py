@@ -100,8 +100,9 @@ def _symbolic_command_to_gate_and_param_inds(
         else:
             raise TypeError("Parameterised gate not found in qujax.gates")
 
-    param_inds = jnp.array([symbol_map[symbol] for symbol in free_symbols],
-                           dtype="int32")  # type: ignore
+    param_inds = jnp.array(
+        [symbol_map[symbol] for symbol in free_symbols], dtype="int32"
+    )  # type: ignore
     return gate, param_inds
 
 
