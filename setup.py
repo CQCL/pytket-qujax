@@ -31,7 +31,11 @@ setup(
     author="TKET development team",
     author_email="tket-support@cambridgequantum.com",
     python_requires=">=3.8",
-    url="https://github.com/CQCL/pytket-qujax",
+    project_urls={
+        "Documentation": "https://cqcl.github.io/pytket-qujax/api/index.html",
+        "Source": "https://github.com/CQCL/pytket-qujax",
+        "Tracker": "https://github.com/CQCL/pytket-qujax/issues",
+    },
     description="Extension for pytket, providing access to qujax functions",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
@@ -39,7 +43,7 @@ setup(
     packages=find_namespace_packages(include=["pytket.*"]),
     include_package_data=True,
     install_requires=[
-        "pytket ~= 1.6",
+        "pytket ~= 1.7",
         "qujax ~= 0.2.8",
     ],
     classifiers=[

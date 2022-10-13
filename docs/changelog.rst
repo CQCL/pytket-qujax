@@ -1,6 +1,11 @@
 Changelog
 ~~~~~~~~~
 
+0.7.0 (October 2022)
+--------------------
+
+* Updated pytket version requirement to 1.7.
+
 0.6.1 (September 2022)
 ----------------------
 
@@ -9,7 +14,7 @@ Changelog
 
 
 0.6.0 (September 2022)
--------------------
+----------------------
 
 * Added support for a blend of numerical and symbolic
   parameterised gates.
