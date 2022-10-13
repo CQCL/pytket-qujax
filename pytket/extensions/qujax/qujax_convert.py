@@ -305,7 +305,8 @@ def qujax_args_to_tk(
     """
     if any(not isinstance(gate_name, str) for gate_name in gate_seq):
         raise TypeError(
-            "qujax_args_to_tk currently only supports gates as strings (found in qujax.gates)"
+            "qujax_args_to_tk currently only supports gates as strings"
+            "(found in qujax.gates)"
         )
 
     qujax.check_circuit(gate_seq, qubit_inds_seq, param_inds_seq, n_qubits)
