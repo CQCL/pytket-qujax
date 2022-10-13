@@ -314,9 +314,9 @@ def qujax_args_to_tk(
 
     if param is None:
         n_params = max([max(p) + 1 if len(p) > 0 else 0 for p in param_inds_seq])
-        param = jnp.zeros(n_params)
+        param = jnp.zeros(n_params)  # type: ignore
 
-    param_inds_seq = [jnp.array(p, dtype="int32") for p in param_inds_seq]
+    param_inds_seq = [jnp.array(p, dtype="int32") for p in param_inds_seq]  # type: ignore
 
     c = Circuit(n_qubits)
 
