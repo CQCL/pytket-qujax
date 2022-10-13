@@ -100,9 +100,7 @@ def _symbolic_command_to_gate_and_param_inds(
         else:
             raise TypeError("Parameterised gate not found in qujax.gates")
 
-    param_inds = jnp.array(
-        [symbol_map[symbol] for symbol in free_symbols], dtype="int32"
-    )  # type: ignore
+    param_inds = tuple(symbol_map[symbol] for symbol in free_symbols)  # type: ignore
     return gate, param_inds
 
 
@@ -186,7 +184,7 @@ def tk_to_qujax_args(
                 )
             gate = gate_name
             n_params = len(c.op.params)
-            param_inds = jnp.arange(param_index, param_index + n_params)
+            param_inds = tuple(range(param_index, param_index + n_params))
             param_index += n_params
 
         gate_name_seq.append(gate)
@@ -317,6 +315,8 @@ def qujax_args_to_tk(
     if param is None:
         n_params = max([max(p) + 1 if len(p) > 0 else 0 for p in param_inds_seq])
         param = jnp.zeros(n_params)
+
+    param_inds_seq = [jnp.array(p, dtype="int32") for p in param_inds_seq]
 
     c = Circuit(n_qubits)
 
