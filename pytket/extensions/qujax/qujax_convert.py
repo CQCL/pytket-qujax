@@ -248,7 +248,7 @@ def tk_to_param(circuit: Circuit) -> jnp.ndarray:
     """
 
     if circuit.is_symbolic():
-        raise TypeError("tk_to_param only applicable to non-symbolic circuits")
+        raise ValueError("tk_to_param only applicable to non-symbolic circuits")
 
     param = jnp.array([])
     for comm in circuit.get_commands():
