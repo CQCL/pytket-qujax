@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API documentation &mdash; pytket-qujax 0.7.0 documentation</title>
+  <title>API documentation &mdash; pytket-qujax 0.7.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -30,7 +30,7 @@
             <a href="index.html" class="icon icon-home"> pytket-qujax
           </a>
               <div class="version">
-                0.7.0
+                0.7.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -139,6 +139,26 @@ second parameters.</p></li>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>pytket.Circuit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pytket.extensions.qujax.tk_to_param">
+<span class="sig-prename descclassname"><span class="pre">pytket.extensions.qujax.</span></span><span class="sig-name descname"><span class="pre">tk_to_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.7)"><span class="pre">pytket._tket.circuit.Circuit</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">jax._src.basearray.Array</span></span></span><a class="headerlink" href="#pytket.extensions.qujax.tk_to_param" title="Permalink to this definition"></a></dt>
+<dd><p>Extract the parameter vector for non-symbolic circuits.
+i.e. an array where each element corresponds to the parameter
+of a parameterised gate found in the circuit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>circuit</strong> (<em>pytket.Circuit</em>) – Circuit to be converted
+(without any measurement commands or symbolic gates).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>1D array containing values of parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>jnp.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
