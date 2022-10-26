@@ -20,7 +20,12 @@ import pytest
 from pytket.circuit import Circuit, Qubit  # type: ignore
 from pytket.pauli import Pauli, QubitPauliString  # type: ignore
 from pytket.utils import QubitPauliOperator  # type: ignore
-from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_args, qujax_args_to_tk
+from pytket.extensions.qujax import (
+    tk_to_qujax,
+    tk_to_qujax_args,
+    qujax_args_to_tk,
+    tk_to_param,
+)
 
 
 def _test_circuit(
@@ -37,6 +42,8 @@ def _test_circuit(
     else:
         test_sv = apply_circuit(param).flatten()
         test_jit_sv = jit_apply_circuit(param).flatten()
+
+        assert jnp.allclose(param, tk_to_param(circuit))
 
     assert jnp.all(jnp.abs(test_sv - true_sv) < 1e-5)
     assert jnp.all(jnp.abs(test_jit_sv - true_sv) < 1e-5)
