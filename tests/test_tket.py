@@ -20,7 +20,12 @@ import pytest
 from pytket.circuit import Circuit, Qubit  # type: ignore
 from pytket.pauli import Pauli, QubitPauliString  # type: ignore
 from pytket.utils import QubitPauliOperator  # type: ignore
-from pytket.extensions.qujax import tk_to_qujax, tk_to_qujax_args, qujax_args_to_tk, tk_to_param
+from pytket.extensions.qujax import (
+    tk_to_qujax,
+    tk_to_qujax_args,
+    qujax_args_to_tk,
+    tk_to_param,
+)
 
 
 def _test_circuit(
