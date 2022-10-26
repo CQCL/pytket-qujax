@@ -1,6 +1,12 @@
 Changelog
 ~~~~~~~~~
 
+0.7.1 (October 2022)
+--------------------
+
+* Added `tk_to_param` function
+
+
 0.7.0 (October 2022)
 --------------------
 

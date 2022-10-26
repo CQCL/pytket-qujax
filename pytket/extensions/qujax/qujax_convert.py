@@ -234,6 +234,38 @@ def tk_to_qujax(
     return qujax.get_params_to_statetensor_func(*tk_to_qujax_args(circuit, symbol_map))
 
 
+def tk_to_param(circuit: Circuit) -> jnp.ndarray:
+    """
+    Extract the parameter vector for non-symbolic circuits.
+    i.e. an array where each element corresponds to the parameter
+    of a parameterised gate found in the circuit
+
+    :param circuit: Circuit to be converted
+        (without any measurement commands or symbolic gates).
+    :type circuit: pytket.Circuit
+    :return: 1D array containing values of parameters
+    :rtype: jnp.ndarray
+    """
+
+    if circuit.is_symbolic():
+        raise ValueError("tk_to_param only applicable to non-symbolic circuits")
+
+    param = jnp.array([])
+    for comm in circuit.get_commands():
+        gate_name = comm.op.type.name
+        if gate_name == "Barrier":
+            continue
+        if gate_name == "Measure":
+            raise TypeError(
+                "Measurements not supported in qujax. \n"
+                "qujax produces statetensor corresponding "
+                "to all qubits."
+            )
+        param = jnp.append(param, jnp.array(comm.op.params))
+
+    return param
+
+
 def print_circuit(
     circuit: Circuit,
     symbol_map: Optional[dict] = None,

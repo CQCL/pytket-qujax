@@ -20,6 +20,7 @@ from ._metadata import __extension_version__, __extension_name__  # type: ignore
 from .qujax_convert import (
     tk_to_qujax,
     tk_to_qujax_args,
+    tk_to_param,
     print_circuit,
     qujax_args_to_tk,
     _tk_qubits_to_inds,
