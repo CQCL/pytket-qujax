@@ -179,8 +179,8 @@ def tk_to_qujax_args(
                     f"{gate_name} gate not found in qujax.gates. \n pytket-qujax "
                     "can automatically convert arbitrary non-parameterised gates "
                     "when specified in a symbolic circuit and absent from the "
-                    "symbol_map argument.\n Arbitrary parameterised gates can be"
-                    "added to a local qujax.gates installation and/or submitted"
+                    "symbol_map argument.\n Arbitrary parameterised gates can be "
+                    "added to a local qujax.gates installation and/or submitted "
                     "via pull request."
                 )
             gate = gate_name
