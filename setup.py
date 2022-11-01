@@ -43,7 +43,7 @@ setup(
     packages=find_namespace_packages(include=["pytket.*"]),
     include_package_data=True,
     install_requires=[
-        "pytket ~= 1.7",
+        "pytket ~= 1.8",
         "qujax ~= 0.2.8",
     ],
     classifiers=[
