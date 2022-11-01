@@ -1,6 +1,11 @@
 Changelog
 ~~~~~~~~~
 
+0.8.0 (November 2022)
+---------------------
+
+* Updated pytket version requirement to 1.8.
+
 0.7.1 (October 2022)
 --------------------
 
@@ -17,7 +22,6 @@ Changelog
 
 * Added support for a blend of constants and symbolic
   arguments (or more complex operations) within a single gate.
-
 
 0.6.0 (September 2022)
 ----------------------

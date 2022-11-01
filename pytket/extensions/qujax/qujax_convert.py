@@ -73,9 +73,9 @@ def _symbolic_command_to_gate_and_param_inds(
         in this dict.
     :type symbol_map: dict
     :return: tuple of gate and parameter indices
-        gate will given as either a string in qujax.gates (if command is not symbolic
-        has single symbolic argument with no operations) or a function that maps
-        parameters to a jax unitary matrix.
+        gate will be given as either a string in qujax.gates (if command is not
+        symbolic or has single symbolic argument with no operations) or a function
+        that maps parameters to a jax unitary matrix.
     :rtype: Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]
     """
     gate_str = command.op.type.name
@@ -98,7 +98,7 @@ def _symbolic_command_to_gate_and_param_inds(
         if len(free_symbols) == 0:
             gate = jnp.array(command.op.get_unitary())  # type: ignore
         else:
-            raise TypeError("Parameterised gate not found in qujax.gates")
+            raise TypeError(f"Parameterised gate {gate_str} not found in qujax.gates")
 
     param_inds = tuple(symbol_map[symbol] for symbol in free_symbols)  # type: ignore
     return gate, param_inds
@@ -176,11 +176,12 @@ def tk_to_qujax_args(
         else:
             if gate_name not in qujax.gates.__dict__:
                 raise TypeError(
-                    "Gate not found in qujax.gates. \n pytket-qujax can automatically "
-                    "convert arbitrary non-parameterised gates when specified in a "
-                    "symbolic circuit and absent from the symbol_map argument. \n"
-                    "Arbitrary parameterised gates can be added to a local "
-                    "qujax.gates installation and/or submitted via pull request."
+                    f"{gate_name} gate not found in qujax.gates. \n pytket-qujax "
+                    "can automatically convert arbitrary non-parameterised gates "
+                    "when specified in a symbolic circuit and absent from the "
+                    "symbol_map argument.\n Arbitrary parameterised gates can be "
+                    "added to a local qujax.gates installation and/or submitted "
+                    "via pull request."
                 )
             gate = gate_name
             n_params = len(c.op.params)
