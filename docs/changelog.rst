@@ -2,6 +2,7 @@ Changelog
 ~~~~~~~~~
 
 0.9.0 (November 2023)
+---------------------
 
 * Update qujax version requirement to 0.3.0
 * Add simulator argument to `tk_to_qujax` to enable
