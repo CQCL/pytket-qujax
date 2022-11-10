@@ -243,7 +243,8 @@ def tk_to_qujax(
         return qujax.get_params_to_densitytensor_func(*qujax_args)
     else:
         raise TypeError(
-            f"simulator argument '{simulator}' not recognised, try 'statetensor' or 'densitytensor'"
+            f"simulator argument '{simulator}' not recognised, try 'statetensor' "
+            f"or 'densitytensor'"
         )
 
 
