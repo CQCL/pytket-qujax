@@ -235,14 +235,15 @@ def tk_to_qujax(
         if no parameters found in circuit
     """
     qujax_args = tk_to_qujax_args(circuit, symbol_map)
+    simulator = simulator.lower()
 
-    if simulator == "statetensor":
+    if simulator in ("statetensor", "state", "st"):
         return qujax.get_params_to_statetensor_func(*qujax_args)
-    elif simulator == "densitytensor":
+    elif simulator in ("densitytensor", "density", "dt"):
         return qujax.get_params_to_densitytensor_func(*qujax_args)
     else:
         raise TypeError(
-            "simulator argument must be in ('statetensor', 'densitytensor')"
+            f"simulator argument '{simulator}' not recognised, try 'statetensor' or 'densitytensor'"
         )
 
 
