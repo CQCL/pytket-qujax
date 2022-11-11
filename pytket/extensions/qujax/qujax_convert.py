@@ -196,13 +196,13 @@ def tk_to_qujax_args(
 
 
 def tk_to_qujax(
-    circuit: Circuit, symbol_map: Optional[dict] = None
+    circuit: Circuit, symbol_map: Optional[dict] = None, simulator: str = "statetensor"
 ) -> qujax.UnionCallableOptionalArray:
     """
     Converts a pytket circuit into a function that maps circuit parameters
-    to a statetensor. Assumes all circuit gates can be found in ``qujax.gates``
-    The ``symbol_map`` argument controls the interpretation of any symbolic parameters
-    found in ``circuit.free_symbols()``.
+    to a statetensor (or densitytensor). Assumes all circuit gates can be found in
+    ``qujax.gates``. The ``symbol_map`` argument controls the interpretation of any
+    symbolic parameters found in ``circuit.free_symbols()``.
 
     - If ``symbol_map`` is ``None``, circuit.free_symbols() will be ignored.
       Parameterised gates will be determined based on whether they are stored as
@@ -223,6 +223,9 @@ def tk_to_qujax(
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
         If ``dict``, maps symbolic pytket parameters following the order in this dict.
     :type symbol_map: Optional[dict]
+    :param simulator: string in ('statetensor', 'densitytensor') corresponding to
+        qujax simulator type. Defaults to statetensor.
+    :type simulator: str
     :return: Function which maps parameters (and optional statetensor_in)
         to a statetensor.
         If the circuit has no parameters, the resulting function
@@ -231,8 +234,18 @@ def tk_to_qujax(
         or Callable[[jnp.ndarray = None], jnp.ndarray]
         if no parameters found in circuit
     """
+    qujax_args = tk_to_qujax_args(circuit, symbol_map)
+    simulator = simulator.lower()
 
-    return qujax.get_params_to_statetensor_func(*tk_to_qujax_args(circuit, symbol_map))
+    if simulator in ("statetensor", "state", "st"):
+        return qujax.get_params_to_statetensor_func(*qujax_args)
+    elif simulator in ("densitytensor", "density", "dt"):
+        return qujax.get_params_to_densitytensor_func(*qujax_args)
+    else:
+        raise TypeError(
+            f"simulator argument '{simulator}' not recognised, try 'statetensor' "
+            f"or 'densitytensor'"
+        )
 
 
 def tk_to_param(circuit: Circuit) -> jnp.ndarray:

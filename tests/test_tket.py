@@ -32,21 +32,40 @@ def _test_circuit(
     circuit: Circuit, param: Union[None, jnp.ndarray], test_two_way: bool = False
 ) -> None:
     true_sv = circuit.get_statevector()
+    true_probs = jnp.square(jnp.abs(true_sv))
 
     apply_circuit = tk_to_qujax(circuit)
     jit_apply_circuit = jit(apply_circuit)
 
+    apply_circuit_dt = tk_to_qujax(circuit, simulator="densitytensor")
+    jit_apply_circuit_dt = jit(apply_circuit_dt)
+
     if param is None:
         test_sv = apply_circuit().flatten()
         test_jit_sv = jit_apply_circuit().flatten()
+
+        test_dt = apply_circuit_dt()
+        n_qubits = test_dt.ndim // 2
+        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))  # type: ignore
+        test_jit_dm_diag = jnp.diag(  # type: ignore
+            jit_apply_circuit_dt().reshape(2**n_qubits, 2**n_qubits)
+        )
     else:
         test_sv = apply_circuit(param).flatten()
         test_jit_sv = jit_apply_circuit(param).flatten()
+        test_dt = apply_circuit_dt(param)
+        n_qubits = test_dt.ndim // 2
+        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))  # type: ignore
+        test_jit_dm_diag = jnp.diag(  # type: ignore
+            jit_apply_circuit_dt(param).reshape(2**n_qubits, 2**n_qubits)
+        )
 
         assert jnp.allclose(param, tk_to_param(circuit))
 
-    assert jnp.all(jnp.abs(test_sv - true_sv) < 1e-5)
-    assert jnp.all(jnp.abs(test_jit_sv - true_sv) < 1e-5)
+    assert jnp.allclose(test_sv, true_sv)
+    assert jnp.allclose(test_jit_sv, true_sv)
+    assert jnp.allclose(test_dm_diag.real, true_probs)
+    assert jnp.allclose(test_jit_dm_diag, true_probs)
 
     if param is not None:
         cost_func = lambda p: jnp.square(apply_circuit(p)).real.sum()

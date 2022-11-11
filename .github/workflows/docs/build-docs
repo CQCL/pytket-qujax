@@ -18,6 +18,7 @@ GITHUB_LINK = "https://github.com/CQCL/pytket-qujax"
 PYPI_LINK = "https://pypi.org/project/pytket-qujax/"
 NOTEBOOK_LINK_1 = "https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_heisenberg_vqe.ipynb"
 NOTEBOOK_LINK_2 = "https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_qaoa.ipynb"
+NOTEBOOK_LINK_3 = "https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax-classification.ipynb"
 NOTEBOOK_LINK_QUJAX = "https://github.com/CQCL/qujax/tree/main/examples"
 
 
@@ -65,6 +66,7 @@ def build_module_docs():
         content.append(f"\tPyPI <{PYPI_LINK}>\n")
         content.append(f"\tExample notebook (VQE) <{NOTEBOOK_LINK_1}>\n")
         content.append(f"\tExample notebook (QAOA with symbol_map) <{NOTEBOOK_LINK_2}>\n")
+        content.append(f"\tExample notebook (classifier) <{NOTEBOOK_LINK_3}>\n")
         content.append(f"\t qujax example notebooks <{NOTEBOOK_LINK_QUJAX}>\n")
 
     with open(index_rst, "w") as f:

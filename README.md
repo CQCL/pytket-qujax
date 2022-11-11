@@ -12,13 +12,13 @@ quantum simulator. pytket-qujax is an extension to [pytket](https://cqcl.github.
 that allows [pytket](https://cqcl.github.io/tket/pytket/api/index.html) circuits to
 be converted to [qujax](https://github.com/CQCL/qujax) for fast (classical) simulation and automatic differentiation.
 
-
 Some useful links:
 - [Documentation](https://cqcl.github.io/pytket-qujax/api/index.html)
 - [PyPI](https://pypi.org/project/pytket-qujax/)
 - [qujax](https://github.com/CQCL/qujax)
 - [pytket-qujax example notebook (VQE)](https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_heisenberg_vqe.ipynb)
 - [pytket-qujax example notebook (QAOA with `symbol_map`)](https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_qaoa.ipynb)
+- [pytket-qujax example notebook (classifier)](https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax-classification.ipynb)
 - [qujax example notebooks](https://github.com/CQCL/qujax/tree/main/examples)
 
 

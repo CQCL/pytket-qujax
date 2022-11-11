@@ -1,6 +1,13 @@
 Changelog
 ~~~~~~~~~
 
+0.9.0 (November 2022)
+---------------------
+
+* Update qujax version requirement to 0.3.0
+* Add simulator argument to `tk_to_qujax` to enable
+  conversion to densitytensor simulator
+
 0.8.0 (November 2022)
 ---------------------
 
@@ -10,7 +17,6 @@ Changelog
 --------------------
 
 * Added `tk_to_param` function
-
 
 0.7.0 (October 2022)
 --------------------
