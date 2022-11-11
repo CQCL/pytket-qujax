@@ -44,4 +44,5 @@ and Windows. To install, run:
 	PyPI <https://pypi.org/project/pytket-qujax/>
 	Example notebook (VQE) <https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_heisenberg_vqe.ipynb>
 	Example notebook (QAOA with symbol_map) <https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_qaoa.ipynb>
+	Example notebook (classifier) <https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax-classification.ipynb>
 	 qujax example notebooks <https://github.com/CQCL/qujax/tree/main/examples>

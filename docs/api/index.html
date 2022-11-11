@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pytket-qujax &mdash; pytket-qujax 0.8.0 documentation</title>
+  <title>pytket-qujax &mdash; pytket-qujax 0.9.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
             <a href="#" class="icon icon-home"> pytket-qujax
           </a>
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -55,6 +55,7 @@
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/pytket-qujax/">PyPI</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_heisenberg_vqe.ipynb">Example notebook (VQE)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_qaoa.ipynb">Example notebook (QAOA with symbol_map)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax-classification.ipynb">Example notebook (classifier)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/qujax/tree/main/examples"> qujax example notebooks</a></li>
 </ul>
 
@@ -71,8 +72,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>pytket-qujax</li>
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">pytket-qujax</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -100,17 +101,18 @@ and Windows. To install, run:</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#november-2022">0.8.0 (November 2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#november-2022">0.9.0 (November 2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.8.0 (November 2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#october-2022">0.7.1 (October 2022)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.7.0 (October 2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">0.7.0 (October 2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#september-2022">0.6.1 (September 2022)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">0.6.0 (September 2022)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">0.5.0 (September 2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">0.6.0 (September 2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">0.5.0 (September 2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#august-2022">0.4.0 (August 2022)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">0.3.0 (August 2022)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">0.2.0 (August 2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">0.3.0 (August 2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">0.2.0 (August 2022)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#july-2022">0.1.1 (July 2022)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">0.1.0 (July 2022)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">0.1.0 (July 2022)</a></li>
 </ul>
 </li>
 </ul>
@@ -130,6 +132,7 @@ and Windows. To install, run:</p>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/pytket-qujax/">PyPI</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_heisenberg_vqe.ipynb">Example notebook (VQE)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_qaoa.ipynb">Example notebook (QAOA with symbol_map)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax-classification.ipynb">Example notebook (classifier)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/CQCL/qujax/tree/main/examples"> qujax example notebooks</a></li>
 </ul>
 </div>
