@@ -44,7 +44,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "pytket ~= 1.8",
-        "qujax ~= 0.2.8",
+        "qujax ~= 0.3.0",
     ],
     classifiers=[
         "Environment :: Console",
