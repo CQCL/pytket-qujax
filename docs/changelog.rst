@@ -1,6 +1,13 @@
 Changelog
 ~~~~~~~~~
 
+0.10.1 (November 2022)
+----------------------
+
+* Update qujax version requirement to 0.3.1
+* Add support for simulator=unitary in tk_to_qujax
+
+
 0.10.0 (November 2022)
 ----------------------
 
