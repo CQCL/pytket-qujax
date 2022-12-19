@@ -1,7 +1,7 @@
 Changelog
 ~~~~~~~~~
 
-0.10.1 (November 2022)
+0.10.1 (December 2022)
 ----------------------
 
 * Update qujax version requirement to 0.3.1
