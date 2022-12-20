@@ -1,6 +1,13 @@
 Changelog
 ~~~~~~~~~
 
+0.11.0 (December 2022)
+----------------------
+
+* Update qujax version requirement to 0.3.1
+* Add support for simulator=unitary in tk_to_qujax
+* Updated pytket version requirement to 1.10.
+
 0.10.0 (November 2022)
 ----------------------
 

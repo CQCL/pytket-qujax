@@ -223,8 +223,8 @@ def tk_to_qujax(
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
         If ``dict``, maps symbolic pytket parameters following the order in this dict.
     :type symbol_map: Optional[dict]
-    :param simulator: string in ('statetensor', 'densitytensor') corresponding to
-        qujax simulator type. Defaults to statetensor.
+    :param simulator: string in ('statetensor', 'densitytensor', 'unitarytensor')
+        corresponding to qujax simulator type. Defaults to statetensor.
     :type simulator: str
     :return: Function which maps parameters (and optional statetensor_in)
         to a statetensor.
@@ -241,6 +241,8 @@ def tk_to_qujax(
         return qujax.get_params_to_statetensor_func(*qujax_args)
     elif simulator in ("densitytensor", "density", "dt"):
         return qujax.get_params_to_densitytensor_func(*qujax_args)
+    elif simulator in ("unitarytensor", "unitary", "ut"):
+        return qujax.get_params_to_unitarytensor_func(*qujax_args)
     else:
         raise TypeError(
             f"simulator argument '{simulator}' not recognised, try 'statetensor' "
