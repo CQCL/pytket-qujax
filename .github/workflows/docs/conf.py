@@ -18,7 +18,7 @@ pygments_style = "borland"
 html_theme = "sphinx_book_theme"
 
 html_theme_options = {
-    "repository_url": "https://github.com/CQCL/pytket-qiskit",
+    "repository_url": "https://github.com/CQCL/pytket-qujax",
     "use_repository_button": True,
     "use_issues_button": True,
 }
