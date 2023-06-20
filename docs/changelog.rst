@@ -1,6 +1,13 @@
 Changelog
 ~~~~~~~~~
 
+Unreleased
+----------
+
+* Update pytket version requirement to 1.16.
+* Update qujax version requirement to 0.3.4.
+* Drop support for Python 3.8; add support for 3.11.
+
 0.11.0 (December 2022)
 ----------------------
 
