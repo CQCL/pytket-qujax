@@ -1,6 +1,12 @@
 Changelog
 ~~~~~~~~~
 
+0.13.0 (August 2023)
+--------------------
+
+* Update pytket version requirement to 1.18.
+* Update qujax version requirement to 1.0.0.
+
 0.12.0 (June 2023)
 ------------------
 
