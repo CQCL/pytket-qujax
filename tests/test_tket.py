@@ -103,7 +103,7 @@ def test_CX() -> None:
 
     circuit = Circuit(2)
     circuit.H(0)
-    circuit.Rz(param[0], 0)
+    circuit.Rz(float(param[0]), 0)
     circuit.CX(0, 1)
 
     _test_circuit(circuit, param, True)
@@ -131,7 +131,7 @@ def test_CX_callable() -> None:
 
     circuit = Circuit(2)
     circuit.H(0)
-    circuit.Rz(param[0], 0)
+    circuit.Rz(float(param[0]), 0)
     circuit.CX(0, 1)
     true_sv = circuit.get_statevector()
 
@@ -148,8 +148,8 @@ def test_CX_qrev() -> None:
     param = jnp.array([0.2, 0.8])  # type: ignore
 
     circuit = Circuit(2)
-    circuit.Rx(param[0], 0)
-    circuit.Rx(param[1], 1)
+    circuit.Rx(float(param[0]), 0)
+    circuit.Rx(float(param[1]), 1)
     circuit.CX(1, 0)
 
     _test_circuit(circuit, param, True)
@@ -160,7 +160,7 @@ def test_CZ() -> None:
 
     circuit = Circuit(2)
     circuit.H(0)
-    circuit.Rz(param[0], 0)
+    circuit.Rz(float(param[0]), 0)
     circuit.CZ(0, 1)
 
     _test_circuit(circuit, param, True)
@@ -171,7 +171,7 @@ def test_CZ_qrev() -> None:
 
     circuit = Circuit(2)
     circuit.H(0)
-    circuit.Rz(param[0], 0)
+    circuit.Rz(float(param[0]), 0)
     circuit.CZ(1, 0)
 
     _test_circuit(circuit, param, True)
@@ -183,8 +183,8 @@ def test_CX_Barrier_Rx() -> None:
     circuit = Circuit(3)
     circuit.CX(0, 1)
     circuit.add_barrier([0, 2])
-    circuit.Rx(param[0], 0)
-    circuit.Rx(param[1], 2)
+    circuit.Rx(float(param[0]), 0)
+    circuit.Rx(float(param[1]), 2)
 
     _test_circuit(circuit, param)
 
@@ -199,7 +199,7 @@ def test_circuit1() -> None:
 
     k = 0
     for i in range(n_qubits):
-        circuit.Ry(param[k], i)
+        circuit.Ry(float(param[k]), i)
         k += 1
 
     for _ in range(depth):
@@ -209,7 +209,7 @@ def test_circuit1() -> None:
             circuit.CX(i, i + 1)
         circuit.add_barrier(range(0, n_qubits))
         for i in range(n_qubits):
-            circuit.Ry(param[k], i)
+            circuit.Ry(float(param[k]), i)
             k += 1
 
     _test_circuit(circuit, param)
@@ -227,10 +227,10 @@ def test_circuit2() -> None:
     for i in range(n_qubits):
         circuit.H(i)
     for i in range(n_qubits):
-        circuit.Rz(param[k], i)
+        circuit.Rz(float(param[k]), i)
         k += 1
     for i in range(n_qubits):
-        circuit.Rx(param[k], i)
+        circuit.Rx(float(param[k]), i)
         k += 1
 
     for _ in range(depth):
@@ -238,10 +238,10 @@ def test_circuit2() -> None:
             circuit.CZ(i, i + 1)
         circuit.add_barrier(range(0, n_qubits))
         for i in range(n_qubits):
-            circuit.Rz(param[k], i)
+            circuit.Rz(float(param[k]), i)
             k += 1
         for i in range(n_qubits):
-            circuit.Rx(param[k], i)
+            circuit.Rx(float(param[k]), i)
             k += 1
 
     _test_circuit(circuit, param)
