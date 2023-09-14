@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from typing import Union, Any
-from jax import numpy as jnp, jit, grad, random  # type: ignore
+from jax import numpy as jnp, jit, grad, random
 import qujax  # type: ignore
 import pytest
 
-from pytket.circuit import Circuit, Qubit  # type: ignore
-from pytket.pauli import Pauli, QubitPauliString  # type: ignore
-from pytket.utils import QubitPauliOperator  # type: ignore
+from pytket.circuit import Circuit, Qubit
+from pytket.pauli import Pauli, QubitPauliString
+from pytket.utils import QubitPauliOperator
 from pytket.extensions.qujax import (
     tk_to_qujax,
     tk_to_qujax_args,
@@ -99,18 +99,18 @@ def test_H() -> None:
 
 
 def test_CX() -> None:
-    param = jnp.array([0.25])  # type: ignore
+    param = jnp.array([0.25])
 
     circuit = Circuit(2)
     circuit.H(0)
-    circuit.Rz(param[0], 0)
+    circuit.Rz(float(param[0]), 0)
     circuit.CX(0, 1)
 
     _test_circuit(circuit, param, True)
 
 
 def test_CX_callable() -> None:
-    param = jnp.array([0.25])  # type: ignore
+    param = jnp.array([0.25])
 
     def H() -> Any:
         return qujax.gates.H
@@ -131,7 +131,7 @@ def test_CX_callable() -> None:
 
     circuit = Circuit(2)
     circuit.H(0)
-    circuit.Rz(param[0], 0)
+    circuit.Rz(float(param[0]), 0)
     circuit.CX(0, 1)
     true_sv = circuit.get_statevector()
 
@@ -145,46 +145,46 @@ def test_CX_callable() -> None:
 
 
 def test_CX_qrev() -> None:
-    param = jnp.array([0.2, 0.8])  # type: ignore
+    param = jnp.array([0.2, 0.8])
 
     circuit = Circuit(2)
-    circuit.Rx(param[0], 0)
-    circuit.Rx(param[1], 1)
+    circuit.Rx(float(param[0]), 0)
+    circuit.Rx(float(param[1]), 1)
     circuit.CX(1, 0)
 
     _test_circuit(circuit, param, True)
 
 
 def test_CZ() -> None:
-    param = jnp.array([0.25])  # type: ignore
+    param = jnp.array([0.25])
 
     circuit = Circuit(2)
     circuit.H(0)
-    circuit.Rz(param[0], 0)
+    circuit.Rz(float(param[0]), 0)
     circuit.CZ(0, 1)
 
     _test_circuit(circuit, param, True)
 
 
 def test_CZ_qrev() -> None:
-    param = jnp.array([0.25])  # type: ignore
+    param = jnp.array([0.25])
 
     circuit = Circuit(2)
     circuit.H(0)
-    circuit.Rz(param[0], 0)
+    circuit.Rz(float(param[0]), 0)
     circuit.CZ(1, 0)
 
     _test_circuit(circuit, param, True)
 
 
 def test_CX_Barrier_Rx() -> None:
-    param = jnp.array([0, 1 / jnp.pi])  # type: ignore
+    param = jnp.array([0, 1 / jnp.pi])
 
     circuit = Circuit(3)
     circuit.CX(0, 1)
     circuit.add_barrier([0, 2])
-    circuit.Rx(param[0], 0)
-    circuit.Rx(param[1], 2)
+    circuit.Rx(float(param[0]), 0)
+    circuit.Rx(float(param[1]), 2)
 
     _test_circuit(circuit, param)
 
@@ -199,7 +199,7 @@ def test_circuit1() -> None:
 
     k = 0
     for i in range(n_qubits):
-        circuit.Ry(param[k], i)
+        circuit.Ry(float(param[k]), i)
         k += 1
 
     for _ in range(depth):
@@ -207,9 +207,9 @@ def test_circuit1() -> None:
             circuit.CX(i, i + 1)
         for i in range(1, n_qubits - 1, 2):
             circuit.CX(i, i + 1)
-        circuit.add_barrier(range(0, n_qubits))
+        circuit.add_barrier(list(range(0, n_qubits)))
         for i in range(n_qubits):
-            circuit.Ry(param[k], i)
+            circuit.Ry(float(param[k]), i)
             k += 1
 
     _test_circuit(circuit, param)
@@ -227,21 +227,21 @@ def test_circuit2() -> None:
     for i in range(n_qubits):
         circuit.H(i)
     for i in range(n_qubits):
-        circuit.Rz(param[k], i)
+        circuit.Rz(float(param[k]), i)
         k += 1
     for i in range(n_qubits):
-        circuit.Rx(param[k], i)
+        circuit.Rx(float(param[k]), i)
         k += 1
 
     for _ in range(depth):
         for i in range(0, n_qubits - 1):
             circuit.CZ(i, i + 1)
-        circuit.add_barrier(range(0, n_qubits))
+        circuit.add_barrier(list(range(0, n_qubits)))
         for i in range(n_qubits):
-            circuit.Rz(param[k], i)
+            circuit.Rz(float(param[k]), i)
             k += 1
         for i in range(n_qubits):
-            circuit.Rx(param[k], i)
+            circuit.Rx(float(param[k]), i)
             k += 1
 
     _test_circuit(circuit, param)
@@ -256,7 +256,7 @@ def test_HH() -> None:
     st1 = apply_circuit()
     st2 = apply_circuit(st1)
 
-    all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)  # type: ignore
+    all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)
 
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
 

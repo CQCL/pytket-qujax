@@ -16,7 +16,7 @@
 """
 
 # _metadata.py is copied to the folder after installation.
-from ._metadata import __extension_version__, __extension_name__  # type: ignore
+from ._metadata import __extension_version__, __extension_name__
 from .qujax_convert import (
     tk_to_qujax,
     tk_to_qujax_args,

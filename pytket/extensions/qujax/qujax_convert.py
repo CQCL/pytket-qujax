@@ -21,9 +21,9 @@ from functools import wraps
 
 import qujax  # type: ignore
 from jax import numpy as jnp
-from sympy import lambdify, Symbol  # type: ignore
+from sympy import lambdify, Symbol
 from pytket import Qubit, Circuit  # type: ignore
-from pytket._tket.circuit import Command  # type: ignore
+from pytket._tket.circuit import Command
 
 
 def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
@@ -96,11 +96,11 @@ def _symbolic_command_to_gate_and_param_inds(
             gate = gate_str
     else:
         if len(free_symbols) == 0:
-            gate = jnp.array(command.op.get_unitary())  # type: ignore
+            gate = jnp.array(command.op.get_unitary())
         else:
             raise TypeError(f"Parameterised gate {gate_str} not found in qujax.gates")
 
-    param_inds = tuple(symbol_map[symbol] for symbol in free_symbols)  # type: ignore
+    param_inds = tuple(symbol_map[symbol] for symbol in free_symbols)
     return gate, param_inds
 
 
@@ -362,7 +362,7 @@ def qujax_args_to_tk(
 
     if param is None:
         n_params = max([max(p) + 1 if len(p) > 0 else 0 for p in param_inds_seq])
-        param = jnp.zeros(n_params)  # type: ignore
+        param = jnp.zeros(n_params)
 
     param_inds_seq = [jnp.array(p, dtype="int32") for p in param_inds_seq]  # type: ignore
 
