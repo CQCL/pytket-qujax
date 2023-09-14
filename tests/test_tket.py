@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from typing import Union, Any
-from jax import numpy as jnp, jit, grad, random  # type: ignore
+from jax import numpy as jnp, jit, grad, random
 import qujax  # type: ignore
 import pytest
 
-from pytket.circuit import Circuit, Qubit  # type: ignore
-from pytket.pauli import Pauli, QubitPauliString  # type: ignore
-from pytket.utils import QubitPauliOperator  # type: ignore
+from pytket.circuit import Circuit, Qubit
+from pytket.pauli import Pauli, QubitPauliString
+from pytket.utils import QubitPauliOperator
 from pytket.extensions.qujax import (
     tk_to_qujax,
     tk_to_qujax_args,
@@ -99,7 +99,7 @@ def test_H() -> None:
 
 
 def test_CX() -> None:
-    param = jnp.array([0.25])  # type: ignore
+    param = jnp.array([0.25])
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -110,7 +110,7 @@ def test_CX() -> None:
 
 
 def test_CX_callable() -> None:
-    param = jnp.array([0.25])  # type: ignore
+    param = jnp.array([0.25])
 
     def H() -> Any:
         return qujax.gates.H
@@ -145,7 +145,7 @@ def test_CX_callable() -> None:
 
 
 def test_CX_qrev() -> None:
-    param = jnp.array([0.2, 0.8])  # type: ignore
+    param = jnp.array([0.2, 0.8])
 
     circuit = Circuit(2)
     circuit.Rx(float(param[0]), 0)
@@ -156,7 +156,7 @@ def test_CX_qrev() -> None:
 
 
 def test_CZ() -> None:
-    param = jnp.array([0.25])  # type: ignore
+    param = jnp.array([0.25])
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -167,7 +167,7 @@ def test_CZ() -> None:
 
 
 def test_CZ_qrev() -> None:
-    param = jnp.array([0.25])  # type: ignore
+    param = jnp.array([0.25])
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -178,7 +178,7 @@ def test_CZ_qrev() -> None:
 
 
 def test_CX_Barrier_Rx() -> None:
-    param = jnp.array([0, 1 / jnp.pi])  # type: ignore
+    param = jnp.array([0, 1 / jnp.pi])
 
     circuit = Circuit(3)
     circuit.CX(0, 1)
@@ -256,7 +256,7 @@ def test_HH() -> None:
     st1 = apply_circuit()
     st2 = apply_circuit(st1)
 
-    all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)  # type: ignore
+    all_zeros_sv = jnp.array(jnp.arange(st2.size) == 0, dtype=int)
 
     assert jnp.all(jnp.abs(st2.flatten() - all_zeros_sv) < 1e-5)
 

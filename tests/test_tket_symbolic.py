@@ -14,10 +14,10 @@
 
 from typing import Sequence
 import pytest
-from sympy import Symbol  # type: ignore
+from sympy import Symbol
 from jax import numpy as jnp, jit, grad, random
 
-from pytket.circuit import Circuit, OpType  # type: ignore
+from pytket.circuit import Circuit, OpType
 from pytket.extensions.qujax import (
     tk_to_qujax,
     tk_to_qujax_args,
