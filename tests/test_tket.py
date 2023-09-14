@@ -207,7 +207,7 @@ def test_circuit1() -> None:
             circuit.CX(i, i + 1)
         for i in range(1, n_qubits - 1, 2):
             circuit.CX(i, i + 1)
-        circuit.add_barrier(range(0, n_qubits))
+        circuit.add_barrier(list(range(0, n_qubits)))
         for i in range(n_qubits):
             circuit.Ry(float(param[k]), i)
             k += 1
@@ -236,7 +236,7 @@ def test_circuit2() -> None:
     for _ in range(depth):
         for i in range(0, n_qubits - 1):
             circuit.CZ(i, i + 1)
-        circuit.add_barrier(range(0, n_qubits))
+        circuit.add_barrier(list(range(0, n_qubits)))
         for i in range(n_qubits):
             circuit.Rz(float(param[k]), i)
             k += 1
