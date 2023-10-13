@@ -49,8 +49,8 @@ def _test_circuit(
 
         test_dt = apply_circuit_dt()
         n_qubits = test_dt.ndim // 2
-        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))  # type: ignore
-        test_jit_dm_diag = jnp.diag(  # type: ignore
+        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))
+        test_jit_dm_diag = jnp.diag(
             jit_apply_circuit_dt().reshape(2**n_qubits, 2**n_qubits)
         )
     else:
@@ -58,8 +58,8 @@ def _test_circuit(
         test_jit_sv = jit_apply_circuit(params).flatten()
         test_dt = apply_circuit_dt(params)
         n_qubits = test_dt.ndim // 2
-        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))  # type: ignore
-        test_jit_dm_diag = jnp.diag(  # type: ignore
+        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))
+        test_jit_dm_diag = jnp.diag(
             jit_apply_circuit_dt(params).reshape(2**n_qubits, 2**n_qubits)
         )
 
