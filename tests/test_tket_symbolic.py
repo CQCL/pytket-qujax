@@ -14,10 +14,10 @@
 
 from typing import Sequence
 import pytest
-from sympy import Symbol  # type: ignore
+from sympy import Symbol
 from jax import numpy as jnp, jit, grad, random
 
-from pytket.circuit import Circuit, OpType  # type: ignore
+from pytket.circuit import Circuit, OpType
 from pytket.extensions.qujax import (
     tk_to_qujax,
     tk_to_qujax_args,
@@ -49,8 +49,8 @@ def _test_circuit(
 
         test_dt = apply_circuit_dt()
         n_qubits = test_dt.ndim // 2
-        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))  # type: ignore
-        test_jit_dm_diag = jnp.diag(  # type: ignore
+        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))
+        test_jit_dm_diag = jnp.diag(
             jit_apply_circuit_dt().reshape(2**n_qubits, 2**n_qubits)
         )
     else:
@@ -58,8 +58,8 @@ def _test_circuit(
         test_jit_sv = jit_apply_circuit(params).flatten()
         test_dt = apply_circuit_dt(params)
         n_qubits = test_dt.ndim // 2
-        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))  # type: ignore
-        test_jit_dm_diag = jnp.diag(  # type: ignore
+        test_dm_diag = jnp.diag(test_dt.reshape(2**n_qubits, 2**n_qubits))
+        test_jit_dm_diag = jnp.diag(
             jit_apply_circuit_dt(params).reshape(2**n_qubits, 2**n_qubits)
         )
 
@@ -222,7 +222,7 @@ def test_circuit1() -> None:
             circuit.CX(i, i + 1)
         for i in range(1, n_qubits - 1, 2):
             circuit.CX(i, i + 1)
-        circuit.add_barrier(range(0, n_qubits))
+        circuit.add_barrier(list(range(0, n_qubits)))
         for i in range(n_qubits):
             circuit.Ry(symbols[k], i)
             k += 1
@@ -248,7 +248,7 @@ def test_circuit2() -> None:
     for _ in range(depth):
         for i in range(0, n_qubits - 1):
             circuit.CZ(i, i + 1)
-        circuit.add_barrier(range(0, n_qubits))
+        circuit.add_barrier(list(range(0, n_qubits)))
         for i in range(n_qubits):
             circuit.Rz(symbols[k], i)
             k += 1
