@@ -1,6 +1,11 @@
 Changelog
 ~~~~~~~~~
 
+0.14.0 (October 2023)
+---------------------
+
+* Updated pytket version requirement to 1.21.
+
 0.13.0 (August 2023)
 --------------------
 
