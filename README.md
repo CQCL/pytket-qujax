@@ -1,19 +1,19 @@
 # pytket-qujax
 
 This repository contains the pytket-qujax extension, using CQC's
-[pytket](https://cqcl.github.io/tket/pytket/api/index.html) quantum SDK.
+[pytket](https://tket.quantinuum.com/api-docs/index.html) quantum SDK.
 The other pytket extensions can be found [here](https://github.com/CQCL/pytket-extensions)
 
-[Pytket](https://cqcl.github.io/tket/pytket/api/index.html) is a Python module for interfacing
+[Pytket](https://tket.quantinuum.com/api-docs/index.html) is a Python module for interfacing
 with CQC tket, a set of quantum programming tools.
 
 [qujax](https://github.com/CQCL/qujax) is a pure [JAX](https://github.com/google/jax)
-quantum simulator. pytket-qujax is an extension to [pytket](https://cqcl.github.io/tket/pytket/api/index.html)
-that allows [pytket](https://cqcl.github.io/tket/pytket/api/index.html) circuits to
+quantum simulator. pytket-qujax is an extension to [pytket](https://tket.quantinuum.com/api-docs/index.html)
+that allows [pytket](https://tket.quantinuum.com/api-docs/index.html) circuits to
 be converted to [qujax](https://github.com/CQCL/qujax) for fast (classical) simulation and automatic differentiation.
 
 Some useful links:
-- [Documentation](https://cqcl.github.io/pytket-qujax/api/index.html)
+- [Documentation](https://tket.quantinuum.com/extensions/pytket-qujax/api/index.html)
 - [PyPI](https://pypi.org/project/pytket-qujax/)
 - [qujax](https://github.com/CQCL/qujax)
 - [pytket-qujax example notebook (VQE)](https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_heisenberg_vqe.ipynb)
