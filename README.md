@@ -2,7 +2,7 @@
 
 This repository contains the pytket-qujax extension, using CQC's
 [pytket](https://tket.quantinuum.com/api-docs/index.html) quantum SDK.
-The other pytket extensions can be found [here](https://tket.quantinuum.com/extensions/)
+The other pytket extensions can be found [here](https://tket.quantinuum.com/api-docs/extensions)
 
 [Pytket](https://tket.quantinuum.com/api-docs/index.html) is a Python module for interfacing
 with CQC tket, a set of quantum programming tools.
