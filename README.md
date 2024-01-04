@@ -13,7 +13,7 @@ that allows [pytket](https://tket.quantinuum.com/api-docs/index.html) circuits t
 be converted to [qujax](https://github.com/CQCL/qujax) for fast (classical) simulation and automatic differentiation.
 
 Some useful links:
-- [Documentation](https://tket.quantinuum.com/extensions/pytket-qujax/api/index.html)
+- [Documentation](https://tket.quantinuum.com/extensions/pytket-qujax/index.html)
 - [PyPI](https://pypi.org/project/pytket-qujax/)
 - [qujax](https://github.com/CQCL/qujax)
 - [pytket-qujax example notebook (VQE)](https://github.com/CQCL/pytket/blob/main/examples/pytket-qujax_heisenberg_vqe.ipynb)
