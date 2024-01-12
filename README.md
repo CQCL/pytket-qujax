@@ -24,7 +24,7 @@ Some useful links:
 
 ## Getting started
 
-`pytket-qujax` is available for Python 3.9, 3.10 and 3.11, on Linux and MacOS.
+`pytket-qujax` is available for Python 3.10, 3.11 and 3.12, on Linux and MacOS.
 To install, run:
 
 ```shell
