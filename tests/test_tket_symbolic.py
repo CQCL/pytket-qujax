@@ -102,7 +102,7 @@ def test_H() -> None:
 
 
 def test_CX() -> None:
-    symbols = [Symbol("p0")]  # type: ignore
+    symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -113,7 +113,7 @@ def test_CX() -> None:
 
 
 def test_CX_qrev() -> None:
-    symbols = [Symbol("p0"), Symbol("p1")]  # type: ignore
+    symbols = [Symbol("p0"), Symbol("p1")]
 
     circuit = Circuit(2)
     circuit.Rx(symbols[0], 0)
@@ -124,7 +124,7 @@ def test_CX_qrev() -> None:
 
 
 def test_CZ() -> None:
-    symbols = [Symbol("p0")]  # type: ignore
+    symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -135,7 +135,7 @@ def test_CZ() -> None:
 
 
 def test_CZ_qrev() -> None:
-    symbols = [Symbol("p0")]  # type: ignore
+    symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -146,7 +146,7 @@ def test_CZ_qrev() -> None:
 
 
 def test_symbolic_numeric_blend_circuit() -> None:
-    symbols = [Symbol("p0")]  # type: ignore
+    symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -158,7 +158,7 @@ def test_symbolic_numeric_blend_circuit() -> None:
 
 
 def test_symbolic_numeric_blend_gate() -> None:
-    symbols = [Symbol("p0"), Symbol("p1"), Symbol("p2")]  # type: ignore
+    symbols = [Symbol("p0"), Symbol("p1"), Symbol("p2")]
 
     circuit = Circuit(1)
     circuit.add_gate(OpType.U2, [symbols[0] * 3.0, symbols[1] + symbols[2] + 2], [0])
@@ -174,7 +174,7 @@ def test_symbolic_numeric_blend_gate() -> None:
 
 
 def test_not_in_qujaxgates() -> None:
-    symbols = [Symbol("p0")]  # type: ignore
+    symbols = [Symbol("p0")]
 
     circuit = Circuit(3)
     circuit.Rx(symbols[0], 0)
@@ -184,7 +184,7 @@ def test_not_in_qujaxgates() -> None:
 
 
 def test_CX_Barrier_Rx() -> None:
-    symbols = [Symbol("p0"), Symbol("p1")]  # type: ignore
+    symbols = [Symbol("p0"), Symbol("p1")]
 
     circuit = Circuit(3)
     circuit.CX(0, 1)
@@ -196,7 +196,7 @@ def test_CX_Barrier_Rx() -> None:
 
 
 def test_measure_error() -> None:
-    symbols = [Symbol("p0")]  # type: ignore
+    symbols = [Symbol("p0")]
     symbol_map = dict(zip(symbols, range(len(symbols))))
 
     circuit = Circuit(3, 3)
@@ -210,7 +210,7 @@ def test_measure_error() -> None:
 def test_circuit1() -> None:
     n_qubits = 4
     depth = 1
-    symbols = [Symbol(f"p{j}") for j in range(n_qubits * (depth + 1))]  # type: ignore
+    symbols = [Symbol(f"p{j}") for j in range(n_qubits * (depth + 1))]
 
     circuit = Circuit(n_qubits)
     k = 0
@@ -233,7 +233,7 @@ def test_circuit1() -> None:
 def test_circuit2() -> None:
     n_qubits = 3
     depth = 1
-    symbols = [Symbol(f"p{j}") for j in range(2 * n_qubits * (depth + 1))]  # type: ignore
+    symbols = [Symbol(f"p{j}") for j in range(2 * n_qubits * (depth + 1))]
 
     circuit = Circuit(n_qubits)
     k = 0
@@ -272,7 +272,7 @@ def test_HH() -> None:
 
 
 def test_exception_symbol_map() -> None:
-    symbols = [Symbol("p0"), Symbol("p1"), Symbol("bad_bad_symbol")]  # type: ignore
+    symbols = [Symbol("p0"), Symbol("p1"), Symbol("bad_bad_symbol")]
 
     circuit = Circuit(2)
     circuit.Rx(symbols[0], 0)
