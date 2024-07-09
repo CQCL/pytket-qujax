@@ -22,7 +22,6 @@ enable=
     line-too-long,
     lost-exception,
     missing-kwoa,
-    mixed-indentation,
     mixed-line-endings,
     not-callable,
     no-value-for-parameter,
