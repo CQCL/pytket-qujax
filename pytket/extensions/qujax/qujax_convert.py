@@ -104,9 +104,7 @@ def _symbolic_command_to_gate_and_param_inds(
     return gate, param_inds
 
 
-def tk_to_qujax_args(
-    circuit: Circuit, symbol_map: Optional[dict] = None
-) -> Tuple[
+def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tuple[
     Sequence[Union[str, Callable[[jnp.ndarray], jnp.ndarray]]],
     Sequence[Sequence[int]],
     Sequence[Sequence[int]],
