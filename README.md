@@ -1,5 +1,8 @@
 # pytket-qujax
 
+[![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://tketusers.slack.com/join/shared_invite/zt-18qmsamj9-UqQFVdkRzxnXCcKtcarLRA#)
+[![Stack Exchange](https://img.shields.io/badge/StackExchange-%23ffffff.svg?style=for-the-badge&logo=StackExchange)](https://quantumcomputing.stackexchange.com/tags/pytket)
+
 This repository contains the pytket-qujax extension, using CQC's
 [pytket](https://tket.quantinuum.com/api-docs/index.html) quantum SDK.
 The other pytket extensions can be found [here](https://tket.quantinuum.com/api-docs/extensions)
