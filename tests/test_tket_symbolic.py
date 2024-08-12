@@ -26,7 +26,10 @@ from pytket.extensions.qujax import (
 
 
 def _test_circuit(
-    circuit: Circuit, symbols: Sequence[Symbol], test_two_way: bool = False
+    circuit: Circuit,
+    symbols: Sequence[Symbol],
+    test_two_way: bool = False,
+    lambdify_gates: bool = False,
 ) -> None:
     params = random.uniform(random.PRNGKey(0), (len(symbols),)) * 2
     param_map = dict(zip(symbols, params))
@@ -37,7 +40,7 @@ def _test_circuit(
     true_sv = circuit_inst.get_statevector()
     true_probs = jnp.square(jnp.abs(true_sv))
 
-    apply_circuit = tk_to_qujax(circuit, symbol_map)
+    apply_circuit = tk_to_qujax(circuit, symbol_map, lambdify_gates=lambdify_gates)
     jit_apply_circuit = jit(apply_circuit)
 
     apply_circuit_dt = tk_to_qujax(circuit, symbol_map, simulator="densitytensor")
@@ -132,6 +135,17 @@ def test_CZ() -> None:
     circuit.CZ(0, 1)
 
     _test_circuit(circuit, symbols, True)
+
+
+def test_symbol_manipulaton() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
+
+    circuit = Circuit(2)
+    circuit.H(0)
+    circuit.Rz(1.2 * symbols[0], 0)
+    circuit.CZ(0, 1)
+
+    _test_circuit(circuit, symbols, True, True)
 
 
 def test_CZ_qrev() -> None:

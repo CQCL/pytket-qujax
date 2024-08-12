@@ -1,6 +1,12 @@
 Changelog
 ~~~~~~~~~
 
+0.21.0 (TBD)
+-------------------
+
+* Add `lambdify_gates` optional parameter to `tk_to_qujax`, `tk_to_qujax_args`, 
+   `_symbolic_command_to_gate_and_param_inds`. 
+
 0.20.0 (July 2024)
 ------------------
 

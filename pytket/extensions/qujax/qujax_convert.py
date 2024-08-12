@@ -62,7 +62,7 @@ def _append_func(f: Callable, func_to_append: Callable) -> Callable:
 
 
 def _symbolic_command_to_gate_and_param_inds(
-    command: Command, symbol_map: dict
+    command: Command, symbol_map: dict, lambdify_gates: bool = False
 ) -> Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]:
     """
     Convert pytket command to qujax (gate, parameter indices) tuple.
@@ -72,6 +72,10 @@ def _symbolic_command_to_gate_and_param_inds(
     :param symbol_map: ``dict``, maps symbolic pytket parameters following the order
         in this dict.
     :type symbol_map: dict
+    :param lambdify_gates: boolean that determines whether gate is represented by a string or by a function
+        returned by sympy's `lambdify`. In the latter case, symbol math is captured
+        (i.e. algebraic manipulations of the parameter symbols are reflected in the returned function).
+    :type lambdify_gates: bool
     :return: tuple of gate and parameter indices
         gate will be given as either a string in qujax.gates (if command is not
         symbolic or has single symbolic argument with no operations) or a function
@@ -87,7 +91,11 @@ def _symbolic_command_to_gate_and_param_inds(
             gate_params = command.op.params
             if len(free_symbols) == 0:
                 gate = qujax_gate(*gate_params)
-            elif len(free_symbols) == 1 and isinstance(free_symbols[0], Symbol):
+            elif (
+                len(free_symbols) == 1
+                and isinstance(free_symbols[0], Symbol)
+                and not lambdify_gates
+            ):
                 gate = gate_str
             else:
                 gate_lambda = lambdify(free_symbols, gate_params)
@@ -104,7 +112,9 @@ def _symbolic_command_to_gate_and_param_inds(
     return gate, param_inds
 
 
-def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tuple[
+def tk_to_qujax_args(
+    circuit: Circuit, symbol_map: Optional[dict] = None, lambdify_gates: bool = False
+) -> Tuple[
     Sequence[Union[str, Callable[[jnp.ndarray], jnp.ndarray]]],
     Sequence[Sequence[int]],
     Sequence[Sequence[int]],
@@ -135,6 +145,10 @@ def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tup
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
         If ``dict``, maps symbolic pytket parameters following the order in this dict.
     :type symbol_map: Optional[dict]
+    :param lambdify_gates: boolean that determines whether gates are represented by a string or by a function
+        returned by sympy's `lambdify`. In the latter case, symbol math is captured
+        (i.e. algebraic manipulations of the parameter symbols are reflected in the returned function).
+    :type lambdify_gates: bool
     :return: Tuple of arguments defining a (parameterised) quantum circuit
         that can be sent to ``qujax.get_params_to_statetensor_func``. The elements of
         the tuple (qujax args) are as follows
@@ -170,7 +184,9 @@ def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tup
             )
 
         if symbol_map:
-            gate, param_inds = _symbolic_command_to_gate_and_param_inds(c, symbol_map)
+            gate, param_inds = _symbolic_command_to_gate_and_param_inds(
+                c, symbol_map, lambdify_gates
+            )
         else:
             if gate_name not in qujax.gates.__dict__:
                 raise TypeError(
@@ -194,8 +210,11 @@ def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tup
 
 
 def tk_to_qujax(
-    circuit: Circuit, symbol_map: Optional[dict] = None, simulator: str = "statetensor"
-) -> qujax.UnionCallableOptionalArray:
+    circuit: Circuit,
+    symbol_map: Optional[dict] = None,
+    simulator: str = "statetensor",
+    lambdify_gates: bool = False,
+) -> qujax.typing.PureCircuitFunction:
     """
     Converts a pytket circuit into a function that maps circuit parameters
     to a statetensor (or densitytensor). Assumes all circuit gates can be found in
@@ -224,6 +243,10 @@ def tk_to_qujax(
     :param simulator: string in ('statetensor', 'densitytensor', 'unitarytensor')
         corresponding to qujax simulator type. Defaults to statetensor.
     :type simulator: str
+    :param lambdify_gates: boolean that determines whether gates are captured as a string or as a function
+        returned by sympy's `lambdify`. In the latter case, symbol math is taken into account
+        (i.e. algebraic manipulations of the parameter symbols are reflected in the returned function).
+    :type lambdify_gates: bool
     :return: Function which maps parameters (and optional statetensor_in)
         to a statetensor.
         If the circuit has no parameters, the resulting function
@@ -232,7 +255,7 @@ def tk_to_qujax(
         or Callable[[jnp.ndarray = None], jnp.ndarray]
         if no parameters found in circuit
     """
-    qujax_args = tk_to_qujax_args(circuit, symbol_map)
+    qujax_args = tk_to_qujax_args(circuit, symbol_map, lambdify_gates=lambdify_gates)
     simulator = simulator.lower()
 
     if simulator in ("statetensor", "state", "st"):
