@@ -216,7 +216,7 @@ def tk_to_qujax(
     symbol_map: Optional[dict] = None,
     simulator: str = "statetensor",
     lambdify_gates: bool = False,
-) -> qujax.typing.PureCircuitFunction:
+) -> qujax.UnionCallableOptionalArray:
     """
     Converts a pytket circuit into a function that maps circuit parameters
     to a statetensor (or densitytensor). Assumes all circuit gates can be found in
