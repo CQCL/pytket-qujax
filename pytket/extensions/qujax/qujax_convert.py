@@ -72,9 +72,10 @@ def _symbolic_command_to_gate_and_param_inds(
     :param symbol_map: ``dict``, maps symbolic pytket parameters following the order
         in this dict.
     :type symbol_map: dict
-    :param lambdify_gates: boolean that determines whether gate is represented by a string or by a function
-        returned by sympy's `lambdify`. In the latter case, symbol math is captured
-        (i.e. algebraic manipulations of the parameter symbols are reflected in the returned function).
+    :param lambdify_gates: boolean that determines whether gate is represented by a
+        string or by a function returned by sympy's `lambdify`. In the latter case,
+        symbol math is captured (i.e. algebraic manipulations of the parameter symbols
+        are reflected in the returned function).
     :type lambdify_gates: bool
     :return: tuple of gate and parameter indices
         gate will be given as either a string in qujax.gates (if command is not
@@ -145,9 +146,10 @@ def tk_to_qujax_args(
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
         If ``dict``, maps symbolic pytket parameters following the order in this dict.
     :type symbol_map: Optional[dict]
-    :param lambdify_gates: boolean that determines whether gates are represented by a string or by a function
-        returned by sympy's `lambdify`. In the latter case, symbol math is captured
-        (i.e. algebraic manipulations of the parameter symbols are reflected in the returned function).
+    :param lambdify_gates: boolean that determines whether gates are represented by a
+        string or by a function returned by sympy's `lambdify`. In the latter case,
+        symbol math is captured (i.e. algebraic manipulations of the parameter symbols
+        are reflected in the returned function).
     :type lambdify_gates: bool
     :return: Tuple of arguments defining a (parameterised) quantum circuit
         that can be sent to ``qujax.get_params_to_statetensor_func``. The elements of
@@ -243,9 +245,10 @@ def tk_to_qujax(
     :param simulator: string in ('statetensor', 'densitytensor', 'unitarytensor')
         corresponding to qujax simulator type. Defaults to statetensor.
     :type simulator: str
-    :param lambdify_gates: boolean that determines whether gates are captured as a string or as a function
-        returned by sympy's `lambdify`. In the latter case, symbol math is taken into account
-        (i.e. algebraic manipulations of the parameter symbols are reflected in the returned function).
+    :param lambdify_gates: boolean that determines whether gates are captured as a
+        string or as a function returned by sympy's `lambdify`. In the latter case,
+        symbol math is taken into account (i.e. algebraic manipulations of the parameter
+        symbols are reflected in the returned function).
     :type lambdify_gates: bool
     :return: Function which maps parameters (and optional statetensor_in)
         to a statetensor.
