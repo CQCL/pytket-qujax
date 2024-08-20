@@ -134,6 +134,17 @@ def test_CZ() -> None:
     _test_circuit(circuit, symbols, True)
 
 
+def test_symbol_manipulaton() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
+
+    circuit = Circuit(2)
+    circuit.H(0)
+    circuit.Rz(1.2 * symbols[0], 0)
+    circuit.CZ(0, 1)
+
+    _test_circuit(circuit, symbols, False)
+
+
 def test_CZ_qrev() -> None:
     symbols = [Symbol("p0")]
 

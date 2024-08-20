@@ -87,7 +87,11 @@ def _symbolic_command_to_gate_and_param_inds(
             gate_params = command.op.params
             if len(free_symbols) == 0:
                 gate = qujax_gate(*gate_params)
-            elif len(free_symbols) == 1 and isinstance(free_symbols[0], Symbol):
+            elif (
+                len(free_symbols) == 1
+                and len(gate_params) == 1
+                and isinstance(gate_params[0], Symbol)
+            ):
                 gate = gate_str
             else:
                 gate_lambda = lambdify(free_symbols, gate_params)
