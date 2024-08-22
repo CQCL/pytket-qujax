@@ -134,12 +134,42 @@ def test_CZ() -> None:
     _test_circuit(circuit, symbols, True)
 
 
-def test_symbol_manipulaton() -> None:
+def test_single_symbol_manipulaton() -> None:
     symbols = [Symbol("p0")]  # type: ignore
 
     circuit = Circuit(2)
     circuit.H(0)
     circuit.Rz(1.2 * symbols[0], 0)
+    circuit.CZ(0, 1)
+
+    _test_circuit(circuit, symbols, False)
+
+
+def test_single_symbol_manipulaton_multiple_appearances() -> None:
+    symbols = [Symbol("p0")]  # type: ignore
+
+    circuit = Circuit(2)
+    circuit.H(0)
+    circuit.Rz(1.2 * symbols[0], 0)
+    circuit.Rz(0.5 * symbols[0], 1)
+    circuit.Rx(symbols[0], 1)
+    circuit.CZ(0, 1)
+
+    _test_circuit(circuit, symbols, False)
+
+
+def test_multiple_symbol_manipulaton() -> None:
+    symbols = [Symbol("p0"), Symbol("p1"), Symbol("p2")]  # type: ignore
+
+    circuit = Circuit(2)
+    circuit.H(0)
+    circuit.Rz(1.2 * symbols[0], 0)
+    circuit.Rz(0.5 * symbols[1], 1)
+    circuit.XXPhase(symbols[0], 0, 1)
+    circuit.YYPhase(0.2 * symbols[0], 0, 1)
+    circuit.ZZPhase(0.3 * symbols[1], 0, 1)
+    circuit.YYPhase(symbols[1], 0, 1)
+    circuit.U3(0.1 * symbols[0], 0.7 * symbols[1], 0.8 * symbols[2], 1)
     circuit.CZ(0, 1)
 
     _test_circuit(circuit, symbols, False)
