@@ -134,8 +134,8 @@ def test_CZ() -> None:
     _test_circuit(circuit, symbols, True)
 
 
-def test_single_symbol_manipulaton() -> None:
-    symbols = [Symbol("p0")]  # type: ignore
+def test_single_symbol_manipulation() -> None:
+    symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -146,7 +146,7 @@ def test_single_symbol_manipulaton() -> None:
 
 
 def test_single_symbol_manipulaton_multiple_appearances() -> None:
-    symbols = [Symbol("p0")]  # type: ignore
+    symbols = [Symbol("p0")]
 
     circuit = Circuit(2)
     circuit.H(0)
@@ -159,7 +159,7 @@ def test_single_symbol_manipulaton_multiple_appearances() -> None:
 
 
 def test_multiple_symbol_manipulaton() -> None:
-    symbols = [Symbol("p0"), Symbol("p1"), Symbol("p2")]  # type: ignore
+    symbols = [Symbol("p0"), Symbol("p1"), Symbol("p2")]
 
     circuit = Circuit(2)
     circuit.H(0)
