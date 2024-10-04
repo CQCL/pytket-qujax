@@ -12,20 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Union, Any
-from jax import numpy as jnp, jit, grad, random
-import qujax  # type: ignore
+from typing import Any, Union
+
 import pytest
+import qujax  # type: ignore
+from jax import grad, jit, random
+from jax import numpy as jnp
 
 from pytket.circuit import Circuit, Qubit
-from pytket.pauli import Pauli, QubitPauliString
-from pytket.utils import QubitPauliOperator
 from pytket.extensions.qujax import (
-    tk_to_qujax,
-    tk_to_qujax_args,
     qujax_args_to_tk,
     tk_to_param,
+    tk_to_qujax,
+    tk_to_qujax_args,
 )
+from pytket.pauli import Pauli, QubitPauliString
+from pytket.utils import QubitPauliOperator
 
 
 def _test_circuit(

@@ -16,13 +16,15 @@
 Methods to allow conversion between qujax and pytket
 """
 
-from typing import Tuple, Sequence, Optional, List, Union, Callable, Any
+from collections.abc import Sequence
 from functools import wraps
+from typing import Any, Callable, List, Optional, Tuple, Union
+
+from jax import numpy as jnp
+from sympy import Symbol, lambdify
 
 import qujax  # type: ignore
-from jax import numpy as jnp
-from sympy import lambdify, Symbol
-from pytket import Qubit, Circuit  # type: ignore
+from pytket import Circuit, Qubit  # type: ignore
 from pytket._tket.circuit import Command
 
 

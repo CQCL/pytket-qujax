@@ -12,16 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Sequence
+from collections.abc import Sequence
+
 import pytest
+from jax import grad, jit, random
+from jax import numpy as jnp
 from sympy import Symbol
-from jax import numpy as jnp, jit, grad, random
 
 from pytket.circuit import Circuit, OpType
 from pytket.extensions.qujax import (
+    qujax_args_to_tk,
     tk_to_qujax,
     tk_to_qujax_args,
-    qujax_args_to_tk,
 )
 
 
