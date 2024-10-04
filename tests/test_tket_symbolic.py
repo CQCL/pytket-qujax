@@ -71,11 +71,16 @@ def _test_circuit(
     assert jnp.allclose(test_jit_dm_diag, true_probs)
 
     if len(params):
-        cost_func = lambda p: jnp.square(apply_circuit(p)).real.sum()
+
+        def cost_func(p):
+            return jnp.square(apply_circuit(p)).real.sum()
+
         grad_cost_func = grad(cost_func)
         assert isinstance(grad_cost_func(params), jnp.ndarray)
 
-        cost_jit_func = lambda p: jnp.square(jit_apply_circuit(p)).real.sum()
+        def cost_jit_func(p):
+            return jnp.square(jit_apply_circuit(p)).real.sum()
+
         grad_cost_jit_func = grad(cost_jit_func)
         assert isinstance(grad_cost_jit_func(params), jnp.ndarray)
 

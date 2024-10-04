@@ -18,7 +18,7 @@ Methods to allow conversion between qujax and pytket
 
 from collections.abc import Sequence
 from functools import wraps
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, Optional, Union
 
 from jax import numpy as jnp
 from sympy import Symbol, lambdify
@@ -28,7 +28,7 @@ from pytket import Circuit, Qubit  # type: ignore
 from pytket._tket.circuit import Command
 
 
-def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
+def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> tuple[int, ...]:
     """
     Convert Sequence of pytket qubits objects to tuple of integers qubit indices.
 
@@ -65,7 +65,7 @@ def _append_func(f: Callable, func_to_append: Callable) -> Callable:
 
 def _symbolic_command_to_gate_and_param_inds(
     command: Command, symbol_map: dict
-) -> Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]:
+) -> tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]:
     """
     Convert pytket command to qujax (gate, parameter indices) tuple.
 
@@ -110,7 +110,7 @@ def _symbolic_command_to_gate_and_param_inds(
     return gate, param_inds
 
 
-def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tuple[
+def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> tuple[
     Sequence[Union[str, Callable[[jnp.ndarray], jnp.ndarray]]],
     Sequence[Sequence[int]],
     Sequence[Sequence[int]],
@@ -294,7 +294,7 @@ def print_circuit(
     gate_ind_min: int = 0,
     gate_ind_max: int = jnp.inf,  # type: ignore
     sep_length: int = 1,
-) -> List[str]:
+) -> list[str]:
     """
     Returns and prints basic string representation of circuit.
 
