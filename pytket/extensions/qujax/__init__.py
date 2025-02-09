@@ -16,12 +16,12 @@
 """
 
 # _metadata.py is copied to the folder after installation.
-from ._metadata import __extension_version__, __extension_name__
+from ._metadata import __extension_name__, __extension_version__
 from .qujax_convert import (
-    tk_to_qujax,
-    tk_to_qujax_args,
-    tk_to_param,
+    _tk_qubits_to_inds,
     print_circuit,
     qujax_args_to_tk,
-    _tk_qubits_to_inds,
+    tk_to_param,
+    tk_to_qujax,
+    tk_to_qujax_args,
 )

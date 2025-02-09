@@ -12,20 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Union, Any
-from jax import numpy as jnp, jit, grad, random
-import qujax  # type: ignore
+from typing import Any, Union
+
 import pytest
+import qujax  # type: ignore
+from jax import grad, jit, random
+from jax import numpy as jnp
 
 from pytket.circuit import Circuit, Qubit
-from pytket.pauli import Pauli, QubitPauliString
-from pytket.utils import QubitPauliOperator
 from pytket.extensions.qujax import (
-    tk_to_qujax,
-    tk_to_qujax_args,
     qujax_args_to_tk,
     tk_to_param,
+    tk_to_qujax,
+    tk_to_qujax_args,
 )
+from pytket.pauli import Pauli, QubitPauliString
+from pytket.utils import QubitPauliOperator
 
 
 def _test_circuit(
@@ -68,11 +70,16 @@ def _test_circuit(
     assert jnp.allclose(test_jit_dm_diag, true_probs)
 
     if param is not None:
-        cost_func = lambda p: jnp.square(apply_circuit(p)).real.sum()
+
+        def cost_func(p):
+            return jnp.square(apply_circuit(p)).real.sum()
+
         grad_cost_func = grad(cost_func)
         assert isinstance(grad_cost_func(param), jnp.ndarray)
 
-        cost_jit_func = lambda p: jnp.square(jit_apply_circuit(p)).real.sum()
+        def cost_jit_func(p):
+            return jnp.square(jit_apply_circuit(p)).real.sum()
+
         grad_cost_jit_func = grad(cost_jit_func)
         assert isinstance(grad_cost_jit_func(param), jnp.ndarray)
 
