@@ -6,7 +6,7 @@ Changelog
 0.22.0 (unreleased)
 -------------------
 
-* Updated pytket version requirement to 1.39.
+* Update pytket minimium version requirement to 2.0.1.
 
 0.21.0 (October 2024)
 ---------------------
