@@ -16,17 +16,19 @@
 Methods to allow conversion between qujax and pytket
 """
 
-from typing import Tuple, Sequence, Optional, List, Union, Callable, Any
+from collections.abc import Callable, Sequence
 from functools import wraps
+from typing import Any
+
+from jax import numpy as jnp
+from sympy import Symbol, lambdify
 
 import qujax  # type: ignore
-from jax import numpy as jnp
-from sympy import lambdify, Symbol
-from pytket import Qubit, Circuit  # type: ignore
+from pytket import Circuit, Qubit  # type: ignore
 from pytket._tket.circuit import Command
 
 
-def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> Tuple[int, ...]:
+def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> tuple[int, ...]:
     """
     Convert Sequence of pytket qubits objects to tuple of integers qubit indices.
 
@@ -63,7 +65,7 @@ def _append_func(f: Callable, func_to_append: Callable) -> Callable:
 
 def _symbolic_command_to_gate_and_param_inds(
     command: Command, symbol_map: dict
-) -> Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]:
+) -> tuple[str | Callable[[jnp.ndarray], jnp.ndarray], Sequence[int]]:
     """
     Convert pytket command to qujax (gate, parameter indices) tuple.
 
@@ -98,18 +100,19 @@ def _symbolic_command_to_gate_and_param_inds(
                 gate = _append_func(gate_lambda, qujax_gate)
         else:
             gate = gate_str
+    elif len(free_symbols) == 0:
+        gate = jnp.array(command.op.get_unitary())
     else:
-        if len(free_symbols) == 0:
-            gate = jnp.array(command.op.get_unitary())
-        else:
-            raise TypeError(f"Parameterised gate {gate_str} not found in qujax.gates")
+        raise TypeError(f"Parameterised gate {gate_str} not found in qujax.gates")
 
     param_inds = tuple(symbol_map[symbol] for symbol in free_symbols)
     return gate, param_inds
 
 
-def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tuple[
-    Sequence[Union[str, Callable[[jnp.ndarray], jnp.ndarray]]],
+def tk_to_qujax_args(
+    circuit: Circuit, symbol_map: dict | None = None
+) -> tuple[
+    Sequence[str | Callable[[jnp.ndarray], jnp.ndarray]],
     Sequence[Sequence[int]],
     Sequence[Sequence[int]],
     int,
@@ -151,12 +154,12 @@ def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tup
     :rtype: Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]
     """
     if symbol_map:
-        assert (
-            set(symbol_map.keys()) == circuit.free_symbols()
-        ), "Circuit keys do not much symbol_map"
-        assert set(symbol_map.values()) == set(
-            range(len(circuit.free_symbols()))
-        ), "Incorrect indices in symbol_map"
+        assert set(symbol_map.keys()) == circuit.free_symbols(), (
+            "Circuit keys do not much symbol_map"
+        )
+        assert set(symbol_map.values()) == set(range(len(circuit.free_symbols()))), (
+            "Incorrect indices in symbol_map"
+        )
 
     gate_name_seq = []
     qubit_inds_seq = []
@@ -198,7 +201,7 @@ def tk_to_qujax_args(circuit: Circuit, symbol_map: Optional[dict] = None) -> Tup
 
 
 def tk_to_qujax(
-    circuit: Circuit, symbol_map: Optional[dict] = None, simulator: str = "statetensor"
+    circuit: Circuit, symbol_map: dict | None = None, simulator: str = "statetensor"
 ) -> qujax.UnionCallableOptionalArray:
     """
     Converts a pytket circuit into a function that maps circuit parameters
@@ -241,15 +244,14 @@ def tk_to_qujax(
 
     if simulator in ("statetensor", "state", "st"):
         return qujax.get_params_to_statetensor_func(*qujax_args)
-    elif simulator in ("densitytensor", "density", "dt"):
+    if simulator in ("densitytensor", "density", "dt"):
         return qujax.get_params_to_densitytensor_func(*qujax_args)
-    elif simulator in ("unitarytensor", "unitary", "ut"):
+    if simulator in ("unitarytensor", "unitary", "ut"):
         return qujax.get_params_to_unitarytensor_func(*qujax_args)
-    else:
-        raise TypeError(
-            f"simulator argument '{simulator}' not recognised, try 'statetensor' "
-            f"or 'densitytensor'"
-        )
+    raise TypeError(
+        f"simulator argument '{simulator}' not recognised, try 'statetensor' "
+        f"or 'densitytensor'"
+    )
 
 
 def tk_to_param(circuit: Circuit) -> jnp.ndarray:
@@ -284,15 +286,15 @@ def tk_to_param(circuit: Circuit) -> jnp.ndarray:
     return param
 
 
-def print_circuit(
+def print_circuit(  # noqa: PLR0913
     circuit: Circuit,
-    symbol_map: Optional[dict] = None,
+    symbol_map: dict | None = None,
     qubit_min: int = 0,
     qubit_max: int = jnp.inf,  # type: ignore
     gate_ind_min: int = 0,
     gate_ind_max: int = jnp.inf,  # type: ignore
     sep_length: int = 1,
-) -> List[str]:
+) -> list[str]:
     """
     Returns and prints basic string representation of circuit.
 
@@ -328,8 +330,8 @@ def qujax_args_to_tk(
     gate_seq: Sequence[str],
     qubit_inds_seq: Sequence[Sequence[int]],
     param_inds_seq: Sequence[Sequence[int]],
-    n_qubits: Optional[int] = None,
-    param: Optional[jnp.ndarray] = None,
+    n_qubits: int | None = None,
+    param: jnp.ndarray | None = None,
 ) -> Circuit:
     """
     Convert qujax args into pytket Circuit.
@@ -370,7 +372,7 @@ def qujax_args_to_tk(
 
     c = Circuit(n_qubits)
 
-    for g, q, p in zip(gate_seq, qubit_inds_seq, param_inds_seq):
+    for g, q, p in zip(gate_seq, qubit_inds_seq, param_inds_seq, strict=False):
         g_apply_func = c.__getattribute__(g)
         g_apply_func(*param[p], *q)
 
