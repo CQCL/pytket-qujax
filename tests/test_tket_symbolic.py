@@ -12,16 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Sequence
+from collections.abc import Sequence
+
 import pytest
+from jax import grad, jit, random
+from jax import numpy as jnp
 from sympy import Symbol
-from jax import numpy as jnp, jit, grad, random
 
 from pytket.circuit import Circuit, OpType
 from pytket.extensions.qujax import (
+    qujax_args_to_tk,
     tk_to_qujax,
     tk_to_qujax_args,
-    qujax_args_to_tk,
 )
 
 
@@ -29,8 +31,8 @@ def _test_circuit(
     circuit: Circuit, symbols: Sequence[Symbol], test_two_way: bool = False
 ) -> None:
     params = random.uniform(random.PRNGKey(0), (len(symbols),)) * 2
-    param_map = dict(zip(symbols, params))
-    symbol_map = dict(zip(symbols, range(len(symbols))))
+    param_map = dict(zip(symbols, params, strict=False))
+    symbol_map = dict(zip(symbols, range(len(symbols)), strict=False))
 
     circuit_inst = circuit.copy()
     circuit_inst.symbol_substitution(param_map)
@@ -84,11 +86,11 @@ def _test_circuit(
         circuit_2 = qujax_args_to_tk(*tk_to_qujax_args(circuit, symbol_map), params)  # type: ignore
         assert all(
             g.op.type == g2.op.type
-            for g, g2 in zip(circuit_commands, circuit_2.get_commands())
+            for g, g2 in zip(circuit_commands, circuit_2.get_commands(), strict=False)
         )
         assert all(
             g.qubits == g2.qubits
-            for g, g2 in zip(circuit_commands, circuit_2.get_commands())
+            for g, g2 in zip(circuit_commands, circuit_2.get_commands(), strict=False)
         )
 
 
@@ -238,7 +240,7 @@ def test_CX_Barrier_Rx() -> None:
 
 def test_measure_error() -> None:
     symbols = [Symbol("p0")]
-    symbol_map = dict(zip(symbols, range(len(symbols))))
+    symbol_map = dict(zip(symbols, range(len(symbols)), strict=False))
 
     circuit = Circuit(3, 3)
     circuit.Rx(symbols[0], 0)
@@ -263,7 +265,7 @@ def test_circuit1() -> None:
             circuit.CX(i, i + 1)
         for i in range(1, n_qubits - 1, 2):
             circuit.CX(i, i + 1)
-        circuit.add_barrier(list(range(0, n_qubits)))
+        circuit.add_barrier(list(range(n_qubits)))
         for i in range(n_qubits):
             circuit.Ry(symbols[k], i)
             k += 1
@@ -287,9 +289,9 @@ def test_circuit2() -> None:
         circuit.Rx(symbols[k], i)
         k += 1
     for _ in range(depth):
-        for i in range(0, n_qubits - 1):
+        for i in range(n_qubits - 1):
             circuit.CZ(i, i + 1)
-        circuit.add_barrier(list(range(0, n_qubits)))
+        circuit.add_barrier(list(range(n_qubits)))
         for i in range(n_qubits):
             circuit.Rz(symbols[k], i)
             k += 1

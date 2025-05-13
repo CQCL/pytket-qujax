@@ -12,24 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Union, Any
-from jax import numpy as jnp, jit, grad, random
-import qujax  # type: ignore
+from typing import Any
+
 import pytest
+import qujax  # type: ignore
+from jax import grad, jit, random
+from jax import numpy as jnp
 
 from pytket.circuit import Circuit, Qubit
-from pytket.pauli import Pauli, QubitPauliString
-from pytket.utils import QubitPauliOperator
 from pytket.extensions.qujax import (
-    tk_to_qujax,
-    tk_to_qujax_args,
     qujax_args_to_tk,
     tk_to_param,
+    tk_to_qujax,
+    tk_to_qujax_args,
 )
+from pytket.pauli import Pauli, QubitPauliString
+from pytket.utils import QubitPauliOperator
 
 
 def _test_circuit(
-    circuit: Circuit, param: Union[None, jnp.ndarray], test_two_way: bool = False
+    circuit: Circuit, param: None | jnp.ndarray, test_two_way: bool = False
 ) -> None:
     true_sv = circuit.get_statevector()
     true_probs = jnp.square(jnp.abs(true_sv))
@@ -83,11 +85,11 @@ def _test_circuit(
         circuit_2 = qujax_args_to_tk(*tk_to_qujax_args(circuit), param)  # type: ignore
         assert all(
             g.op.type == g2.op.type
-            for g, g2 in zip(circuit_commands, circuit_2.get_commands())
+            for g, g2 in zip(circuit_commands, circuit_2.get_commands(), strict=False)
         )
         assert all(
             g.qubits == g2.qubits
-            for g, g2 in zip(circuit_commands, circuit_2.get_commands())
+            for g, g2 in zip(circuit_commands, circuit_2.get_commands(), strict=False)
         )
 
 
@@ -207,7 +209,7 @@ def test_circuit1() -> None:
             circuit.CX(i, i + 1)
         for i in range(1, n_qubits - 1, 2):
             circuit.CX(i, i + 1)
-        circuit.add_barrier(list(range(0, n_qubits)))
+        circuit.add_barrier(list(range(n_qubits)))
         for i in range(n_qubits):
             circuit.Ry(float(param[k]), i)
             k += 1
@@ -234,9 +236,9 @@ def test_circuit2() -> None:
         k += 1
 
     for _ in range(depth):
-        for i in range(0, n_qubits - 1):
+        for i in range(n_qubits - 1):
             circuit.CZ(i, i + 1)
-        circuit.add_barrier(list(range(0, n_qubits)))
+        circuit.add_barrier(list(range(n_qubits)))
         for i in range(n_qubits):
             circuit.Rz(float(param[k]), i)
             k += 1
@@ -278,10 +280,10 @@ def test_quantum_hamiltonian() -> None:
         for j in range(n_qubits - 1)
     ]
     coefs_zz = random.normal(random.PRNGKey(0), shape=(len(strings_zz),))
-    tket_op_dict_zz = dict(zip(strings_zz, coefs_zz.tolist()))
+    tket_op_dict_zz = dict(zip(strings_zz, coefs_zz.tolist(), strict=False))
     strings_x = [QubitPauliString({Qubit(j): Pauli.X}) for j in range(n_qubits)]
     coefs_x = random.normal(random.PRNGKey(0), shape=(len(strings_x),))
-    tket_op_dict_x = dict(zip(strings_x, coefs_x.tolist()))
+    tket_op_dict_x = dict(zip(strings_x, coefs_x.tolist(), strict=False))
     tket_op = QubitPauliOperator({**tket_op_dict_zz, **tket_op_dict_x})
 
     gate_str_seq_seq = [["Z", "Z"]] * (n_qubits - 1) + [["X"]] * n_qubits
