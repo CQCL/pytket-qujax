@@ -34,9 +34,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> tuple[int, ...]:
 
     :param tk_qubits: Sequence of pytket qubit object
         (as stored in ``pytket.Circuit.qubits``).
-    :type tk_qubits: Sequence[Qubit]
     :return: Tuple of qubit indices.
-    :rtype: Tuple[int]
     """
     return tuple(q.index[0] for q in tk_qubits)
 
@@ -49,11 +47,8 @@ def _append_func(f: Callable, func_to_append: Callable) -> Callable:
     with the same signature as f.
 
     :param f: Base function, whose signature is retained.
-    :type f: Callable
     :param func_to_append: Function to apply to the output of
-    :type func_to_append: Callable
     :return: Decorated function that executes func_to_append(f(*args **kwargs))
-    :rtype: Callable
     """
 
     @wraps(f)
@@ -70,15 +65,12 @@ def _symbolic_command_to_gate_and_param_inds(
     Convert pytket command to qujax (gate, parameter indices) tuple.
 
     :param command: pytket circuit command from .get_commands()
-    :type command: Command
     :param symbol_map: ``dict``, maps symbolic pytket parameters following the order
         in this dict.
-    :type symbol_map: dict
     :return: tuple of gate and parameter indices
         gate will be given as either a string in qujax.gates (if command is not
         symbolic or has single symbolic argument with no operations) or a function
         that maps parameters to a jax unitary matrix.
-    :rtype: Tuple[Union[str, Callable[[jnp.ndarray], jnp.ndarray]], Sequence[int]]
     """
     gate_str = command.op.type.name
     free_symbols = list(command.op.free_symbols())
@@ -137,11 +129,9 @@ def tk_to_qujax_args(
     The conversion can also be checked with ``print_circuit``.
 
     :param circuit: Circuit to be converted (without any measurement commands).
-    :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
         If ``dict``, maps symbolic pytket parameters following the order in this dict.
-    :type symbol_map: Optional[dict]
     :return: Tuple of arguments defining a (parameterised) quantum circuit
         that can be sent to ``qujax.get_params_to_statetensor_func``. The elements of
         the tuple (qujax args) are as follows
@@ -150,8 +140,6 @@ def tk_to_qujax_args(
         - Sequence of sequences describing which qubits gates act on.
         - Sequence of sequences of parameter indices that gates are using.
         - Number of qubits.
-
-    :rtype: Tuple[Sequence[str], Sequence[Sequence[int]], Sequence[Sequence[int]], int]
     """
     if symbol_map:
         assert set(symbol_map.keys()) == circuit.free_symbols(), (
@@ -223,21 +211,15 @@ def tk_to_qujax(
     or ``print_circuit``.
 
     :param circuit: Circuit to be converted (without any measurement commands).
-    :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
         If ``dict``, maps symbolic pytket parameters following the order in this dict.
-    :type symbol_map: Optional[dict]
     :param simulator: string in ('statetensor', 'densitytensor', 'unitarytensor')
         corresponding to qujax simulator type. Defaults to statetensor.
-    :type simulator: str
     :return: Function which maps parameters (and optional statetensor_in)
         to a statetensor.
         If the circuit has no parameters, the resulting function
         will only take the optional ``statetensor_in`` as an argument.
-    :rtype: Callable[[jnp.ndarray, jnp.ndarray = None], jnp.ndarray]
-        or Callable[[jnp.ndarray = None], jnp.ndarray]
-        if no parameters found in circuit
     """
     qujax_args = tk_to_qujax_args(circuit, symbol_map)
     simulator = simulator.lower()
@@ -262,9 +244,7 @@ def tk_to_param(circuit: Circuit) -> jnp.ndarray:
 
     :param circuit: Circuit to be converted
         (without any measurement commands or symbolic gates).
-    :type circuit: pytket.Circuit
     :return: 1D array containing values of parameters
-    :rtype: jnp.ndarray
     """
 
     if circuit.is_symbolic():
@@ -302,23 +282,15 @@ def print_circuit(  # noqa: PLR0913
     ``tk_to_qujax`` or ``tk_to_qujax_args`` documentation.
 
     :param circuit: Circuit to be converted (without any measurement commands).
-    :type circuit: pytket.Circuit
     :param symbol_map:
         If ``None``, parameterised gates determined by ``qujax.gates``. \n
         If ``dict``, maps symbolic pytket parameters following the order in this dict.
-    :type symbol_map: Optional[dict]
     :param qubit_min: Index of first qubit to display.
-    :type qubit_min: int
     :param qubit_max: Index of final qubit to display.
-    :type qubit_max: int
     :param gate_ind_min: Index of gate to start circuit printing.
-    :type gate_ind_min: int
     :param gate_ind_max: Index of gate to stop circuit printing.
-    :type gate_ind_max: int
     :param sep_length: Number of dashes to separate gates.
-    :type sep_length: int
     :return: String representation of circuit
-    :rtype: List[str]
     """
     g, q, p, nq = tk_to_qujax_args(circuit, symbol_map)
     return qujax.print_circuit(  # type: ignore
@@ -338,20 +310,14 @@ def qujax_args_to_tk(
 
     :param gate_seq: Sequence of gates. Each element is a string matching an array
         or function in qujax.gates
-    :type gate_seq: Sequence[str]
     :param qubit_inds_seq: Sequences of qubits (ints) that gates are acting on.
-    :type qubit_inds_seq: Sequence[Sequence[int]]
     :param param_inds_seq: Sequence of parameter indices that gates are using,
         i.e. [[0], [], [5, 2]] tells qujax that the first gate uses the first parameter,
         the second gate is not parameterised and the third gates used the fifth and
         second parameters.
-    :type param_inds_seq: Sequence[Sequence[int]]
     :param n_qubits: Number of qubits, if fixed.
-    :type n_qubits: int
     :param param: Circuit parameters, if parameterised. Defaults to all zeroes.
-    :type param: jnp.ndarray
     :return: Circuit
-    :rtype: pytket.Circuit
     """
     if any(not isinstance(gate_name, str) for gate_name in gate_seq):
         raise TypeError(
