@@ -14,11 +14,11 @@
 
 from typing import Any
 
+import numpy as np
 import pytest
 import qujax  # type: ignore
 from jax import grad, jit, random
 from jax import numpy as jnp
-import numpy as np
 
 from pytket.circuit import Circuit, Qubit
 from pytket.extensions.qujax import (
