@@ -298,7 +298,7 @@ def test_quantum_hamiltonian() -> None:
     state = random.uniform(random.PRNGKey(0), shape=(2**n_qubits,))
     state /= jnp.linalg.norm(state)
 
-    tket_exp = tket_op.state_expectation(np.asarray(state))  # type: ignore
+    tket_exp = tket_op.state_expectation(np.asarray(state))
     jax_exp = st_to_exp(state.reshape((2,) * n_qubits))
 
     assert jnp.abs(tket_exp - jax_exp) < 1e-5
