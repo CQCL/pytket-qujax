@@ -12,10 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-Methods to allow conversion between qujax and pytket
-"""
-
 from collections.abc import Callable, Sequence
 from functools import wraps
 from typing import Any
@@ -33,7 +29,7 @@ def _tk_qubits_to_inds(tk_qubits: Sequence[Qubit]) -> tuple[int, ...]:
     Convert Sequence of pytket qubits objects to tuple of integers qubit indices.
 
     :param tk_qubits: Sequence of pytket qubit object
-        (as stored in ``pytket.Circuit.qubits``).
+        (as stored in :py:attr:`pytket._tket.circuit.Circuit.qubits`).
     :return: Tuple of qubit indices.
     """
     return tuple(q.index[0] for q in tk_qubits)
@@ -64,11 +60,11 @@ def _symbolic_command_to_gate_and_param_inds(
     """
     Convert pytket command to qujax (gate, parameter indices) tuple.
 
-    :param command: pytket circuit command from .get_commands()
+    :param command: pytket circuit command from :py:meth:`~pytket._tket.circuit.Circuit.get_commands`
     :param symbol_map: ``dict``, maps symbolic pytket parameters following the order
         in this dict.
     :return: tuple of gate and parameter indices
-        gate will be given as either a string in qujax.gates (if command is not
+        gate will be given as either a string in ``qujax.gates`` (if command is not
         symbolic or has single symbolic argument with no operations) or a function
         that maps parameters to a jax unitary matrix.
     """
@@ -116,17 +112,17 @@ def tk_to_qujax_args(
     The ``symbol_map`` argument controls the interpretation of any symbolic parameters
     found in ``circuit.free_symbols()``.
 
-    - If ``symbol_map`` is ``None``, circuit.free_symbols() will be ignored.
+    - If ``symbol_map`` is ``None``, ``circuit.free_symbols()`` will be ignored.
       Parameterised gates will be determined based on whether they are stored as
       functions (parameterised) or arrays (non-parameterised) in qujax.gates. The order
-      of qujax circuit parameters is the same as in circuit.get_commands().
+      of qujax circuit parameters is the same as in ``circuit.get_commands()``.
     - If ``symbol_map`` is provided as a ``dict``, assign qujax circuit parameters to
       symbolic parameters in ``circuit.free_symbols()``; the order of qujax circuit
       parameters will be given by this dict. Keys of the dict should be symbolic pytket
       parameters as in ``circuit.free_symbols()`` and the values indicate
       the index of the qujax circuit parameter -- integer indices starting from 0.
 
-    The conversion can also be checked with ``print_circuit``.
+    The conversion can also be checked with :py:func:`print_circuit`.
 
     :param circuit: Circuit to be converted (without any measurement commands).
     :param symbol_map:
@@ -197,18 +193,18 @@ def tk_to_qujax(
     ``qujax.gates``. The ``symbol_map`` argument controls the interpretation of any
     symbolic parameters found in ``circuit.free_symbols()``.
 
-    - If ``symbol_map`` is ``None``, circuit.free_symbols() will be ignored.
+    - If ``symbol_map`` is ``None``, ``circuit.free_symbols()`` will be ignored.
       Parameterised gates will be determined based on whether they are stored as
       functions (parameterised) or arrays (non-parameterised) in qujax.gates. The order
-      of qujax circuit parameters is the same as in circuit.get_commands().
+      of qujax circuit parameters is the same as in ``circuit.get_commands()``.
     - If ``symbol_map`` is provided as a ``dict``, assign qujax circuit parameters to
       symbolic parameters in ``circuit.free_symbols()``; the order of qujax circuit
       parameters will be given by this dict. Keys of the dict should be symbolic pytket
       parameters as in ``circuit.free_symbols()`` and the values indicate
       the index of the qujax circuit parameter -- integer indices starting from 0.
 
-    The conversion can be checked by examining the output from ``tk_to_qujax_args``
-    or ``print_circuit``.
+    The conversion can be checked by examining the output from :py:func:`tk_to_qujax_args`
+    or :py:func:`print_circuit`.
 
     :param circuit: Circuit to be converted (without any measurement commands).
     :param symbol_map:
@@ -279,7 +275,7 @@ def print_circuit(  # noqa: PLR0913
     Returns and prints basic string representation of circuit.
 
     For more information on the ``symbol_map`` parameter refer to the
-    ``tk_to_qujax`` or ``tk_to_qujax_args`` documentation.
+    :py:func:`tk_to_qujax` or :py:func:`tk_to_qujax_args` documentation.
 
     :param circuit: Circuit to be converted (without any measurement commands).
     :param symbol_map:
@@ -309,7 +305,7 @@ def qujax_args_to_tk(
     Convert qujax args into pytket Circuit.
 
     :param gate_seq: Sequence of gates. Each element is a string matching an array
-        or function in qujax.gates
+        or function in ``qujax.gates``
     :param qubit_inds_seq: Sequences of qubits (ints) that gates are acting on.
     :param param_inds_seq: Sequence of parameter indices that gates are using,
         i.e. [[0], [], [5, 2]] tells qujax that the first gate uses the first parameter,
