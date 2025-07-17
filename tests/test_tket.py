@@ -18,6 +18,7 @@ import pytest
 import qujax  # type: ignore
 from jax import grad, jit, random
 from jax import numpy as jnp
+import numpy as np
 
 from pytket.circuit import Circuit, Qubit
 from pytket.extensions.qujax import (
@@ -297,7 +298,7 @@ def test_quantum_hamiltonian() -> None:
     state = random.uniform(random.PRNGKey(0), shape=(2**n_qubits,))
     state /= jnp.linalg.norm(state)
 
-    tket_exp = tket_op.state_expectation(state)  # type: ignore
+    tket_exp = tket_op.state_expectation(np.asarray(state))  # type: ignore
     jax_exp = st_to_exp(state.reshape((2,) * n_qubits))
 
     assert jnp.abs(tket_exp - jax_exp) < 1e-5
