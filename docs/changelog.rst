@@ -66,7 +66,7 @@ Changelog
 ----------------------
 
 * Update qujax version requirement to 0.3.1
-* Add support for simulator=unitary in tk_to_qujax
+* Add support for ``simulator=unitary`` in :py:func:`~.tk_to_qujax`
 * Updated pytket version requirement to 1.10.
 
 0.10.0 (November 2022)
@@ -78,7 +78,7 @@ Changelog
 ---------------------
 
 * Update qujax version requirement to 0.3.0
-* Add simulator argument to `tk_to_qujax` to enable
+* Add simulator argument to :py:func:`~.tk_to_qujax` to enable
   conversion to densitytensor simulator
 
 0.8.0 (November 2022)
@@ -89,7 +89,7 @@ Changelog
 0.7.1 (October 2022)
 --------------------
 
-* Added `tk_to_param` function
+* Added :py:func:`~.tk_to_param` function
 
 0.7.0 (October 2022)
 --------------------
@@ -108,26 +108,26 @@ Changelog
 * Added support for a blend of numerical and symbolic
   parameterised gates.
 * Added automatic conversion of non-parameterised gates
-  not found in qujax.gates (in symbolic implementation only)
+  not found in ``qujax.gates`` (in symbolic implementation only)
 * Raises error if measurements found
 * Updated pytket version requirement to 1.6.
 
 0.5.0 (September 2022)
 ----------------------
 
-* Consolidate `tk_to_qujax_args` with `tk_to_qujax_args_symbolic`,
-  `tk_to_qujax` with `tk_to_qujax_symbolic`,
-  `print_circuit` with `print_circuit_symbolic`
+* Consolidate :py:func:`~.tk_to_qujax_args` with ``tk_to_qujax_args_symbolic``,
+  :py:func:`~.tk_to_qujax` with ``tk_to_qujax_symbolic``,
+  :py:func:`~.print_circuit` with ``print_circuit_symbolic``
   and removed all the symbolic versions.
   Now, all the functions have a default symbol_map argument
   which tells wherther or not to make it symbolic.
-* Renamed `qujax_to_tk` to `qujax_args_to_tk`
+* Renamed ``qujax_to_tk`` to :py:func:`~.qujax_args_to_tk`
 
 0.4.0 (August 2022)
 -------------------
 
-* Add tk_to_qujax_args, tk_to_qujax_args_symbolic
-* Add print_circuit, print_circuit_symbolic
+* Add :py:func:`~.tk_to_qujax_args`, ``tk_to_qujax_args_symbolic``
+* Add :py:func:`~.print_circuit`, ``print_circuit_symbolic``
 * Updated qujax version requirement to 0.2.5.
 
 0.3.0 (August 2022)
@@ -149,5 +149,5 @@ Changelog
 0.1.0 (July 2022)
 -----------------
 
-* add tk_to_qujax and tk_to_qujax_symbolic
-* update to qujax version 0.1.3
+* Add :py:func:`~.tk_to_qujax` and ``tk_to_qujax_symbolic``
+* Update to qujax version 0.1.3
